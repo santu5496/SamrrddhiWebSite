@@ -197,7 +197,7 @@ export default function VolunteerSection() {
           {/* Volunteer Application Form */}
           <div>
             <h3 className="text-2xl font-semibold text-neutral mb-8">Apply to Volunteer</h3>
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="bg-white rounded-xl shadow-lg p-8 card-hover">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <Label htmlFor="vol-name">Full Name *</Label>
@@ -356,7 +356,7 @@ export default function VolunteerSection() {
                 <Button 
                   type="submit" 
                   disabled={submitMutation.isPending}
-                  className="w-full bg-accent hover:bg-green-600 text-white py-3 rounded-lg font-semibold transition-colors"
+                  className="w-full btn-gradient text-white py-3 rounded-lg font-semibold border-0"
                 >
                   <Hand className="mr-2 h-4 w-4" />
                   {submitMutation.isPending ? "Submitting..." : "Apply to Volunteer"}

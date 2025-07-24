@@ -38,7 +38,7 @@ export default function ProgramsSection() {
           {programs?.map((program, index) => {
             const IconComponent = getIconComponent(program.icon);
             return (
-              <div key={program.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <div key={program.id} className="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
                 <img 
                   src={program.imageUrl || defaultImages[index % defaultImages.length]}
                   alt={program.title}
@@ -48,8 +48,14 @@ export default function ProgramsSection() {
                 
                 <div className="p-6">
                   <div className="flex items-center mb-3">
-                    <IconComponent className="text-secondary h-6 w-6 mr-3" />
-                    <h3 className="text-xl font-semibold text-neutral">{program.title}</h3>
+                    <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg mr-3 ${
+                      index === 0 ? 'gradient-primary' : 
+                      index === 1 ? 'gradient-secondary' : 
+                      'gradient-accent'
+                    }`}>
+                      <IconComponent className="text-white h-5 w-5" />
+                    </div>
+                    <h3 className="text-xl font-bold text-neutral">{program.title}</h3>
                   </div>
                   <p className="text-gray-700 leading-relaxed">
                     {program.description}

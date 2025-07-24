@@ -37,7 +37,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button 
             onClick={() => scrollToSection('donate')}
-            className="bg-secondary hover:bg-orange-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
+            className="btn-gradient text-white px-8 py-4 rounded-full text-lg font-semibold border-0"
           >
             <Heart className="mr-2 h-5 w-5" />
             Donate Now
@@ -45,7 +45,7 @@ export default function HeroSection() {
           <Button 
             onClick={() => scrollToSection('programs')}
             variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold transition-all"
+            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold transition-all hover:transform hover:scale-105"
           >
             Learn More
           </Button>
@@ -53,13 +53,13 @@ export default function HeroSection() {
         
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
-            <div className="text-4xl font-bold text-secondary mb-2">
+            <div className="text-4xl font-bold text-white mb-2">
               {heroContent?.yearsOfService || "29"}
             </div>
             <div className="text-sm uppercase tracking-wide">Years of Service</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-secondary mb-2">
+            <div className="text-4xl font-bold text-white mb-2">
               {heroContent?.childrenSupported || "50+"}
             </div>
             <div className="text-sm uppercase tracking-wide">Children Supported</div>

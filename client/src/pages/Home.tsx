@@ -14,19 +14,29 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <main>
         <HeroSection />
-        <ImpactSection />
+        <div className="section-bg">
+          <ImpactSection />
+        </div>
         <AboutSection />
-        <ProgramsSection />
+        <div className="section-bg">
+          <ProgramsSection />
+        </div>
         <SuccessStoriesSection />
-        <DonateSection />
+        <div className="section-bg">
+          <DonateSection />
+        </div>
         <VolunteerSection />
-        <TestimonialsSection />
+        <div className="section-bg">
+          <TestimonialsSection />
+        </div>
         <PartnersSection />
-        <DownloadBrochure />
+        <div className="section-bg">
+          <DownloadBrochure />
+        </div>
         <ContactSection />
       </main>
       <Footer />

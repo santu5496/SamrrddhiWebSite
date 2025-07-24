@@ -25,7 +25,7 @@ export default function TestimonialsSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials?.map((testimonial, index) => (
-            <div key={testimonial.id} className="bg-white rounded-xl shadow-lg p-6">
+            <div key={testimonial.id} className="bg-white rounded-xl shadow-lg p-6 card-hover">
               <div className="flex items-center mb-4">
                 <img 
                   src={testimonial.imageUrl || defaultImages[index % defaultImages.length]}
@@ -34,11 +34,11 @@ export default function TestimonialsSection() {
                   loading="lazy"
                 />
                 <div>
-                  <h4 className="font-semibold text-neutral">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  <h4 className="font-bold text-neutral">{testimonial.name}</h4>
+                  <p className="text-sm text-primary font-medium">{testimonial.role}</p>
                 </div>
               </div>
-              <p className="text-gray-700 italic">
+              <p className="text-gray-700 italic leading-relaxed">
                 "{testimonial.quote}"
               </p>
             </div>
