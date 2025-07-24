@@ -64,6 +64,14 @@ export interface IStorage {
   // Donation config operations
   getDonationConfig(): Promise<DonationConfig | undefined>;
   updateDonationConfig(config: InsertDonationConfig): Promise<DonationConfig>;
+  
+  // New methods for enhanced features
+  createVolunteerApplication(application: InsertVolunteerApplication): Promise<VolunteerApplication>;
+  getVolunteerApplications(): Promise<VolunteerApplication[]>;
+  subscribeToNewsletter(subscription: InsertNewsletterSubscription): Promise<NewsletterSubscription>;
+  getEvents(): Promise<Event[]>;
+  createEvent(event: InsertEvent): Promise<Event>;
+  registerForEvent(registration: InsertEventRegistration): Promise<EventRegistration>;
 }
 
 export class DatabaseStorage implements IStorage {

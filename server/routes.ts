@@ -190,6 +190,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Volunteer applications endpoint
+  app.post('/api/volunteers/apply', async (req, res) => {
+    try {
+      const volunteerData = req.body;
+      // Store volunteer application as a structured contact submission
+      const submissionData = {
+        name: volunteerData.name,
+        email: volunteerData.email,
+        phone: volunteerData.phone || '',
+        subject: "Volunteer Application",
+        message: `
+Age: ${volunteerData.age || 'Not provided'}
+Address: ${volunteerData.address || 'Not provided'}
+Occupation: ${volunteerData.occupation || 'Not provided'}
+Skills: ${volunteerData.skills || 'Not provided'}
+Availability: ${volunteerData.availability || 'Not provided'}
+Preferred Program: ${volunteerData.preferredProgram || 'Any'}
+Previous Experience: ${volunteerData.experience || 'None provided'}
+Motivation: ${volunteerData.motivation || 'Not provided'}
+Emergency Contact: ${volunteerData.emergencyContact || 'Not provided'}
+        `.trim(),
+        organization: 'Volunteer Application',
+        inquiryType: 'volunteer',
+        preferredContact: 'email'
+      };
+      
+      const validatedData = insertContactSubmissionSchema.parse(submissionData);
+      const submission = await storage.createContactSubmission(validatedData);
+      res.json({ message: "Volunteer application submitted successfully", id: submission.id });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid form data", errors: error.errors });
+      }
+      console.error("Error creating volunteer application:", error);
+      res.status(500).json({ message: "Failed to submit volunteer application" });
+    }
+  });
+
   // Protected admin routes
   app.get('/api/admin/hero', isAuthenticated, async (req, res) => {
     try {

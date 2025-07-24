@@ -13,8 +13,12 @@ export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     subject: "",
     message: "",
+    organization: "",
+    inquiryType: "",
+    preferredContact: "email",
   });
 
   const { toast } = useToast();
@@ -33,7 +37,7 @@ export default function ContactSection() {
         title: "Message Sent",
         description: "Thank you for your message. We'll get back to you soon!",
       });
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      resetForm();
     },
     onError: () => {
       toast({
@@ -59,6 +63,19 @@ export default function ContactSection() {
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+      organization: "",
+      inquiryType: "",
+      preferredContact: "email",
+    });
   };
 
   return (
@@ -179,6 +196,64 @@ export default function ContactSection() {
                   placeholder="your.email@example.com"
                   className="mt-1"
                 />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="phone">Phone Number (Optional)</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    placeholder="+91 12345 67890"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="organization">Organization (Optional)</Label>
+                  <Input
+                    id="organization"
+                    type="text"
+                    value={formData.organization}
+                    onChange={(e) => handleInputChange("organization", e.target.value)}
+                    placeholder="Company/NGO name"
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="inquiryType">Inquiry Type</Label>
+                  <select
+                    id="inquiryType"
+                    value={formData.inquiryType}
+                    onChange={(e) => handleInputChange("inquiryType", e.target.value)}
+                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  >
+                    <option value="">Select inquiry type</option>
+                    <option value="donation">Donation Inquiry</option>
+                    <option value="volunteer">Volunteer Application</option>
+                    <option value="partnership">Partnership/CSR</option>
+                    <option value="support">General Support</option>
+                    <option value="media">Media/Press</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <Label htmlFor="preferredContact">Preferred Contact Method</Label>
+                  <select
+                    id="preferredContact"
+                    value={formData.preferredContact}
+                    onChange={(e) => handleInputChange("preferredContact", e.target.value)}
+                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  >
+                    <option value="email">Email</option>
+                    <option value="phone">Phone</option>
+                    <option value="either">Either</option>
+                  </select>
+                </div>
               </div>
               
               <div>

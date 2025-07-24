@@ -13,21 +13,25 @@ export default function VolunteerSection() {
     name: "",
     email: "",
     phone: "",
+    age: "",
+    address: "",
+    occupation: "",
     skills: "",
     availability: "",
-    message: "",
+    experience: "",
+    motivation: "",
+    preferredProgram: "",
+    emergencyContact: "",
   });
 
   const { toast } = useToast();
 
   const submitMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      // For now, we'll use the contact submission endpoint
-      const response = await apiRequest("POST", "/api/contact/submit", {
-        name: data.name,
-        email: data.email,
-        subject: "Volunteer Application",
-        message: `Phone: ${data.phone}\nSkills: ${data.skills}\nAvailability: ${data.availability}\nMessage: ${data.message}`,
+      // Use the volunteer application endpoint
+      const response = await apiRequest("POST", "/api/volunteers/apply", {
+        ...data,
+        age: data.age ? parseInt(data.age) : undefined,
       });
       return response.json();
     },
@@ -36,7 +40,20 @@ export default function VolunteerSection() {
         title: "Application Submitted",
         description: "Thank you for your interest in volunteering! We'll contact you soon.",
       });
-      setFormData({ name: "", email: "", phone: "", skills: "", availability: "", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        age: "",
+        address: "",
+        occupation: "",
+        skills: "",
+        availability: "",
+        experience: "",
+        motivation: "",
+        preferredProgram: "",
+        emergencyContact: "",
+      });
     },
     onError: () => {
       toast({
@@ -218,38 +235,120 @@ export default function VolunteerSection() {
                   />
                 </div>
                 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="vol-age">Age (Optional)</Label>
+                    <Input
+                      id="vol-age"
+                      type="number"
+                      value={formData.age}
+                      onChange={(e) => handleInputChange("age", e.target.value)}
+                      placeholder="Your age"
+                      className="mt-1"
+                      min="16"
+                      max="100"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="vol-occupation">Occupation</Label>
+                    <Input
+                      id="vol-occupation"
+                      type="text"
+                      value={formData.occupation}
+                      onChange={(e) => handleInputChange("occupation", e.target.value)}
+                      placeholder="Student, Teacher, IT Professional, etc."
+                      className="mt-1"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <Label htmlFor="vol-address">Address</Label>
+                  <Textarea
+                    id="vol-address"
+                    value={formData.address}
+                    onChange={(e) => handleInputChange("address", e.target.value)}
+                    placeholder="Your full address"
+                    rows={2}
+                    className="mt-1"
+                  />
+                </div>
+                
                 <div>
                   <Label htmlFor="vol-skills">Skills & Experience</Label>
-                  <Input
+                  <Textarea
                     id="vol-skills"
-                    type="text"
                     value={formData.skills}
                     onChange={(e) => handleInputChange("skills", e.target.value)}
-                    placeholder="Teaching, counseling, arts, etc."
+                    placeholder="Teaching, counseling, arts, special needs support, etc."
+                    rows={3}
                     className="mt-1"
                   />
                 </div>
                 
-                <div>
-                  <Label htmlFor="vol-availability">Availability</Label>
-                  <Input
-                    id="vol-availability"
-                    type="text"
-                    value={formData.availability}
-                    onChange={(e) => handleInputChange("availability", e.target.value)}
-                    placeholder="Weekends, evenings, etc."
-                    className="mt-1"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="vol-availability">Availability</Label>
+                    <Input
+                      id="vol-availability"
+                      type="text"
+                      value={formData.availability}
+                      onChange={(e) => handleInputChange("availability", e.target.value)}
+                      placeholder="Weekends, evenings, 4-6 hours/week, etc."
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="vol-program">Preferred Program</Label>
+                    <select
+                      id="vol-program"
+                      value={formData.preferredProgram}
+                      onChange={(e) => handleInputChange("preferredProgram", e.target.value)}
+                      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                      <option value="">Select program</option>
+                      <option value="girls-hostel">Girls' Hostel Program</option>
+                      <option value="idc">IDC - Special Needs Support</option>
+                      <option value="teaching">Teaching & Academic Support</option>
+                      <option value="administrative">Administrative Support</option>
+                      <option value="field-work">Field Work & Outreach</option>
+                      <option value="any">Any Program</option>
+                    </select>
+                  </div>
                 </div>
                 
                 <div>
-                  <Label htmlFor="vol-message">Why do you want to volunteer?</Label>
+                  <Label htmlFor="vol-experience">Previous Volunteer Experience (Optional)</Label>
                   <Textarea
-                    id="vol-message"
-                    value={formData.message}
-                    onChange={(e) => handleInputChange("message", e.target.value)}
-                    placeholder="Tell us about your motivation to volunteer..."
+                    id="vol-experience"
+                    value={formData.experience}
+                    onChange={(e) => handleInputChange("experience", e.target.value)}
+                    placeholder="Describe any previous volunteer work or relevant experience..."
+                    rows={3}
+                    className="mt-1"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="vol-motivation">Why do you want to volunteer with us?</Label>
+                  <Textarea
+                    id="vol-motivation"
+                    value={formData.motivation}
+                    onChange={(e) => handleInputChange("motivation", e.target.value)}
+                    placeholder="Tell us about your motivation and what you hope to contribute..."
                     rows={4}
+                    className="mt-1"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="vol-emergency">Emergency Contact</Label>
+                  <Input
+                    id="vol-emergency"
+                    type="text"
+                    value={formData.emergencyContact}
+                    onChange={(e) => handleInputChange("emergencyContact", e.target.value)}
+                    placeholder="Name and phone number of emergency contact"
                     className="mt-1"
                   />
                 </div>
