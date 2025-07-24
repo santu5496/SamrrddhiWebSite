@@ -62,42 +62,54 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <button 
-              onClick={() => scrollToSection('home')} 
-              className="text-neutral hover:text-primary transition-colors font-medium"
-            >
-              Home
-            </button>
+          <div className="hidden md:flex items-center space-x-6">
             <button 
               onClick={() => scrollToSection('about')} 
-              className="text-neutral hover:text-primary transition-colors font-medium"
+              className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
             >
               About Us
             </button>
             <button 
               onClick={() => scrollToSection('programs')} 
-              className="text-neutral hover:text-primary transition-colors font-medium"
+              className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
             >
-              Our Programs
+              Our Work
+            </button>
+            <button 
+              onClick={() => scrollToSection('success-stories')} 
+              className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+            >
+              Resources
+            </button>
+            <button 
+              onClick={() => scrollToSection('events')} 
+              className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+            >
+              Media
             </button>
             <button 
               onClick={() => scrollToSection('volunteer')} 
-              className="text-neutral hover:text-primary transition-colors font-medium"
+              className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
             >
-              Volunteer
+              Get Involved
             </button>
             <button 
               onClick={() => scrollToSection('contact')} 
-              className="text-neutral hover:text-primary transition-colors font-medium"
+              className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
             >
-              Contact
+              Contact Us
             </button>
             <Button 
-              onClick={() => scrollToSection('donate')}
-              className="bg-secondary text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors font-semibold"
+              onClick={() => scrollToSection('csr')}
+              className="bg-red-500 text-white px-4 py-2 text-sm font-semibold hover:bg-red-600 transition-colors uppercase tracking-wide"
             >
-              Donate Now
+              CSR
+            </Button>
+            <Button 
+              onClick={() => scrollToSection('donate')}
+              className="bg-secondary text-white px-6 py-2 font-semibold hover:bg-orange-600 transition-colors uppercase tracking-wide"
+            >
+              Donate
             </Button>
           </div>
 
@@ -114,41 +126,55 @@ export default function Header() {
           <div className="md:hidden border-t border-gray-200 py-4">
             <div className="flex flex-col space-y-4">
               <button 
-                onClick={() => scrollToSection('home')} 
-                className="text-neutral hover:text-primary transition-colors font-medium text-left"
-              >
-                Home
-              </button>
-              <button 
                 onClick={() => scrollToSection('about')} 
-                className="text-neutral hover:text-primary transition-colors font-medium text-left"
+                className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
               >
                 About Us
               </button>
               <button 
                 onClick={() => scrollToSection('programs')} 
-                className="text-neutral hover:text-primary transition-colors font-medium text-left"
+                className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
               >
-                Our Programs
+                Our Work
+              </button>
+              <button 
+                onClick={() => scrollToSection('success-stories')} 
+                className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
+              >
+                Resources
+              </button>
+              <button 
+                onClick={() => scrollToSection('events')} 
+                className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
+              >
+                Media
               </button>
               <button 
                 onClick={() => scrollToSection('volunteer')} 
-                className="text-neutral hover:text-primary transition-colors font-medium text-left"
+                className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
               >
-                Volunteer
+                Get Involved
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 
-                className="text-neutral hover:text-primary transition-colors font-medium text-left"
+                className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
               >
-                Contact
+                Contact Us
               </button>
-              <Button 
-                onClick={() => scrollToSection('donate')}
-                className="bg-secondary text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors font-semibold w-fit"
-              >
-                Donate Now
-              </Button>
+              <div className="flex flex-col space-y-2 pt-2">
+                <Button 
+                  onClick={() => scrollToSection('csr')}
+                  className="bg-red-500 text-white px-4 py-2 text-sm font-semibold hover:bg-red-600 transition-colors uppercase tracking-wide w-fit"
+                >
+                  CSR
+                </Button>
+                <Button 
+                  onClick={() => scrollToSection('donate')}
+                  className="bg-secondary text-white px-6 py-2 font-semibold hover:bg-orange-600 transition-colors uppercase tracking-wide w-fit"
+                >
+                  Donate
+                </Button>
+              </div>
             </div>
           </div>
         )}
