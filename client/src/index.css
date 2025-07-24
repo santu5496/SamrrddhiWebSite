@@ -3,26 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 98%);
-  --foreground: hsl(210, 40%, 20%);
-  --muted: hsl(210, 20%, 95%);
-  --muted-foreground: hsl(210, 15%, 50%);
+  --background: hsl(220, 25%, 97%);
+  --foreground: hsl(215, 50%, 15%);
+  --muted: hsl(220, 30%, 92%);
+  --muted-foreground: hsl(215, 20%, 45%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(210, 40%, 20%);
+  --popover-foreground: hsl(215, 50%, 15%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(210, 40%, 20%);
-  --border: hsl(210, 15%, 88%);
-  --input: hsl(210, 20%, 94%);
-  --primary: hsl(210, 100%, 45%);
+  --card-foreground: hsl(215, 50%, 15%);
+  --border: hsl(220, 20%, 85%);
+  --input: hsl(220, 25%, 92%);
+  --primary: hsl(215, 85%, 50%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(35, 90%, 55%);
+  --secondary: hsl(210, 75%, 55%);
   --secondary-foreground: hsl(0, 0%, 100%);
-  --accent: hsl(25, 95%, 60%);
+  --accent: hsl(38, 85%, 60%);
   --accent-foreground: hsl(0, 0%, 100%);
-  --neutral: hsl(210, 35%, 25%);
+  --neutral: hsl(215, 40%, 25%);
   --destructive: hsl(0, 85%, 60%);
   --destructive-foreground: hsl(0, 0%, 100%);
-  --ring: hsl(210, 100%, 45%);
+  --ring: hsl(215, 85%, 50%);
   --radius: 0.75rem;
 }
 
@@ -70,15 +70,15 @@
   }
   
   .gradient-primary {
-    background: linear-gradient(135deg, hsl(210, 100%, 45%) 0%, hsl(35, 90%, 55%) 100%);
+    background: linear-gradient(135deg, hsl(215, 85%, 50%) 0%, hsl(210, 75%, 55%) 100%);
   }
   
   .gradient-secondary {
-    background: linear-gradient(135deg, hsl(35, 90%, 55%) 0%, hsl(25, 95%, 60%) 100%);
+    background: linear-gradient(135deg, hsl(210, 75%, 55%) 0%, hsl(205, 70%, 60%) 100%);
   }
   
   .gradient-accent {
-    background: linear-gradient(135deg, hsl(25, 95%, 60%) 0%, hsl(35, 100%, 65%) 100%);
+    background: linear-gradient(135deg, hsl(205, 70%, 60%) 0%, hsl(38, 85%, 60%) 100%);
   }
   
   .card-hover {
@@ -92,21 +92,21 @@
   }
   
   .btn-gradient {
-    background: linear-gradient(135deg, hsl(210, 100%, 45%) 0%, hsl(35, 90%, 55%) 100%);
+    background: linear-gradient(135deg, hsl(215, 85%, 50%) 0%, hsl(210, 75%, 55%) 100%);
     transition: all 0.3s ease;
   }
   
   .btn-gradient:hover {
-    background: linear-gradient(135deg, hsl(210, 100%, 50%) 0%, hsl(35, 95%, 60%) 100%);
+    background: linear-gradient(135deg, hsl(215, 90%, 55%) 0%, hsl(210, 80%, 60%) 100%);
     transform: translateY(-1px);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
   }
   
   .hero-gradient {
-    background: linear-gradient(135deg, hsl(210, 100%, 45%) 0%, hsl(210, 90%, 40%) 35%, hsl(35, 90%, 55%) 100%);
+    background: linear-gradient(135deg, hsl(220, 70%, 45%) 0%, hsl(215, 75%, 50%) 35%, hsl(210, 80%, 55%) 100%);
   }
   
   .section-bg {
-    background: linear-gradient(180deg, hsl(0, 0%, 98%) 0%, hsl(210, 10%, 96%) 100%);
+    background: linear-gradient(180deg, hsl(220, 25%, 97%) 0%, hsl(220, 20%, 95%) 100%);
   }
 }
