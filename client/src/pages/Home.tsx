@@ -13,6 +13,10 @@ import PartnersSection from "@/components/PartnersSection";
 import DownloadBrochure from "@/components/DownloadBrochure";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import LanguageSupport from "@/components/LanguageSupport";
+import EventsSection from "@/components/EventsSection";
+import ResearchSection from "@/components/ResearchSection";
+import CertificationsSection from "@/components/CertificationsSection";
 
 export default function Home() {
   return (
@@ -39,6 +43,14 @@ export default function Home() {
         <VolunteerSection />
         <div className="section-bg">
           <PartnersSection />
+        </div>
+        <LanguageSupport />
+        <div className="section-bg">
+          <EventsSection />
+        </div>
+        <ResearchSection />
+        <div className="section-bg">
+          <CertificationsSection />
         </div>
         <DownloadBrochure />
         <div className="section-bg">

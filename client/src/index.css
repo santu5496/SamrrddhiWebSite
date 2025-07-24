@@ -68,45 +68,85 @@
   .text-neutral {
     color: var(--neutral);
   }
-  
+
   .gradient-primary {
     background: linear-gradient(135deg, hsl(215, 85%, 50%) 0%, hsl(210, 75%, 55%) 100%);
   }
-  
+
   .gradient-secondary {
     background: linear-gradient(135deg, hsl(210, 75%, 55%) 0%, hsl(205, 70%, 60%) 100%);
   }
-  
+
   .gradient-accent {
     background: linear-gradient(135deg, hsl(205, 70%, 60%) 0%, hsl(38, 85%, 60%) 100%);
   }
-  
+
   .card-hover {
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
-  
+
   .card-hover:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
   }
-  
+
   .btn-gradient {
     background: linear-gradient(135deg, hsl(215, 85%, 50%) 0%, hsl(210, 75%, 55%) 100%);
     transition: all 0.3s ease;
   }
-  
+
   .btn-gradient:hover {
     background: linear-gradient(135deg, hsl(215, 90%, 55%) 0%, hsl(210, 80%, 60%) 100%);
     transform: translateY(-1px);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
   }
-  
+
   .hero-gradient {
     background: linear-gradient(135deg, hsl(220, 70%, 45%) 0%, hsl(215, 75%, 50%) 35%, hsl(210, 80%, 55%) 100%);
   }
-  
+
   .section-bg {
     background: linear-gradient(180deg, hsl(220, 25%, 97%) 0%, hsl(220, 20%, 95%) 100%);
+  }
+
+  /* Accessibility Styles */
+  .high-contrast {
+    filter: contrast(150%);
+  }
+
+  /* Focus indicators for keyboard navigation */
+  *:focus {
+    outline: 2px solid #f59e0b;
+    outline-offset: 2px;
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .bg-gradient-to-r {
+      background: white;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
