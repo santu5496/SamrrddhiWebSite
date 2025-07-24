@@ -1,0 +1,127 @@
+📘 Samruddhi Service Society – NGO Website Development Brief
+🏷️ Organization Overview
+Name: Samruddhi Service Society
+
+Established: Registered in 1995
+
+Mission: Empower underprivileged rural and differently-abled children through education, shelter, and support.
+
+🌐 Website Goals
+Visually appealing, modern, and responsive NGO website
+
+Designed to attract donors
+
+Must include media (images/videos) management via CRUD
+
+Easy for non-technical staff to update content and media without touching code
+
+📂 Required Website Sections
+1. Hero Section (Homepage)
+Large headline: “Give Her a Chance to Learn, Grow, and Thrive.”
+
+Subheading: “Empowering rural girls and differently-abled children through education and care since 1995.”
+
+“Donate Now” button
+
+Full-width banner image (editable via CMS)
+
+2. About Us
+Mission, vision, history (from 1995, hostel started in 2002)
+
+2 paragraphs + photo
+
+Editable text and image content via CMS
+
+3. Our Programs
+At least 3 cards:
+
+Free Girls’ Hostel
+
+IDC (Integrated Education for Disabled Children)
+
+Food & Shelter
+
+Image + title + description per card (fully CMS-managed)
+
+4. Donate Now
+Clear call to action
+
+Donation benefits (₹1500/month covers child support)
+
+80G note if applicable
+
+“Donate Now” button (link to Razorpay/PayPal)
+
+5. Contact Us
+Email, phone, address, map
+
+Optional: form or newsletter sign-up
+
+⚙️ Technical Stack (Recommended)
+Frontend:
+React + Tailwind CSS for modern UI
+
+Backend / Media CMS:
+Sanity.io (preferred) or Strapi
+
+Alternative: Firebase Storage + Firestore for custom CRUD
+
+Hosting:
+Vercel, Netlify, or Firebase Hosting
+
+🖼️ Media Management (CRUD):
+Admin dashboard for managing:
+
+Homepage images
+
+Program card images
+
+Gallery (if added later)
+
+Videos (hosted via Cloudinary or YouTube link)
+
+Requirements:
+
+No hard-coded media — all image and video content must be editable via CMS
+
+CMS should support:
+
+Add / Edit / Delete images & videos
+
+Preview before publish
+
+SEO fields (alt, title, caption)
+
+🔐 Admin Panel / CMS Access
+Secure login for NGO team
+
+Roles (optional): Admin, Editor
+
+Link to login and documentation should be provided
+
+🧪 Optional Enhancements
+Testimonials section with photo, name, and quote
+
+Blog or News updates (editable via CMS)
+
+Image gallery of events (CRUD-based)
+
+🛠 Developer Notes
+Keep components modular
+
+Use lazy-loading for images
+
+Optimize for mobile (responsive)
+
+Use proper alt text and semantic HTML
+
+Ensure Lighthouse performance >90
+
+📎 Deliverables
+Source code (GitHub repo)
+
+CMS dashboard access & credentials
+
+Deployment link (live site)
+
+One short user guide for content editors
