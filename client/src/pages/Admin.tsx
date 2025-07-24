@@ -154,7 +154,7 @@ export default function Admin() {
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600">
-                Welcome, {user?.firstName || user?.email}
+                Welcome, {(user as any)?.firstName || (user as any)?.email}
               </span>
               <Button asChild>
                 <a href="/api/logout">Logout</a>
@@ -219,7 +219,7 @@ export default function Admin() {
                     <Label htmlFor="years">Years of Service</Label>
                     <Input
                       id="years"
-                      defaultValue={heroContent?.yearsOfService}
+                      defaultValue={heroContent?.yearsOfService || ""}
                       onBlur={(e) => {
                         if (heroContent && e.target.value !== heroContent.yearsOfService) {
                           updateHeroMutation.mutate({
@@ -234,7 +234,7 @@ export default function Admin() {
                     <Label htmlFor="children">Children Supported</Label>
                     <Input
                       id="children"
-                      defaultValue={heroContent?.childrenSupported}
+                      defaultValue={heroContent?.childrenSupported || ""}
                       onBlur={(e) => {
                         if (heroContent && e.target.value !== heroContent.childrenSupported) {
                           updateHeroMutation.mutate({
@@ -249,7 +249,7 @@ export default function Admin() {
                     <Label htmlFor="programs">Core Programs</Label>
                     <Input
                       id="programs"
-                      defaultValue={heroContent?.corePrograms}
+                      defaultValue={heroContent?.corePrograms || ""}
                       onBlur={(e) => {
                         if (heroContent && e.target.value !== heroContent.corePrograms) {
                           updateHeroMutation.mutate({

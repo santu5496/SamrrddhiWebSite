@@ -47,6 +47,12 @@ export default function Header() {
               Our Programs
             </button>
             <button 
+              onClick={() => scrollToSection('volunteer')} 
+              className="text-neutral hover:text-primary transition-colors font-medium"
+            >
+              Volunteer
+            </button>
+            <button 
               onClick={() => scrollToSection('contact')} 
               className="text-neutral hover:text-primary transition-colors font-medium"
             >
@@ -89,6 +95,12 @@ export default function Header() {
                 className="text-neutral hover:text-primary transition-colors font-medium text-left"
               >
                 Our Programs
+              </button>
+              <button 
+                onClick={() => scrollToSection('volunteer')} 
+                className="text-neutral hover:text-primary transition-colors font-medium text-left"
+              >
+                Volunteer
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 
