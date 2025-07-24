@@ -143,7 +143,7 @@ export default function DonateSection() {
             
             <Button 
               onClick={handleDonate}
-              className="w-full bg-secondary hover:bg-orange-600 text-white py-4 rounded-lg text-lg font-semibold transition-colors mb-4"
+              className="w-full bg-red-500 hover:bg-red-600 text-white py-4 rounded-lg text-lg font-semibold transition-colors mb-4"
             >
               <Heart className="mr-2 h-5 w-5" />
               Donate Now

@@ -107,7 +107,7 @@ export default function Header() {
             </Button>
             <Button 
               onClick={() => scrollToSection('donate')}
-              className="bg-secondary text-white px-6 py-2 font-semibold hover:bg-orange-600 transition-colors uppercase tracking-wide"
+              className="bg-red-500 text-white px-6 py-2 font-semibold hover:bg-red-600 transition-colors uppercase tracking-wide"
             >
               Donate
             </Button>
@@ -170,7 +170,7 @@ export default function Header() {
                 </Button>
                 <Button 
                   onClick={() => scrollToSection('donate')}
-                  className="bg-secondary text-white px-6 py-2 font-semibold hover:bg-orange-600 transition-colors uppercase tracking-wide w-fit"
+                  className="bg-red-500 text-white px-6 py-2 font-semibold hover:bg-red-600 transition-colors uppercase tracking-wide w-fit"
                 >
                   Donate
                 </Button>
