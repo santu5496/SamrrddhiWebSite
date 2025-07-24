@@ -7,6 +7,8 @@ import SuccessStoriesSection from "@/components/SuccessStoriesSection";
 import DonateSection from "@/components/DonateSection";
 import VolunteerSection from "@/components/VolunteerSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import MonthlyDonorSection from "@/components/MonthlyDonorSection";
+import CSRPartnershipSection from "@/components/CSRPartnershipSection";
 import PartnersSection from "@/components/PartnersSection";
 import DownloadBrochure from "@/components/DownloadBrochure";
 import ContactSection from "@/components/ContactSection";
@@ -27,17 +29,21 @@ export default function Home() {
         </div>
         <SuccessStoriesSection />
         <div className="section-bg">
-          <DonateSection />
-        </div>
-        <VolunteerSection />
-        <div className="section-bg">
           <TestimonialsSection />
         </div>
-        <PartnersSection />
+        <MonthlyDonorSection />
         <div className="section-bg">
-          <DownloadBrochure />
+          <DonateSection />
         </div>
-        <ContactSection />
+        <CSRPartnershipSection />
+        <VolunteerSection />
+        <div className="section-bg">
+          <PartnersSection />
+        </div>
+        <DownloadBrochure />
+        <div className="section-bg">
+          <ContactSection />
+        </div>
       </main>
       <Footer />
     </div>

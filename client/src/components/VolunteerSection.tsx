@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Hand, Clock, MapPin, Phone, Users, Heart } from "lucide-react";
+import { HandHeart, Clock, MapPin, Phone, Users, Heart } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function VolunteerSection() {
@@ -155,7 +155,7 @@ export default function VolunteerSection() {
                   <div key={index} className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-                        <IconComponent className="h-6 w-6 text-white" />
+                        <HandHeart className="h-6 w-6 text-white" />
                       </div>
                       <div className="flex-1">
                         <h4 className="text-lg font-semibold text-neutral mb-2">{opportunity.title}</h4>
@@ -170,7 +170,7 @@ export default function VolunteerSection() {
                 );
               })}
             </div>
-            
+
             <div className="mt-8 bg-blue-50 rounded-lg p-6">
               <h4 className="text-lg font-semibold text-neutral mb-3">Why Volunteer With Us?</h4>
               <ul className="space-y-2 text-gray-700">
@@ -210,7 +210,7 @@ export default function VolunteerSection() {
                     className="mt-1"
                   />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="vol-email">Email Address *</Label>
                   <Input
@@ -222,7 +222,7 @@ export default function VolunteerSection() {
                     className="mt-1"
                   />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="vol-phone">Phone Number *</Label>
                   <Input
@@ -234,7 +234,7 @@ export default function VolunteerSection() {
                     className="mt-1"
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="vol-age">Age (Optional)</Label>
@@ -261,7 +261,7 @@ export default function VolunteerSection() {
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <Label htmlFor="vol-address">Address</Label>
                   <Textarea
@@ -273,7 +273,7 @@ export default function VolunteerSection() {
                     className="mt-1"
                   />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="vol-skills">Skills & Experience</Label>
                   <Textarea
@@ -285,7 +285,7 @@ export default function VolunteerSection() {
                     className="mt-1"
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="vol-availability">Availability</Label>
@@ -316,7 +316,7 @@ export default function VolunteerSection() {
                     </select>
                   </div>
                 </div>
-                
+
                 <div>
                   <Label htmlFor="vol-experience">Previous Volunteer Experience (Optional)</Label>
                   <Textarea
@@ -328,7 +328,7 @@ export default function VolunteerSection() {
                     className="mt-1"
                   />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="vol-motivation">Why do you want to volunteer with us?</Label>
                   <Textarea
@@ -340,7 +340,7 @@ export default function VolunteerSection() {
                     className="mt-1"
                   />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="vol-emergency">Emergency Contact</Label>
                   <Input
@@ -352,13 +352,13 @@ export default function VolunteerSection() {
                     className="mt-1"
                   />
                 </div>
-                
+
                 <Button 
                   type="submit" 
                   disabled={submitMutation.isPending}
                   className="w-full btn-gradient text-white py-3 rounded-lg font-semibold border-0"
                 >
-                  <Hand className="mr-2 h-4 w-4" />
+                  <HandHeart className="mr-2 h-4 w-4" />
                   {submitMutation.isPending ? "Submitting..." : "Apply to Volunteer"}
                 </Button>
               </form>
