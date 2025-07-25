@@ -17,6 +17,8 @@ import LanguageSupport from "@/components/LanguageSupport";
 import EventsSection from "@/components/EventsSection";
 import ResearchSection from "@/components/ResearchSection";
 import CertificationsSection from "@/components/CertificationsSection";
+import ResourcesSection from "@/components/ResourcesSection";
+import MediaSection from "@/components/MediaSection";
 
 export default function Home() {
   return (
@@ -52,6 +54,8 @@ export default function Home() {
         <div className="section-bg">
           <CertificationsSection />
         </div>
+        <ResourcesSection />
+        <MediaSection />
         <DownloadBrochure />
         <div className="section-bg">
           <ContactSection />

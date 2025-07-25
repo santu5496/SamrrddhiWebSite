@@ -48,7 +48,7 @@ export default function Header() {
         </div>
       </div>
 
-      <header className={`bg-white shadow-md sticky top-0 z-50 ${isHighContrast ? 'high-contrast' : ''}`} style={{fontSize: `${fontSize}px`}}>
+      <header className={`bg-white shadow-md sticky top-0 z-50 ${isHighContrast ? 'high-contrast' : ''}`} style={{fontSize: `${fontSize}px`}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
           aria-label="Main navigation">
         <div className="flex justify-between items-center py-4">
