@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { HeroContent } from "@shared/schema";
-import bannerImage from "@assets/WhatsApp Image 2025-07-29 at 20.05.20_b468d80d_1753954299033.jpg";
 
 export default function HeroSection() {
   const { data: heroContent } = useQuery<HeroContent>({
@@ -18,7 +17,7 @@ export default function HeroSection() {
 
   const backgroundImageStyle = heroContent?.backgroundImageUrl 
     ? `linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.7)), url('${heroContent.backgroundImageUrl}')`
-    : `linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.7)), url('${bannerImage}')`;
+    : `linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.7)), url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')`;
 
   return (
     <section id="home" className="relative min-h-screen flex items-center">
