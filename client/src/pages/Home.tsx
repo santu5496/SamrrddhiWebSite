@@ -29,6 +29,8 @@ import EnhancedDonationOptions from "@/components/EnhancedDonationOptions";
 import DonationCTA from "@/components/DonationCTA";
 import NewsletterSection from "@/components/NewsletterSection";
 import WhatWeDoSection from "@/components/WhatWeDoSection";
+import VidyaranyaInspiredHowToHelp from "@/components/VidyaranyaInspiredHowToHelp";
+import ProfessionalImageGallery from "@/components/ProfessionalImageGallery";
 
 export default function Home() {
   return (
@@ -53,11 +55,11 @@ export default function Home() {
         <div className="section-bg">
           <NewsSection />
         </div>
-        <PhotoGallerySection />
+        <ProfessionalImageGallery />
         <div className="section-bg">
           <AnnualReportsSection />
         </div>
-        <HowToHelpSection />
+        <VidyaranyaInspiredHowToHelp />
         <EnhancedDonationOptions />
         <DonationCTA />
         <div className="section-bg">

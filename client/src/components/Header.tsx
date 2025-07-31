@@ -55,8 +55,7 @@ export default function Header() {
       </div>
 
       <header className={`bg-white shadow-md sticky top-0 z-50 ${isHighContrast ? 'high-contrast' : ''}`} style={{fontSize: `${fontSize}px`}}>
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-          aria-label="Main navigation">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl">
@@ -73,210 +72,95 @@ export default function Header() {
                 onClick={() => scrollToSection('about')} 
                 className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
               >
-                About Us
+                ABOUT
               </button>
+              
               <button 
-                onClick={() => scrollToSection('programs')} 
+                onClick={() => scrollToSection('what-we-do')} 
                 className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
               >
-                Programs
+                WHAT WE DO
               </button>
+              
               <button 
-                onClick={() => scrollToSection('leadership')} 
+                onClick={() => scrollToSection('how-to-help')} 
                 className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
               >
-                Leadership
+                HOW TO HELP
               </button>
-              <button 
-                onClick={() => scrollToSection('news')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                News
-              </button>
-              <button 
-                onClick={() => scrollToSection('gallery')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                Gallery
-              </button>
-              <button 
-                onClick={() => scrollToSection('events')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                Events
-              </button>
-              <button 
-                onClick={() => scrollToSection('resources')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                Resources
-              </button>
+              
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="flex items-center space-x-1 text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide">
-                    <span>How to Help</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
+                  <Button variant="ghost" className="text-neutral hover:text-primary text-sm font-medium uppercase tracking-wide">
+                    MORE <ChevronDown className="ml-1 h-4 w-4" />
+                  </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-64 bg-white border border-gray-200 shadow-lg">
-                  <DropdownMenuItem 
-                    onClick={() => scrollToSection('how-to-help')}
-                    className="flex items-center space-x-3 p-3 hover:bg-pink-50 cursor-pointer"
-                  >
-                    <Heart className="h-5 w-5 text-pink-500" />
-                    <div>
-                      <div className="font-medium text-gray-900">Celebrate with Us</div>
-                      <div className="text-sm text-gray-600">Join our events and celebrations</div>
-                    </div>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => scrollToSection('gallery')}>
+                    Photo Gallery
                   </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => scrollToSection('donate')}
-                    className="flex items-center space-x-3 p-3 hover:bg-red-50 cursor-pointer"
-                  >
-                    <Heart className="h-5 w-5 text-red-500" />
-                    <div>
-                      <div className="font-medium text-gray-900">Sponsor a Beneficiary</div>
-                      <div className="text-sm text-gray-600">₹18,000 sponsors a child's education</div>
-                    </div>
+                  <DropdownMenuItem onClick={() => scrollToSection('contact')}>
+                    Contact Us
                   </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => scrollToSection('csr')}
-                    className="flex items-center space-x-3 p-3 hover:bg-blue-50 cursor-pointer"
-                  >
-                    <Handshake className="h-5 w-5 text-blue-500" />
-                    <div>
-                      <div className="font-medium text-gray-900">Corporate Partnership</div>
-                      <div className="text-sm text-gray-600">CSR initiatives & partnerships</div>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => scrollToSection('volunteer')}
-                    className="flex items-center space-x-3 p-3 hover:bg-green-50 cursor-pointer"
-                  >
-                    <UserPlus className="h-5 w-5 text-green-500" />
-                    <div>
-                      <div className="font-medium text-gray-900">Volunteering & Internships</div>
-                      <div className="text-sm text-gray-600">Contribute your time and skills</div>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => scrollToSection('volunteer')}
-                    className="flex items-center space-x-3 p-3 hover:bg-purple-50 cursor-pointer"
-                  >
-                    <Building className="h-5 w-5 text-purple-500" />
-                    <div>
-                      <div className="font-medium text-gray-900">Employee Engagement</div>
-                      <div className="text-sm text-gray-600">Team volunteer activities</div>
-                    </div>
+                  <DropdownMenuItem onClick={() => scrollToSection('donate')}>
+                    Donate Now
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                Our Work
-              </button>
-              <button 
-                onClick={() => scrollToSection('success-stories')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                Resources
-              </button>
-              <button 
-                onClick={() => scrollToSection('events')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                Media
-              </button>
-              <button 
-                onClick={() => scrollToSection('volunteer')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                Get Involved
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                Contact Us
-              </button>
-              <Button 
-                onClick={() => scrollToSection('csr')}
-                className="bg-red-500 text-white px-4 py-2 text-sm font-semibold hover:bg-red-600 transition-colors uppercase tracking-wide"
-              >
-                CSR
-              </Button>
-              <Button 
-                onClick={() => scrollToSection('donate')}
-                className="bg-red-500 text-white px-6 py-2 font-semibold hover:bg-red-600 transition-colors uppercase tracking-wide"
-              >
-                Donate
-              </Button>
             </div>
 
-            <button 
-              className="md:hidden text-neutral" 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-neutral hover:text-primary"
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           </div>
 
           {/* Mobile menu */}
           {isMenuOpen && (
-            <div className="md:hidden border-t border-gray-200 py-4">
-              <div className="flex flex-col space-y-4">
+            <div className="md:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
                 <button 
-                  onClick={() => scrollToSection('about')} 
-                  className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
+                  onClick={() => scrollToSection('about')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
                 >
                   About Us
                 </button>
                 <button 
-                  onClick={() => scrollToSection('programs')} 
-                  className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
+                  onClick={() => scrollToSection('what-we-do')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
                 >
-                  Our Work
+                  What We Do
                 </button>
                 <button 
-                  onClick={() => scrollToSection('success-stories')} 
-                  className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
+                  onClick={() => scrollToSection('how-to-help')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
                 >
-                  Resources
+                  How to Help
                 </button>
                 <button 
-                  onClick={() => scrollToSection('events')} 
-                  className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
+                  onClick={() => scrollToSection('gallery')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
                 >
-                  Media
+                  Gallery
                 </button>
                 <button 
-                  onClick={() => scrollToSection('volunteer')} 
-                  className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
-                >
-                  Get Involved
-                </button>
-                <button 
-                  onClick={() => scrollToSection('contact')} 
-                  className="text-neutral hover:text-primary transition-colors font-medium text-left uppercase text-sm tracking-wide"
+                  onClick={() => scrollToSection('contact')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
                 >
                   Contact Us
                 </button>
-                <div className="flex flex-col space-y-2 pt-2">
-                  <Button 
-                    onClick={() => scrollToSection('csr')}
-                    className="bg-red-500 text-white px-4 py-2 text-sm font-semibold hover:bg-red-600 transition-colors uppercase tracking-wide w-fit"
-                  >
-                    CSR
-                  </Button>
-                  <Button 
-                    onClick={() => scrollToSection('donate')}
-                    className="bg-red-500 text-white px-6 py-2 font-semibold hover:bg-red-600 transition-colors uppercase tracking-wide w-fit"
-                  >
-                    Donate
-                  </Button>
-                </div>
+                <button 
+                  onClick={() => scrollToSection('donate')}
+                  className="block px-3 py-2 text-base font-medium text-white bg-primary hover:bg-primary/90 rounded-md w-full text-left"
+                >
+                  Donate Now
+                </button>
               </div>
             </div>
           )}
