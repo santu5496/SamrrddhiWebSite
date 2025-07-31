@@ -73,6 +73,48 @@ export default function Header() {
                 onClick={() => scrollToSection('programs')} 
                 className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
               >
+                Programs
+              </button>
+              <button 
+                onClick={() => scrollToSection('leadership')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+              >
+                Leadership
+              </button>
+              <button 
+                onClick={() => scrollToSection('news')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+              >
+                News
+              </button>
+              <button 
+                onClick={() => scrollToSection('gallery')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+              >
+                Gallery
+              </button>
+              <button 
+                onClick={() => scrollToSection('events')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+              >
+                Events
+              </button>
+              <button 
+                onClick={() => scrollToSection('resources')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+              >
+                Resources
+              </button>
+              <button 
+                onClick={() => scrollToSection('how-to-help')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+              >
+                How to Help
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+              >
                 Our Work
               </button>
               <button 

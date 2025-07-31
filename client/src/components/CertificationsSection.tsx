@@ -1,129 +1,186 @@
+import { useQuery } from "@tanstack/react-query";
+import { Award, ExternalLink, Calendar, Shield } from "lucide-react";
+import { Button } from "./ui/button";
 
-import { Shield, Award, FileCheck, Building2, Star, CheckCircle } from "lucide-react";
+interface Certification {
+  id: number;
+  title: string;
+  issuingAuthority: string;
+  certificateNumber?: string;
+  issueDate?: string;
+  expiryDate?: string;
+  description?: string;
+  category?: string;
+  certificateUrl?: string;
+}
 
 export default function CertificationsSection() {
-  const certifications = [
-    {
-      icon: <Shield className="h-12 w-12 text-green-600" />,
-      title: "80G Tax Exemption",
-      issuer: "Income Tax Department",
-      validUntil: "2025",
-      description: "Donations are 100% tax deductible under Section 80G"
-    },
-    {
-      icon: <FileCheck className="h-12 w-12 text-blue-600" />,
-      title: "12A Registration",
-      issuer: "Income Tax Department",
-      validUntil: "Permanent",
-      description: "Registered as a charitable trust with tax exemption benefits"
-    },
-    {
-      icon: <Building2 className="h-12 w-12 text-purple-600" />,
-      title: "FCRA Registration",
-      issuer: "Ministry of Home Affairs",
-      validUntil: "2026",
-      description: "Authorized to receive foreign donations for charitable activities"
-    },
-    {
-      icon: <Award className="h-12 w-12 text-yellow-600" />,
-      title: "NGO Darpan Registration",
-      issuer: "NITI Aayog",
-      validUntil: "Active",
-      description: "Registered on government's NGO portal for transparency"
-    }
-  ];
+  const { data: certifications = [], isLoading } = useQuery<Certification[]>({
+    queryKey: ['/api/certifications'],
+  });
 
-  const recognitions = [
-    {
-      title: "Best NGO Award 2023",
-      issuer: "State Government",
-      category: "Education Sector"
-    },
-    {
-      title: "Excellence in Rural Development",
-      issuer: "District Administration",
-      category: "Community Service"
-    },
-    {
-      title: "Women Empowerment Recognition",
-      issuer: "Women & Child Development",
-      category: "Social Impact"
-    }
-  ];
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-300 rounded w-64 mx-auto mb-4"></div>
+            <div className="h-4 bg-gray-300 rounded w-96 mx-auto mb-12"></div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white rounded-lg p-6 space-y-4">
+                  <div className="h-12 w-12 bg-gray-300 rounded"></div>
+                  <div className="h-6 bg-gray-300 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-300 rounded"></div>
+                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                  <div className="h-10 bg-gray-300 rounded"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
-  const compliance = [
-    "Annual audit by Chartered Accountant",
-    "Regular financial reporting to authorities",
-    "Compliance with Foreign Contribution Regulation Act",
-    "Transparent utilization certificate submission",
-    "Regular board meetings and governance",
-    "Public disclosure of annual reports"
-  ];
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const getCategoryIcon = (category?: string) => {
+    switch (category?.toLowerCase()) {
+      case 'tax-exemption':
+        return Shield;
+      case 'registration':
+        return Award;
+      default:
+        return Award;
+    }
+  };
+
+  const getCategoryColor = (category?: string) => {
+    switch (category?.toLowerCase()) {
+      case 'tax-exemption':
+        return 'bg-green-100 text-green-800';
+      case 'registration':
+        return 'bg-blue-100 text-blue-800';
+      case 'accreditation':
+        return 'bg-purple-100 text-purple-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
+    <section className="py-16 bg-gray-50" id="certifications">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">
-            Government Recognition & Compliance
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Fully registered and compliant NGO with all necessary government certifications and recognition for transparent operations.
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center mb-4">
+            <Award className="h-8 w-8 text-primary mr-3" />
+            <h2 className="text-3xl font-bold text-neutral">Certifications & Recognition</h2>
+          </div>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Our official certifications and recognition that demonstrate our credibility and commitment to transparency.
           </p>
-          <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
 
-        {/* Certifications */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-neutral mb-8 text-center">Official Certifications</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {certifications.map((cert, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-                <div className="mb-4 flex justify-center">{cert.icon}</div>
-                <h4 className="text-lg font-semibold text-neutral mb-2">{cert.title}</h4>
-                <p className="text-sm text-gray-600 mb-2">Issued by: {cert.issuer}</p>
-                <p className="text-sm font-medium text-green-600 mb-3">Valid until: {cert.validUntil}</p>
-                <p className="text-xs text-gray-700">{cert.description}</p>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {certifications.map((cert) => {
+            const IconComponent = getCategoryIcon(cert.category);
+            return (
+              <div key={cert.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 border border-gray-100">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
+                    <IconComponent className="h-8 w-8 text-primary" />
+                  </div>
+                  {cert.category && (
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(cert.category)}`}>
+                      {cert.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="text-lg font-semibold text-neutral mb-2">
+                  {cert.title}
+                </h3>
+
+                <p className="text-sm text-gray-600 mb-3">
+                  <span className="font-medium">Issued by:</span> {cert.issuingAuthority}
+                </p>
+
+                {cert.description && (
+                  <p className="text-sm text-gray-600 mb-4">
+                    {cert.description}
+                  </p>
+                )}
+
+                <div className="space-y-2 text-xs text-gray-500 mb-4">
+                  {cert.certificateNumber && (
+                    <div>
+                      <span className="font-medium">Certificate No:</span> {cert.certificateNumber}
+                    </div>
+                  )}
+                  
+                  {cert.issueDate && (
+                    <div className="flex items-center">
+                      <Calendar className="h-3 w-3 mr-1" />
+                      <span className="font-medium">Issued:</span> {formatDate(cert.issueDate)}
+                    </div>
+                  )}
+
+                  {cert.expiryDate && (
+                    <div className="flex items-center">
+                      <Calendar className="h-3 w-3 mr-1" />
+                      <span className="font-medium">Expires:</span> {formatDate(cert.expiryDate)}
+                    </div>
+                  )}
+                </div>
+
+                {cert.certificateUrl && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full group"
+                    onClick={() => window.open(cert.certificateUrl, '_blank')}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform" />
+                    View Certificate
+                  </Button>
+                )}
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
-        {/* Recognition Awards */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-neutral mb-8 text-center">Awards & Recognition</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {recognitions.map((recognition, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-lg text-center">
-                <Star className="h-10 w-10 text-yellow-500 mx-auto mb-4" />
-                <h4 className="text-lg font-semibold text-neutral mb-2">{recognition.title}</h4>
-                <p className="text-sm text-gray-600 mb-1">{recognition.issuer}</p>
-                <span className="inline-block bg-secondary text-white px-3 py-1 rounded-full text-xs">
-                  {recognition.category}
-                </span>
-              </div>
-            ))}
+        {certifications.length === 0 && (
+          <div className="text-center py-12">
+            <Award className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+            <p className="text-gray-500">Certification information will be available soon.</p>
           </div>
-        </div>
+        )}
 
-        {/* Compliance & Governance */}
-        <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h3 className="text-2xl font-semibold text-neutral mb-6 text-center">Compliance & Governance</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {compliance.map((item, index) => (
-              <div key={index} className="flex items-center space-x-3">
-                <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                <span className="text-gray-700">{item}</span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <p className="text-gray-600 mb-4">
-              All documents and certificates are available for verification
-            </p>
-            <button className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-              View All Documents
-            </button>
+        <div className="mt-12 bg-white rounded-lg p-6 border border-gray-200">
+          <h3 className="text-lg font-semibold text-neutral mb-4 text-center">Why Our Certifications Matter</h3>
+          <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div>
+              <Shield className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <h4 className="font-medium text-neutral mb-1">Legal Compliance</h4>
+              <p className="text-sm text-gray-600">All our operations comply with government regulations and standards.</p>
+            </div>
+            <div>
+              <Award className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+              <h4 className="font-medium text-neutral mb-1">Tax Benefits</h4>
+              <p className="text-sm text-gray-600">Donations to our organization are eligible for tax exemptions under 80G.</p>
+            </div>
+            <div>
+              <ExternalLink className="h-8 w-8 text-purple-600 mx-auto mb-2" />
+              <h4 className="font-medium text-neutral mb-1">Transparency</h4>
+              <p className="text-sm text-gray-600">Our certifications ensure accountability and transparent use of funds.</p>
+            </div>
           </div>
         </div>
       </div>

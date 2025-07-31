@@ -303,3 +303,179 @@ export type Donation = typeof donations.$inferSelect;
 export type InsertDonation = z.infer<typeof insertDonationSchema>;
 export type DonationConfig = typeof donationConfig.$inferSelect;
 export type InsertDonationConfig = z.infer<typeof insertDonationConfigSchema>;
+
+// Leadership team
+export const leadership = pgTable("leadership", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  role: varchar("role", { length: 255 }).notNull(),
+  bio: text("bio"),
+  imageUrl: varchar("image_url", { length: 500 }),
+  qualification: text("qualification"),
+  experience: text("experience"),
+  email: varchar("email", { length: 255 }),
+  linkedIn: varchar("linkedin", { length: 255 }),
+  orderIndex: integer("order_index").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Annual reports
+export const annualReports = pgTable("annual_reports", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  year: integer("year").notNull(),
+  description: text("description"),
+  fileUrl: varchar("file_url", { length: 500 }).notNull(),
+  fileSize: varchar("file_size", { length: 50 }),
+  downloadCount: integer("download_count").default(0),
+  isPublished: boolean("is_published").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Photo gallery
+export const photoGallery = pgTable("photo_gallery", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  imageUrl: varchar("image_url", { length: 500 }).notNull(),
+  category: varchar("category", { length: 100 }), // education, events, programs, etc.
+  event: varchar("event", { length: 255 }),
+  date: timestamp("date").defaultNow(),
+  photographer: varchar("photographer", { length: 255 }),
+  isActive: boolean("is_active").default(true),
+  orderIndex: integer("order_index").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// News and blog posts
+export const news = pgTable("news", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  excerpt: text("excerpt"),
+  content: text("content").notNull(),
+  authorName: varchar("author_name", { length: 255 }),
+  category: varchar("category", { length: 100 }), // news, blog, press-release
+  tags: text("tags").array(),
+  featuredImageUrl: varchar("featured_image_url", { length: 500 }),
+  isPublished: boolean("is_published").default(false),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Certifications and registrations
+export const certifications = pgTable("certifications", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  issuingAuthority: varchar("issuing_authority", { length: 255 }).notNull(),
+  certificateNumber: varchar("certificate_number", { length: 255 }),
+  issueDate: timestamp("issue_date"),
+  expiryDate: timestamp("expiry_date"),
+  description: text("description"),
+  certificateUrl: varchar("certificate_url", { length: 500 }),
+  category: varchar("category", { length: 100 }), // registration, tax-exemption, iso, etc.
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Success metrics and impact stats
+export const impactStats = pgTable("impact_stats", {
+  id: serial("id").primaryKey(),
+  metric: varchar("metric", { length: 255 }).notNull(),
+  value: varchar("value", { length: 100 }).notNull(),
+  description: text("description"),
+  icon: varchar("icon", { length: 100 }),
+  category: varchar("category", { length: 100 }), // education, health, community, etc.
+  orderIndex: integer("order_index").default(0),
+  isActive: boolean("is_active").default(true),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Research papers and publications
+export const publications = pgTable("publications", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  type: varchar("type", { length: 100 }).notNull(), // research, report, case-study, etc.
+  authors: text("authors").array(),
+  abstract: text("abstract"),
+  publishedDate: timestamp("published_date"),
+  journal: varchar("journal", { length: 255 }),
+  fileUrl: varchar("file_url", { length: 500 }),
+  tags: text("tags").array(),
+  isPublished: boolean("is_published").default(true),
+  downloadCount: integer("download_count").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Create insert schemas for new tables
+export const insertLeadershipSchema = createInsertSchema(leadership).omit({
+  id: true,
+  orderIndex: true,
+  isActive: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertAnnualReportSchema = createInsertSchema(annualReports).omit({
+  id: true,
+  downloadCount: true,
+  isPublished: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPhotoGallerySchema = createInsertSchema(photoGallery).omit({
+  id: true,
+  isActive: true,
+  orderIndex: true,
+  createdAt: true,
+});
+
+export const insertNewsSchema = createInsertSchema(news).omit({
+  id: true,
+  slug: true,
+  isPublished: true,
+  publishedAt: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertCertificationSchema = createInsertSchema(certifications).omit({
+  id: true,
+  isActive: true,
+  createdAt: true,
+});
+
+export const insertImpactStatsSchema = createInsertSchema(impactStats).omit({
+  id: true,
+  orderIndex: true,
+  isActive: true,
+  updatedAt: true,
+});
+
+export const insertPublicationSchema = createInsertSchema(publications).omit({
+  id: true,
+  isPublished: true,
+  downloadCount: true,
+  createdAt: true,
+});
+
+// Export new types
+export type Leadership = typeof leadership.$inferSelect;
+export type InsertLeadership = z.infer<typeof insertLeadershipSchema>;
+export type AnnualReport = typeof annualReports.$inferSelect;
+export type InsertAnnualReport = z.infer<typeof insertAnnualReportSchema>;
+export type PhotoGallery = typeof photoGallery.$inferSelect;
+export type InsertPhotoGallery = z.infer<typeof insertPhotoGallerySchema>;
+export type News = typeof news.$inferSelect;
+export type InsertNews = z.infer<typeof insertNewsSchema>;
+export type Certification = typeof certifications.$inferSelect;
+export type InsertCertification = z.infer<typeof insertCertificationSchema>;
+export type ImpactStats = typeof impactStats.$inferSelect;
+export type InsertImpactStats = z.infer<typeof insertImpactStatsSchema>;
+export type Publication = typeof publications.$inferSelect;
+export type InsertPublication = z.infer<typeof insertPublicationSchema>;

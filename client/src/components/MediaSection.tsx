@@ -1,263 +1,243 @@
+import { Play, Image as ImageIcon, Newspaper, Video, ArrowRight } from "lucide-react";
+import { Button } from "./ui/button";
 
-import React, { useState } from 'react';
-import { Card, CardContent } from './ui/card';
-import { Button } from './ui/button';
-import { Play, Image as ImageIcon, Calendar, Users, Award, Heart } from 'lucide-react';
+interface MediaItem {
+  id: number;
+  type: 'video' | 'image' | 'article';
+  title: string;
+  description?: string;
+  thumbnailUrl: string;
+  mediaUrl?: string;
+  publishedDate: string;
+  source?: string;
+}
 
 export default function MediaSection() {
-  const [activeTab, setActiveTab] = useState('photos');
-
-  const photoGalleries = [
+  // Sample media data - in real app this would come from API
+  const mediaItems: MediaItem[] = [
     {
-      title: "Girls Education Program",
-      date: "March 2024",
-      count: 24,
-      thumbnail: "/api/placeholder/300/200",
-      category: "education"
+      id: 1,
+      type: 'video',
+      title: 'Transforming Lives Through Education',
+      description: 'Watch how our residential education program is changing the lives of rural girls.',
+      thumbnailUrl: '/api/placeholder/400/300',
+      mediaUrl: 'https://example.com/video/transforming-lives',
+      publishedDate: '2024-01-15',
+      source: 'Samruddhi Documentary'
     },
     {
-      title: "Community Health Camp",
-      date: "February 2024", 
-      count: 18,
-      thumbnail: "/api/placeholder/300/200",
-      category: "health"
+      id: 2,
+      type: 'article',
+      title: 'Featured in Rural Development Magazine',
+      description: 'Our innovative approach to girls\' education highlighted in national publication.',
+      thumbnailUrl: '/api/placeholder/400/300',
+      publishedDate: '2024-01-10',
+      source: 'Rural Development Today'
     },
     {
-      title: "Skill Development Workshop",
-      date: "January 2024",
-      count: 32,
-      thumbnail: "/api/placeholder/300/200",
-      category: "skills"
+      id: 3,
+      type: 'image',
+      title: 'Annual Sports Day 2024',
+      description: 'Celebrating achievements and fostering team spirit among our students.',
+      thumbnailUrl: '/api/placeholder/400/300',
+      publishedDate: '2024-02-20',
+      source: 'Event Gallery'
     },
     {
-      title: "Annual Day Celebration",
-      date: "December 2023",
-      count: 45,
-      thumbnail: "/api/placeholder/300/200",
-      category: "events"
+      id: 4,
+      type: 'video',
+      title: 'Success Story: Priya\'s Journey',
+      description: 'Former student Priya shares how education changed her life and community.',
+      thumbnailUrl: '/api/placeholder/400/300',
+      mediaUrl: 'https://example.com/video/priya-story',
+      publishedDate: '2024-01-05',
+      source: 'Impact Stories'
     },
     {
-      title: "Volunteer Training Program",
-      date: "November 2023",
-      count: 28,
-      thumbnail: "/api/placeholder/300/200",
-      category: "training"
+      id: 5,
+      type: 'article',
+      title: 'Award Recognition Ceremony',
+      description: 'Samruddhi Service Society honored for excellence in rural education.',
+      thumbnailUrl: '/api/placeholder/400/300',
+      publishedDate: '2023-12-20',
+      source: 'Award Coverage'
     },
     {
-      title: "Women Empowerment Session",
-      date: "October 2023",
-      count: 20,
-      thumbnail: "/api/placeholder/300/200",
-      category: "empowerment"
+      id: 6,
+      type: 'image',
+      title: 'Skill Development Workshop',
+      description: 'Students learning valuable vocational skills for future employment.',
+      thumbnailUrl: '/api/placeholder/400/300',
+      publishedDate: '2024-01-30',
+      source: 'Program Gallery'
     }
   ];
 
-  const videos = [
-    {
-      title: "Our Impact Story 2024",
-      duration: "3:45",
-      views: "2.1K",
-      date: "March 2024",
-      thumbnail: "/api/placeholder/300/200",
-      category: "impact"
-    },
-    {
-      title: "Girls Education Success Stories",
-      duration: "5:20",
-      views: "3.8K", 
-      date: "February 2024",
-      thumbnail: "/api/placeholder/300/200",
-      category: "education"
-    },
-    {
-      title: "Community Development Project",
-      duration: "2:30",
-      views: "1.5K",
-      date: "January 2024",
-      thumbnail: "/api/placeholder/300/200",
-      category: "community"
-    },
-    {
-      title: "Volunteer Testimonials",
-      duration: "4:15",
-      views: "2.9K",
-      date: "December 2023",
-      thumbnail: "/api/placeholder/300/200",
-      category: "testimonials"
+  const getMediaIcon = (type: string) => {
+    switch (type) {
+      case 'video':
+        return Play;
+      case 'image':
+        return ImageIcon;
+      case 'article':
+        return Newspaper;
+      default:
+        return Video;
     }
-  ];
+  };
 
-  const newsArticles = [
-    {
-      title: "Samruddhi Society Receives State Award for Excellence",
-      publication: "Times of India",
-      date: "March 15, 2024",
-      excerpt: "Recognition for outstanding contribution to girls' education in rural areas..."
-    },
-    {
-      title: "Empowering Rural Girls Through Education",
-      publication: "The Hindu",
-      date: "February 28, 2024",
-      excerpt: "How Samruddhi Service Society is transforming lives through quality education..."
-    },
-    {
-      title: "Community Health Initiative Shows Remarkable Results",
-      publication: "Indian Express",
-      date: "January 20, 2024",
-      excerpt: "Health camps organized by the society have benefited over 5000 people..."
-    },
-    {
-      title: "Skill Development Program Creates New Opportunities",
-      publication: "Economic Times",
-      date: "December 10, 2023",
-      excerpt: "Vocational training programs help women achieve financial independence..."
+  const getMediaTypeColor = (type: string) => {
+    switch (type) {
+      case 'video':
+        return 'bg-red-100 text-red-800';
+      case 'image':
+        return 'bg-green-100 text-green-800';
+      case 'article':
+        return 'bg-blue-100 text-blue-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
-  ];
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
 
   return (
-    <section id="media" className="py-16 bg-white">
+    <section className="py-16 bg-gray-50" id="media">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Media Gallery</h2>
+          <div className="flex items-center justify-center mb-4">
+            <Video className="h-8 w-8 text-primary mr-3" />
+            <h2 className="text-3xl font-bold text-neutral">Media & Coverage</h2>
+          </div>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Explore our journey through photos, videos, and media coverage
+            Explore our media coverage, documentaries, and visual stories that showcase our impact and recognition.
           </p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-gray-100 p-1 rounded-lg">
-            <button
-              onClick={() => setActiveTab('photos')}
-              className={`px-6 py-2 rounded-md font-medium transition-colors ${
-                activeTab === 'photos' 
-                  ? 'bg-primary text-white' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              <ImageIcon className="inline h-4 w-4 mr-2" />
-              Photo Gallery
-            </button>
-            <button
-              onClick={() => setActiveTab('videos')}
-              className={`px-6 py-2 rounded-md font-medium transition-colors ${
-                activeTab === 'videos' 
-                  ? 'bg-primary text-white' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              <Play className="inline h-4 w-4 mr-2" />
-              Videos
-            </button>
-            <button
-              onClick={() => setActiveTab('news')}
-              className={`px-6 py-2 rounded-md font-medium transition-colors ${
-                activeTab === 'news' 
-                  ? 'bg-primary text-white' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              <Award className="inline h-4 w-4 mr-2" />
-              In The News
-            </button>
-          </div>
-        </div>
-
-        {/* Photo Gallery */}
-        {activeTab === 'photos' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {photoGalleries.map((gallery, idx) => (
-              <Card key={idx} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="relative">
-                  <img 
-                    src={gallery.thumbnail} 
-                    alt={gallery.title}
-                    className="w-full h-48 object-cover"
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {mediaItems.map((item) => {
+            const IconComponent = getMediaIcon(item.type);
+            return (
+              <div key={item.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden group cursor-pointer">
+                <div className="relative aspect-video overflow-hidden">
+                  <img
+                    src={item.thumbnailUrl}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm">
-                    {gallery.count} photos
-                  </div>
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">{gallery.title}</h3>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {gallery.date}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-
-        {/* Videos */}
-        {activeTab === 'videos' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {videos.map((video, idx) => (
-              <Card key={idx} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="relative">
-                  <img 
-                    src={video.thumbnail} 
-                    alt={video.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center group-hover:bg-opacity-50 transition-colors">
-                    <div className="bg-primary text-white p-3 rounded-full">
-                      <Play className="h-6 w-6 ml-1" />
-                    </div>
-                  </div>
-                  <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm">
-                    {video.duration}
-                  </div>
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">{video.title}</h3>
-                  <div className="flex items-center justify-between text-sm text-gray-500">
-                    <div className="flex items-center">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      {video.date}
-                    </div>
-                    <div className="flex items-center">
-                      <Users className="h-4 w-4 mr-1" />
-                      {video.views} views
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-
-        {/* News */}
-        {activeTab === 'news' && (
-          <div className="space-y-6">
-            {newsArticles.map((article, idx) => (
-              <Card key={idx} className="hover:shadow-lg transition-shadow cursor-pointer">
-                <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-primary/10 p-3 rounded-lg">
-                      <Award className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{article.title}</h3>
-                      <p className="text-gray-600 mb-3">{article.excerpt}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm text-gray-500">
-                          <span className="font-medium">{article.publication}</span>
-                          <span className="mx-2">•</span>
-                          {article.date}
-                        </div>
-                        <Button variant="outline" size="sm">
-                          Read More
-                        </Button>
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                      <div className="p-3 bg-white bg-opacity-90 rounded-full">
+                        <IconComponent className="h-6 w-6 text-primary" />
                       </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <div className="absolute top-4 left-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getMediaTypeColor(item.type)}`}>
+                      {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-neutral mb-2 line-clamp-2">
+                    {item.title}
+                  </h3>
+
+                  {item.description && (
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                      {item.description}
+                    </p>
+                  )}
+
+                  <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                    <span>{formatDate(item.publishedDate)}</span>
+                    {item.source && (
+                      <span className="font-medium">{item.source}</span>
+                    )}
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full group"
+                    onClick={() => {
+                      if (item.mediaUrl) {
+                        window.open(item.mediaUrl, '_blank');
+                      } else {
+                        // Handle other media types or show modal
+                        console.log('View media item:', item.id);
+                      }
+                    }}
+                  >
+                    {item.type === 'video' ? 'Watch Video' : 
+                     item.type === 'article' ? 'Read Article' : 'View Gallery'}
+                    <ArrowRight className="h-3 w-3 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Media Statistics */}
+        <div className="mt-16 bg-white rounded-lg p-8 border border-gray-200">
+          <h3 className="text-2xl font-bold text-neutral text-center mb-8">Our Media Presence</h3>
+          <div className="grid md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div className="text-3xl font-bold text-primary mb-2">15+</div>
+              <p className="text-gray-600">Documentary Features</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-primary mb-2">50+</div>
+              <p className="text-gray-600">Media Mentions</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-primary mb-2">100K+</div>
+              <p className="text-gray-600">Video Views</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-primary mb-2">25+</div>
+              <p className="text-gray-600">Awards Covered</p>
+            </div>
           </div>
-        )}
+        </div>
+
+        {/* Call to Action */}
+        <div className="mt-12 text-center">
+          <h3 className="text-xl font-semibold text-neutral mb-4">
+            Want to Feature Our Work?
+          </h3>
+          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            Media professionals and content creators are welcome to collaborate with us to showcase 
+            the impact of our educational programs.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Contact Media Team
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => {
+                // Navigate to full media gallery
+                window.open('/gallery', '_blank');
+              }}
+            >
+              View Full Gallery
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );

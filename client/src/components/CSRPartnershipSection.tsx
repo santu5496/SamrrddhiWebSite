@@ -1,124 +1,212 @@
-
-import { Building2, HandHeart, Trophy, FileText, ArrowRight, CheckCircle2, Users, Target } from "lucide-react";
+import { Handshake, Target, TrendingUp, Award, ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "./ui/button";
 
 export default function CSRPartnershipSection() {
-  const csrBenefits = [
+  const benefits = [
     {
-      icon: <Trophy className="h-8 w-8 text-primary" />,
+      icon: Target,
+      title: "Aligned Impact Goals",
+      description: "Partner with us to achieve your CSR objectives while creating meaningful social impact in rural communities."
+    },
+    {
+      icon: TrendingUp,
+      title: "Measurable Outcomes",
+      description: "Receive detailed impact reports and metrics to demonstrate the effectiveness of your CSR investments."
+    },
+    {
+      icon: Award,
       title: "Brand Recognition",
-      description: "Feature your company in our marketing materials and annual reports"
-    },
-    {
-      icon: <Users className="h-8 w-8 text-secondary" />,
-      title: "Employee Engagement",
-      description: "Volunteer opportunities for your team to directly impact communities"
-    },
-    {
-      icon: <Target className="h-8 w-8 text-accent" />,
-      title: "SDG Alignment",
-      description: "Support UN Sustainable Development Goals 4 (Quality Education) and 5 (Gender Equality)"
-    },
-    {
-      icon: <FileText className="h-8 w-8 text-primary" />,
-      title: "Complete Documentation",
-      description: "Detailed impact reports and proper documentation for CSR compliance"
+      description: "Gain positive brand association through our educational initiatives and community development programs."
     }
   ];
 
-  const partnershipTiers = [
+  const partnershipModels = [
     {
-      title: "Education Partner",
-      amount: "₹50,000 - ₹2,00,000",
-      impact: "Sponsor education for 5-15 children annually",
-      features: ["Certificate of partnership", "Quarterly impact reports", "Social media recognition"]
+      title: "Education Sponsorship",
+      description: "Sponsor a girl's education for ₹18,000 annually and receive regular progress updates.",
+      impact: "Direct impact on 1 beneficiary",
+      commitment: "₹18,000/year"
     },
     {
-      title: "Program Sponsor",
-      amount: "₹2,00,000 - ₹10,00,000",
-      impact: "Fund entire program components",
-      features: ["Program naming rights", "Annual site visits", "Employee volunteer programs", "Custom impact videos"]
+      title: "Program Partnership",
+      description: "Fund specific programs like skill development, healthcare, or infrastructure projects.",
+      impact: "Benefit 50-100 children",
+      commitment: "₹2-5 Lakhs"
     },
     {
-      title: "Strategic Partner",
-      amount: "₹10,00,000+",
-      impact: "Long-term strategic partnership",
-      features: ["Advisory board representation", "Joint PR opportunities", "Custom partnership agreement", "CEO recognition events"]
+      title: "Strategic Alliance",
+      description: "Long-term partnership for sustainable community development and organizational growth.",
+      impact: "Transform entire communities",
+      commitment: "₹10+ Lakhs"
     }
+  ];
+
+  const currentPartners = [
+    { name: "ABC Foundation", sector: "Technology", partnership: "Digital Literacy Program" },
+    { name: "XYZ Corporation", sector: "Manufacturing", partnership: "Skill Development Initiative" },
+    { name: "Education Trust", sector: "Education", partnership: "Teacher Training Program" },
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-16 bg-white" id="csr-partnership">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">
-            Corporate Social Responsibility Partnerships
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Partner with us to fulfill your CSR obligations while creating meaningful impact 
-            in education and women empowerment. Join leading companies in transforming lives.
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center mb-4">
+            <Handshake className="h-8 w-8 text-primary mr-3" />
+            <h2 className="text-3xl font-bold text-neutral">CSR Partnerships</h2>
+          </div>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Partner with us to fulfill your Corporate Social Responsibility goals while making a lasting impact on rural education and child welfare.
           </p>
-          <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
 
-        {/* CSR Benefits */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {csrBenefits.map((benefit, index) => (
-            <div key={index} className="bg-gray-50 rounded-xl p-6 text-center card-hover">
-              <div className="flex justify-center mb-4">
-                {benefit.icon}
-              </div>
-              <h3 className="text-lg font-semibold text-neutral mb-3">{benefit.title}</h3>
-              <p className="text-gray-600 text-sm">{benefit.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Partnership Tiers */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-neutral text-center mb-8">CSR Partnership Levels</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {partnershipTiers.map((tier, index) => (
-              <div key={index} className="bg-white border-2 border-gray-200 rounded-xl p-8 card-hover">
-                <h4 className="text-xl font-bold text-neutral mb-3">{tier.title}</h4>
-                <div className="text-lg font-semibold text-primary mb-4">{tier.amount}</div>
-                <div className="bg-blue-50 rounded-lg p-4 mb-6">
-                  <p className="text-sm font-semibold text-blue-800">{tier.impact}</p>
+        {/* Partnership Benefits */}
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          {benefits.map((benefit, index) => {
+            const IconComponent = benefit.icon;
+            return (
+              <div key={index} className="text-center p-6 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                <div className="p-4 bg-primary/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                  <IconComponent className="h-10 w-10 text-primary" />
                 </div>
-                <ul className="space-y-2 mb-6">
-                  {tier.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <CheckCircle2 className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button className="w-full bg-primary hover:bg-primary/90 text-white">
+                <h3 className="text-xl font-semibold text-neutral mb-3">{benefit.title}</h3>
+                <p className="text-gray-600">{benefit.description}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Partnership Models */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-bold text-neutral text-center mb-8">Partnership Models</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {partnershipModels.map((model, index) => (
+              <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <h4 className="text-lg font-semibold text-neutral mb-3">{model.title}</h4>
+                <p className="text-gray-600 mb-4">{model.description}</p>
+                
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Impact:</span>
+                    <span className="font-medium text-primary">{model.impact}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Investment:</span>
+                    <span className="font-medium text-neutral">{model.commitment}</span>
+                  </div>
+                </div>
+
+                <Button 
+                  variant="outline" 
+                  className="w-full group"
+                  onClick={() => {
+                    // Scroll to contact section or open contact form
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
                   Learn More
+                  <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
             ))}
           </div>
         </div>
 
-        {/* CTA Section */}
-        <div className="bg-gradient-to-r from-primary to-secondary rounded-xl p-8 md:p-12 text-center text-white">
-          <Building2 className="h-16 w-16 mx-auto mb-6 opacity-90" />
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            Ready to Make a Corporate Impact?
-          </h3>
-          <p className="text-xl mb-6 opacity-90">
-            Join us in creating sustainable change. Download our CSR partnership brochure 
-            or schedule a meeting with our team.
+        {/* Current Partners */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-bold text-neutral text-center mb-8">Our Partners</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {currentPartners.map((partner, index) => (
+              <div key={index} className="bg-gray-50 rounded-lg p-6 text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold text-lg">
+                    {partner.name.split(' ').map(word => word[0]).join('')}
+                  </span>
+                </div>
+                <h4 className="font-semibold text-neutral mb-1">{partner.name}</h4>
+                <p className="text-sm text-gray-600 mb-2">{partner.sector}</p>
+                <p className="text-xs text-primary font-medium">{partner.partnership}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Why Partner With Us */}
+        <div className="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg p-8 mb-12">
+          <h3 className="text-2xl font-bold text-neutral text-center mb-8">Why Partner With Samruddhi?</h3>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 className="text-lg font-semibold text-neutral mb-4">Our Track Record</h4>
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span className="text-gray-700">29+ years of successful operations</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span className="text-gray-700">2,500+ children impacted</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span className="text-gray-700">95% program completion rate</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span className="text-gray-700">50+ villages reached</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold text-neutral mb-4">Partnership Benefits</h4>
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span className="text-gray-700">80G tax exemption benefits</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span className="text-gray-700">Quarterly impact reports</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span className="text-gray-700">Brand visibility opportunities</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span className="text-gray-700">Employee engagement programs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center">
+          <h3 className="text-2xl font-bold text-neutral mb-4">Ready to Make an Impact Together?</h3>
+          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+            Let's discuss how your organization can contribute to meaningful social change while achieving your CSR objectives.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-white text-primary hover:bg-gray-100 font-semibold">
-              <FileText className="mr-2 h-4 w-4" />
-              Download CSR Brochure
+            <Button 
+              size="lg"
+              onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Start Partnership Discussion
+              <ArrowRight className="h-5 w-5 ml-2" />
             </Button>
-            <Button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-semibold">
-              <HandHeart className="mr-2 h-4 w-4" />
-              Schedule Meeting
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => {
+                // Download partnership brochure
+                window.open('/api/placeholder/document/csr-partnership-brochure.pdf', '_blank');
+              }}
+            >
+              Download Partnership Brochure
             </Button>
           </div>
         </div>

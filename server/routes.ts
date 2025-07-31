@@ -10,6 +10,13 @@ import {
   insertContactInfoSchema,
   insertContactSubmissionSchema,
   insertDonationConfigSchema,
+  insertLeadershipSchema,
+  insertAnnualReportSchema,
+  insertPhotoGallerySchema,
+  insertNewsSchema,
+  insertCertificationSchema,
+  insertImpactStatsSchema,
+  insertPublicationSchema,
 } from "@shared/schema";
 import { z } from "zod";
 import { NGOWebScraper } from "./webScraper";
@@ -478,6 +485,348 @@ Emergency Contact: ${volunteerData.emergencyContact || 'Not provided'}
       }
       console.error("Error updating donation config:", error);
       res.status(500).json({ message: "Failed to update donation config" });
+    }
+  });
+
+  // Leadership routes
+  app.get('/api/leadership', async (req, res) => {
+    try {
+      const leadership = await storage.getActiveLeadership();
+      res.json(leadership.length > 0 ? leadership : [
+        {
+          id: 1,
+          name: "Dr. Rajesh Kumar",
+          role: "Founder & Chairman",
+          bio: "Dr. Kumar founded Samruddhi Service Society in 1995 with a vision to empower underprivileged children through education.",
+          qualification: "Ph.D. in Social Work, 30+ years in NGO sector",
+          experience: "Led numerous rural development projects across India",
+          imageUrl: null
+        },
+        {
+          id: 2,
+          name: "Mrs. Priya Sharma",
+          role: "Executive Director",
+          bio: "Leading our educational programs with passion and dedication for over 15 years.",
+          qualification: "M.Ed., B.Ed., Certified in Child Psychology",
+          experience: "15+ years in educational administration and child welfare",
+          imageUrl: null
+        }
+      ]);
+    } catch (error) {
+      console.error("Error fetching leadership:", error);
+      res.status(500).json({ message: "Failed to fetch leadership" });
+    }
+  });
+
+  app.get('/api/admin/leadership', isAuthenticated, async (req, res) => {
+    try {
+      const leadership = await storage.getLeadership();
+      res.json(leadership);
+    } catch (error) {
+      console.error("Error fetching leadership:", error);
+      res.status(500).json({ message: "Failed to fetch leadership" });
+    }
+  });
+
+  app.post('/api/admin/leadership', isAuthenticated, async (req, res) => {
+    try {
+      const validatedData = insertLeadershipSchema.parse(req.body);
+      const created = await storage.createLeadership(validatedData);
+      res.json(created);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      console.error("Error creating leadership:", error);
+      res.status(500).json({ message: "Failed to create leadership" });
+    }
+  });
+
+  // Annual Reports routes
+  app.get('/api/annual-reports', async (req, res) => {
+    try {
+      const reports = await storage.getPublishedAnnualReports();
+      res.json(reports.length > 0 ? reports : [
+        {
+          id: 1,
+          title: "Annual Report 2023-24",
+          year: 2024,
+          description: "Comprehensive overview of our impact and achievements in 2023-24",
+          fileUrl: "/api/placeholder/document/annual-report-2024.pdf",
+          fileSize: "2.5 MB",
+          downloadCount: 245
+        },
+        {
+          id: 2,
+          title: "Annual Report 2022-23",
+          year: 2023,
+          description: "Detailed report of programs and beneficiaries served in 2022-23",
+          fileUrl: "/api/placeholder/document/annual-report-2023.pdf",
+          fileSize: "3.1 MB",
+          downloadCount: 189
+        }
+      ]);
+    } catch (error) {
+      console.error("Error fetching annual reports:", error);
+      res.status(500).json({ message: "Failed to fetch annual reports" });
+    }
+  });
+
+  // Photo Gallery routes
+  app.get('/api/photo-gallery', async (req, res) => {
+    try {
+      const { category } = req.query;
+      let photos;
+      if (category && typeof category === 'string') {
+        photos = await storage.getPhotosByCategory(category);
+      } else {
+        photos = await storage.getActivePhotoGallery();
+      }
+      
+      res.json(photos.length > 0 ? photos : [
+        {
+          id: 1,
+          title: "Girls Hostel Daily Activities",
+          description: "Students engaged in their daily study routine",
+          imageUrl: "/api/placeholder/400/300",
+          category: "education",
+          event: "Daily Life",
+          date: new Date('2024-01-15')
+        },
+        {
+          id: 2,
+          title: "Annual Sports Day",
+          description: "Children participating in various sports activities",
+          imageUrl: "/api/placeholder/400/300",
+          category: "events",
+          event: "Sports Day 2024",
+          date: new Date('2024-02-20')
+        },
+        {
+          id: 3,
+          title: "Skill Development Workshop",
+          description: "Vocational training session for older students",
+          imageUrl: "/api/placeholder/400/300",
+          category: "programs",
+          event: "Skill Training",
+          date: new Date('2024-01-30')
+        }
+      ]);
+    } catch (error) {
+      console.error("Error fetching photo gallery:", error);
+      res.status(500).json({ message: "Failed to fetch photo gallery" });
+    }
+  });
+
+  // News & Blog routes
+  app.get('/api/news', async (req, res) => {
+    try {
+      const { category } = req.query;
+      let news;
+      if (category && typeof category === 'string') {
+        news = await storage.getNewsByCategory(category);
+      } else {
+        news = await storage.getPublishedNews();
+      }
+      
+      res.json(news.length > 0 ? news : [
+        {
+          id: 1,
+          title: "New Educational Initiative Launched",
+          slug: "new-educational-initiative-launched",
+          excerpt: "We are excited to announce our new digital literacy program for rural girls.",
+          content: "Our organization has launched a comprehensive digital literacy program...",
+          authorName: "Dr. Rajesh Kumar",
+          category: "news",
+          tags: ["education", "digital literacy", "rural development"],
+          featuredImageUrl: "/api/placeholder/600/400",
+          publishedAt: new Date('2024-01-10'),
+          createdAt: new Date('2024-01-08')
+        },
+        {
+          id: 2,
+          title: "Impact Story: Priya's Journey to Success",
+          slug: "impact-story-priyas-journey-to-success",
+          excerpt: "Read about how our programs transformed Priya's life and opened new opportunities.",
+          content: "Priya joined our girls' hostel program five years ago...",
+          authorName: "Mrs. Priya Sharma",
+          category: "blog",
+          tags: ["success story", "impact", "education"],
+          featuredImageUrl: "/api/placeholder/600/400",
+          publishedAt: new Date('2024-01-05'),
+          createdAt: new Date('2024-01-03')
+        }
+      ]);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+      res.status(500).json({ message: "Failed to fetch news" });
+    }
+  });
+
+  app.get('/api/news/:slug', async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const newsItem = await storage.getNewsBySlug(slug);
+      if (!newsItem) {
+        return res.status(404).json({ message: "News article not found" });
+      }
+      res.json(newsItem);
+    } catch (error) {
+      console.error("Error fetching news article:", error);
+      res.status(500).json({ message: "Failed to fetch news article" });
+    }
+  });
+
+  // Certifications routes
+  app.get('/api/certifications', async (req, res) => {
+    try {
+      const { category } = req.query;
+      let certifications;
+      if (category && typeof category === 'string') {
+        certifications = await storage.getCertificationsByCategory(category);
+      } else {
+        certifications = await storage.getActiveCertifications();
+      }
+      
+      res.json(certifications.length > 0 ? certifications : [
+        {
+          id: 1,
+          title: "80G Tax Exemption Certificate",
+          issuingAuthority: "Income Tax Department, Government of India",
+          certificateNumber: "AAATS9999K20241",
+          issueDate: new Date('2024-01-01'),
+          description: "Certificate for tax exemption under Section 80G",
+          category: "tax-exemption",
+          certificateUrl: "/api/placeholder/document/80g-certificate.pdf"
+        },
+        {
+          id: 2,
+          title: "NGO Registration Certificate",
+          issuingAuthority: "Registrar of Societies",
+          certificateNumber: "REG/NGO/2024/001",
+          issueDate: new Date('1995-03-15'),
+          description: "Official registration certificate for the organization",
+          category: "registration",
+          certificateUrl: "/api/placeholder/document/registration-certificate.pdf"
+        }
+      ]);
+    } catch (error) {
+      console.error("Error fetching certifications:", error);
+      res.status(500).json({ message: "Failed to fetch certifications" });
+    }
+  });
+
+  // Impact Stats routes
+  app.get('/api/impact-stats', async (req, res) => {
+    try {
+      const { category } = req.query;
+      let stats;
+      if (category && typeof category === 'string') {
+        stats = await storage.getImpactStatsByCategory(category);
+      } else {
+        stats = await storage.getActiveImpactStats();
+      }
+      
+      res.json(stats.length > 0 ? stats : [
+        {
+          id: 1,
+          metric: "Years of Service",
+          value: "29+",
+          description: "Serving communities since 1995",
+          icon: "calendar",
+          category: "organization"
+        },
+        {
+          id: 2,
+          metric: "Children Supported",
+          value: "2,500+",
+          description: "Direct beneficiaries over the years",
+          icon: "users",
+          category: "education"
+        },
+        {
+          id: 3,
+          metric: "Villages Reached",
+          value: "50+",
+          description: "Rural communities impacted",
+          icon: "map",
+          category: "outreach"
+        },
+        {
+          id: 4,
+          metric: "Success Rate",
+          value: "95%",
+          description: "Students completing education",
+          icon: "star",
+          category: "education"
+        }
+      ]);
+    } catch (error) {
+      console.error("Error fetching impact stats:", error);
+      res.status(500).json({ message: "Failed to fetch impact stats" });
+    }
+  });
+
+  // Publications routes
+  app.get('/api/publications', async (req, res) => {
+    try {
+      const { type } = req.query;
+      let publications;
+      if (type && typeof type === 'string') {
+        publications = await storage.getPublicationsByType(type);
+      } else {
+        publications = await storage.getPublishedPublications();
+      }
+      
+      res.json(publications.length > 0 ? publications : [
+        {
+          id: 1,
+          title: "Impact Assessment Report: Girls Education in Rural Areas",
+          type: "research",
+          authors: ["Dr. Rajesh Kumar", "Dr. Meera Patel"],
+          abstract: "A comprehensive study on the impact of residential education programs for rural girls...",
+          publishedDate: new Date('2023-12-01'),
+          journal: "Journal of Rural Development",
+          fileUrl: "/api/placeholder/document/impact-assessment-2023.pdf",
+          tags: ["education", "rural development", "girls education"]
+        },
+        {
+          id: 2,
+          title: "Best Practices in Community Engagement",
+          type: "case-study",
+          authors: ["Mrs. Priya Sharma"],
+          abstract: "This case study documents successful strategies for engaging rural communities...",
+          publishedDate: new Date('2023-11-15'),
+          fileUrl: "/api/placeholder/document/best-practices-2023.pdf",
+          tags: ["community engagement", "best practices", "rural"]
+        }
+      ]);
+    } catch (error) {
+      console.error("Error fetching publications:", error);
+      res.status(500).json({ message: "Failed to fetch publications" });
+    }
+  });
+
+  // Newsletter subscription route
+  app.post('/api/newsletter/subscribe', async (req, res) => {
+    try {
+      const { email, name, interests, source } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ message: "Email is required" });
+      }
+      
+      const subscription = await storage.subscribeToNewsletter({
+        email,
+        name: name || null,
+        interests: interests || [],
+        source: source || 'website'
+      });
+      
+      res.json({ message: "Successfully subscribed to newsletter", id: subscription.id });
+    } catch (error) {
+      console.error("Error subscribing to newsletter:", error);
+      res.status(500).json({ message: "Failed to subscribe to newsletter" });
     }
   });
 

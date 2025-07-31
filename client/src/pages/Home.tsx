@@ -19,6 +19,11 @@ import ResearchSection from "@/components/ResearchSection";
 import CertificationsSection from "@/components/CertificationsSection";
 import ResourcesSection from "@/components/ResourcesSection";
 import MediaSection from "@/components/MediaSection";
+import LeadershipSection from "@/components/LeadershipSection";
+import NewsSection from "@/components/NewsSection";
+import PhotoGallerySection from "@/components/PhotoGallerySection";
+import AnnualReportsSection from "@/components/AnnualReportsSection";
+import HowToHelpSection from "@/components/HowToHelpSection";
 
 export default function Home() {
   return (
@@ -37,29 +42,42 @@ export default function Home() {
         <div className="section-bg">
           <TestimonialsSection />
         </div>
-        <MonthlyDonorSection />
+        <LeadershipSection />
+        <div className="section-bg">
+          <NewsSection />
+        </div>
+        <PhotoGallerySection />
+        <div className="section-bg">
+          <AnnualReportsSection />
+        </div>
+        <HowToHelpSection />
+        <div className="section-bg">
+          <MonthlyDonorSection />
+        </div>
         <div className="section-bg">
           <DonateSection />
         </div>
         <CSRPartnershipSection />
-        <VolunteerSection />
         <div className="section-bg">
-          <PartnersSection />
+          <VolunteerSection />
         </div>
-        <LanguageSupport />
+        <PartnersSection />
         <div className="section-bg">
           <EventsSection />
         </div>
-        <ResearchSection />
+        <CertificationsSection />
         <div className="section-bg">
-          <CertificationsSection />
+          <ResourcesSection />
         </div>
-        <ResourcesSection />
         <MediaSection />
-        <DownloadBrochure />
         <div className="section-bg">
-          <ContactSection />
+          <ResearchSection />
         </div>
+        <LanguageSupport />
+        <div className="section-bg">
+          <DownloadBrochure />
+        </div>
+        <ContactSection />
       </main>
       <Footer />
     </div>
