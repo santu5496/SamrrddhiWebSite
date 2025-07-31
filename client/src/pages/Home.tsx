@@ -24,6 +24,10 @@ import NewsSection from "@/components/NewsSection";
 import PhotoGallerySection from "@/components/PhotoGallerySection";
 import AnnualReportsSection from "@/components/AnnualReportsSection";
 import HowToHelpSection from "@/components/HowToHelpSection";
+import VidyaranyaInspiredStats from "@/components/VidyaranyaInspiredStats";
+import EnhancedDonationOptions from "@/components/EnhancedDonationOptions";
+import DonationCTA from "@/components/DonationCTA";
+import NewsletterSection from "@/components/NewsletterSection";
 
 export default function Home() {
   return (
@@ -31,6 +35,7 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
+        <VidyaranyaInspiredStats />
         <div className="section-bg">
           <ImpactSection />
         </div>
@@ -51,6 +56,8 @@ export default function Home() {
           <AnnualReportsSection />
         </div>
         <HowToHelpSection />
+        <EnhancedDonationOptions />
+        <DonationCTA />
         <div className="section-bg">
           <MonthlyDonorSection />
         </div>
@@ -73,6 +80,7 @@ export default function Home() {
         <div className="section-bg">
           <ResearchSection />
         </div>
+        <NewsletterSection />
         <LanguageSupport />
         <div className="section-bg">
           <DownloadBrochure />
