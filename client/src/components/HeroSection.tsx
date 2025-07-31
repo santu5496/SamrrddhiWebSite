@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { Button } from "./ui/button";
+import { ArrowRight, Heart, Users, Award } from "lucide-react";
+
+// Fallback banner image
+const bannerImage = "/attached_assets/WhatsApp Image 2025-07-29 at 20.05.20_b468d80d_1753954299033.jpg";
 import { HeroContent } from "@shared/schema";
 
 export default function HeroSection() {
@@ -25,7 +28,7 @@ export default function HeroSection() {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: backgroundImageStyle }}
       />
-      
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
         <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 animate-fade-in-up">
           {heroContent?.headline || "Give Her a Chance to Learn, Grow, and Thrive."}
@@ -33,7 +36,7 @@ export default function HeroSection() {
         <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light animate-fade-in-up animate-delay-200">
           {heroContent?.subheading || "Empowering rural girls and differently-abled children through education and care since 1995."}
         </p>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animate-delay-400">
           <Button 
             onClick={() => scrollToSection('donate')}
@@ -50,7 +53,7 @@ export default function HeroSection() {
             Learn More
           </Button>
         </div>
-        
+
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div className="text-center animate-fade-in-up animate-delay-500 transform hover:scale-105 transition-all duration-300">
             <div className="text-4xl font-bold text-white mb-2 hover:text-secondary transition-colors duration-300">
