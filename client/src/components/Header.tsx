@@ -96,8 +96,26 @@ export default function Header() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => scrollToSection('programs')}>
+                    Programs
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => scrollToSection('leadership')}>
+                    Leadership
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => scrollToSection('news')}>
+                    News & Updates
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => scrollToSection('gallery')}>
                     Photo Gallery
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => scrollToSection('events')}>
+                    Events
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => scrollToSection('media')}>
+                    Media Coverage
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => scrollToSection('resources')}>
+                    Resources
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => scrollToSection('contact')}>
                     Contact Us
@@ -144,10 +162,40 @@ export default function Header() {
                   How to Help
                 </button>
                 <button 
+                  onClick={() => scrollToSection('programs')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
+                >
+                  Programs
+                </button>
+                <button 
+                  onClick={() => scrollToSection('leadership')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
+                >
+                  Leadership
+                </button>
+                <button 
+                  onClick={() => scrollToSection('news')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
+                >
+                  News
+                </button>
+                <button 
                   onClick={() => scrollToSection('gallery')}
                   className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
                 >
                   Gallery
+                </button>
+                <button 
+                  onClick={() => scrollToSection('events')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
+                >
+                  Events
+                </button>
+                <button 
+                  onClick={() => scrollToSection('media')}
+                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
+                >
+                  Media
                 </button>
                 <button 
                   onClick={() => scrollToSection('contact')}

@@ -47,7 +47,9 @@ export default function Home() {
         <div className="section-bg">
           <ProgramsSection />
         </div>
-        <SuccessStoriesSection />
+        <div className="section-bg">
+          <SuccessStoriesSection />
+        </div>
         <div className="section-bg">
           <TestimonialsSection />
         </div>
