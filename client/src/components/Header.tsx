@@ -67,68 +67,87 @@ export default function Header() {
               </div>
             </div>
 
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-4">
               <button 
                 onClick={() => scrollToSection('about')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
               >
                 ABOUT
               </button>
               
               <button 
-                onClick={() => scrollToSection('what-we-do')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+                onClick={() => scrollToSection('programs')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
               >
-                WHAT WE DO
+                PROGRAMS
+              </button>
+              
+              <button 
+                onClick={() => scrollToSection('leadership')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+              >
+                LEADERSHIP
+              </button>
+              
+              <button 
+                onClick={() => scrollToSection('news')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+              >
+                NEWS
+              </button>
+              
+              <button 
+                onClick={() => scrollToSection('events')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+              >
+                EVENTS
+              </button>
+              
+              <button 
+                onClick={() => scrollToSection('media')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+              >
+                MEDIA
+              </button>
+              
+              <button 
+                onClick={() => scrollToSection('gallery')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+              >
+                GALLERY
+              </button>
+              
+              <button 
+                onClick={() => scrollToSection('resources')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+              >
+                RESOURCES
               </button>
               
               <button 
                 onClick={() => scrollToSection('how-to-help')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
               >
                 HOW TO HELP
               </button>
               
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="text-neutral hover:text-primary text-sm font-medium uppercase tracking-wide">
-                    MORE <ChevronDown className="ml-1 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => scrollToSection('programs')}>
-                    Programs
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => scrollToSection('leadership')}>
-                    Leadership
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => scrollToSection('news')}>
-                    News & Updates
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => scrollToSection('gallery')}>
-                    Photo Gallery
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => scrollToSection('events')}>
-                    Events
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => scrollToSection('media')}>
-                    Media Coverage
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => scrollToSection('resources')}>
-                    Resources
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => scrollToSection('contact')}>
-                    Contact Us
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => scrollToSection('donate')}>
-                    Donate Now
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <button 
+                onClick={() => scrollToSection('contact')} 
+                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+              >
+                CONTACT
+              </button>
+              
+              <Button 
+                onClick={() => scrollToSection('donate')} 
+                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-xs font-medium uppercase tracking-wide"
+              >
+                DONATE
+              </Button>
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-neutral hover:text-primary"
@@ -141,7 +160,7 @@ export default function Header() {
 
           {/* Mobile menu */}
           {isMenuOpen && (
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
                 <button 
                   onClick={() => scrollToSection('about')}
