@@ -1,7 +1,9 @@
-import { Heart, Users, Handshake, UserPlus, Building, Calendar, ArrowRight, CheckCircle } from "lucide-react";
+import { Heart, Users, Handshake, UserPlus, Building, Calendar, ArrowRight, CheckCircle, ChevronDown, ChevronUp, CreditCard, Gift, Phone, Mail, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
+import { useState } from "react";
 
 export default function HowToHelpSection() {
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const helpOptions = [
     {
       icon: Calendar,
@@ -52,29 +54,61 @@ export default function HowToHelpSection() {
     { value: "₹1,000", label: "Supports skill development workshops" }
   ];
 
+  const donationMethods = [
+    {
+      icon: CreditCard,
+      title: "Online Donations",
+      description: "Quick and secure online payments with instant confirmation",
+      details: ["Credit/Debit Cards", "Net Banking", "UPI Payments", "Razorpay Gateway"],
+      buttonText: "Donate Online",
+      action: () => document.getElementById('donate')?.scrollIntoView({ behavior: 'smooth' })
+    },
+    {
+      icon: Gift,
+      title: "Offline Donations",
+      description: "Traditional donation methods for your convenience",
+      details: ["Cheque/DD Collection", "Bank Transfer", "Cash Donations", "Electronic Clearance Service (ECS)"],
+      buttonText: "Learn More"
+    },
+    {
+      icon: Heart,
+      title: "Kind Donations",
+      description: "Material support and in-kind contributions",
+      details: ["Educational Materials", "Uniforms & Books", "Medical Equipment", "Infrastructure Support"],
+      buttonText: "Contribute Items"
+    }
+  ];
+
   return (
     <section className="py-16 bg-gradient-to-br from-red-50 via-white to-pink-50" id="how-to-help">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main Header - Similar to Vidyaranya */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-neutral mb-4">How You Can Help</h2>
+          <div className="inline-block bg-red-500 text-white px-8 py-4 rounded-lg text-2xl font-bold mb-6 shadow-lg transform hover:scale-105 transition-transform">
+            HOW YOU CAN HELP
+          </div>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             There are many ways to support our mission and make a lasting impact on the lives of underprivileged children. 
             Choose the way that resonates most with you.
           </p>
         </div>
 
-        {/* Help Options Grid */}
+        {/* Main Help Options - Expandable Cards like Vidyaranya */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {helpOptions.map((option, index) => {
             const IconComponent = option.icon;
+            const isExpanded = expandedCard === index;
             return (
               <div key={index} className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
                 <div className={`${option.color} p-6 text-white`}>
                   <div className="flex items-center justify-between mb-4">
                     <IconComponent className="h-8 w-8" />
-                    <div className="text-right">
-                      <span className="text-sm opacity-90">Make a difference</span>
-                    </div>
+                    <button
+                      onClick={() => setExpandedCard(isExpanded ? null : index)}
+                      className="text-white hover:text-gray-200 transition-colors"
+                    >
+                      {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                    </button>
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{option.title}</h3>
                 </div>
@@ -84,19 +118,20 @@ export default function HowToHelpSection() {
                     {option.description}
                   </p>
 
-                  <div className="space-y-2 mb-6">
-                    {option.actions.map((action, actionIndex) => (
-                      <div key={actionIndex} className="flex items-center text-sm text-gray-700">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-                        <span>{action}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {isExpanded && (
+                    <div className="space-y-2 mb-6 animate-in slide-in-from-top-2 duration-300">
+                      {option.actions.map((action, actionIndex) => (
+                        <div key={actionIndex} className="flex items-center text-sm text-gray-700">
+                          <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
+                          <span>{action}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   <Button 
                     className={`w-full group ${option.color} hover:opacity-90 text-white`}
                     onClick={() => {
-                      // Scroll to contact or open specific action
                       if (option.title === "Sponsor a Beneficiary") {
                         document.getElementById('donate')?.scrollIntoView({ behavior: 'smooth' });
                       } else if (option.title === "Corporate Partnership") {
@@ -115,6 +150,44 @@ export default function HowToHelpSection() {
               </div>
             );
           })}
+        </div>
+
+        {/* Donation Methods Section - Inspired by Vidyaranya */}
+        <div className="bg-white rounded-lg p-8 shadow-lg mb-12">
+          <h3 className="text-2xl font-bold text-neutral text-center mb-8">Other Ways to Donate</h3>
+          <p className="text-center text-gray-600 mb-8">
+            We also have several modes of offline donations if you are not interested or new to online donations mode
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {donationMethods.map((method, index) => {
+              const IconComponent = method.icon;
+              return (
+                <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                  <IconComponent className="h-10 w-10 text-red-500 mb-4" />
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">{method.title}</h4>
+                  <p className="text-gray-600 text-sm mb-4">{method.description}</p>
+                  
+                  <div className="space-y-1 mb-4">
+                    {method.details.map((detail, detailIndex) => (
+                      <div key={detailIndex} className="text-sm text-gray-700 flex items-center">
+                        <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
+                        {detail}
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <Button 
+                    variant="outline" 
+                    className="w-full text-red-500 border-red-500 hover:bg-red-50"
+                    onClick={method.action || (() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }))}
+                  >
+                    {method.buttonText}
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Impact Statistics */}
@@ -163,20 +236,32 @@ export default function HowToHelpSection() {
           </div>
         </div>
 
-        {/* Quick Contact */}
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">
-            Have questions about how you can help? We're here to guide you.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center text-sm">
-            <a href="tel:+91-9876543210" className="text-primary hover:text-secondary font-medium">
-              📞 Call us: +91-9876543210
+        {/* Contact Methods - Similar to Vidyaranya */}
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-gray-200">
+            <Phone className="h-12 w-12 text-green-500 mx-auto mb-4" />
+            <h4 className="font-semibold text-gray-900 mb-2">Call Us</h4>
+            <p className="text-gray-600 text-sm mb-3">We will collect donations at your doorstep</p>
+            <a href="tel:+91-9876543210" className="text-green-600 font-medium hover:text-green-700">
+              +91-9876543210
             </a>
-            <a href="mailto:help@samruddhi.org" className="text-primary hover:text-secondary font-medium">
-              ✉️ Email: help@samruddhi.org
+          </div>
+          
+          <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-gray-200">
+            <Mail className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+            <h4 className="font-semibold text-gray-900 mb-2">Email Us</h4>
+            <p className="text-gray-600 text-sm mb-3">Get detailed information about donation methods</p>
+            <a href="mailto:help@samruddhi.org" className="text-blue-600 font-medium hover:text-blue-700">
+              help@samruddhi.org
             </a>
-            <a href="https://wa.me/919876543210" className="text-primary hover:text-secondary font-medium">
-              💬 WhatsApp: +91-9876543210
+          </div>
+          
+          <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-gray-200">
+            <MessageCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+            <h4 className="font-semibold text-gray-900 mb-2">WhatsApp</h4>
+            <p className="text-gray-600 text-sm mb-3">Quick assistance and donation guidance</p>
+            <a href="https://wa.me/919876543210" className="text-green-600 font-medium hover:text-green-700">
+              +91-9876543210
             </a>
           </div>
         </div>

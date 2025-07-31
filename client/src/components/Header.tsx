@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { Menu, X, Volume2, Type, Eye } from "lucide-react";
+import { Menu, X, Volume2, Type, Eye, ChevronDown, Heart, Users, Handshake, UserPlus, Building } from "lucide-react";
 import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -105,12 +111,66 @@ export default function Header() {
               >
                 Resources
               </button>
-              <button 
-                onClick={() => scrollToSection('how-to-help')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
-              >
-                How to Help
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center space-x-1 text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide">
+                    <span>How to Help</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-64 bg-white border border-gray-200 shadow-lg">
+                  <DropdownMenuItem 
+                    onClick={() => scrollToSection('how-to-help')}
+                    className="flex items-center space-x-3 p-3 hover:bg-pink-50 cursor-pointer"
+                  >
+                    <Heart className="h-5 w-5 text-pink-500" />
+                    <div>
+                      <div className="font-medium text-gray-900">Celebrate with Us</div>
+                      <div className="text-sm text-gray-600">Join our events and celebrations</div>
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => scrollToSection('donate')}
+                    className="flex items-center space-x-3 p-3 hover:bg-red-50 cursor-pointer"
+                  >
+                    <Heart className="h-5 w-5 text-red-500" />
+                    <div>
+                      <div className="font-medium text-gray-900">Sponsor a Beneficiary</div>
+                      <div className="text-sm text-gray-600">₹18,000 sponsors a child's education</div>
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => scrollToSection('csr')}
+                    className="flex items-center space-x-3 p-3 hover:bg-blue-50 cursor-pointer"
+                  >
+                    <Handshake className="h-5 w-5 text-blue-500" />
+                    <div>
+                      <div className="font-medium text-gray-900">Corporate Partnership</div>
+                      <div className="text-sm text-gray-600">CSR initiatives & partnerships</div>
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => scrollToSection('volunteer')}
+                    className="flex items-center space-x-3 p-3 hover:bg-green-50 cursor-pointer"
+                  >
+                    <UserPlus className="h-5 w-5 text-green-500" />
+                    <div>
+                      <div className="font-medium text-gray-900">Volunteering & Internships</div>
+                      <div className="text-sm text-gray-600">Contribute your time and skills</div>
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => scrollToSection('volunteer')}
+                    className="flex items-center space-x-3 p-3 hover:bg-purple-50 cursor-pointer"
+                  >
+                    <Building className="h-5 w-5 text-purple-500" />
+                    <div>
+                      <div className="font-medium text-gray-900">Employee Engagement</div>
+                      <div className="text-sm text-gray-600">Team volunteer activities</div>
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <button 
                 onClick={() => scrollToSection('contact')} 
                 className="text-neutral hover:text-primary transition-colors font-medium uppercase text-sm tracking-wide"
