@@ -220,7 +220,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Error scraping website:", error);
       res.status(500).json({ 
         message: "Failed to scrape website", 
-        error: error.message 
+        error: error instanceof Error ? error.message : "Unknown error" 
       });
     }
   });
