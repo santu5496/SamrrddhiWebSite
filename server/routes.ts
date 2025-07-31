@@ -12,6 +12,7 @@ import {
   insertDonationConfigSchema,
 } from "@shared/schema";
 import { z } from "zod";
+import { NGOWebScraper } from "./webScraper";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -187,6 +188,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error("Error submitting contact form:", error);
       res.status(500).json({ message: "Failed to submit message" });
+    }
+  });
+
+  // Web scraping endpoint
+  app.post('/api/scrape-ngo', async (req, res) => {
+    try {
+      const { url } = req.body;
+      
+      if (!url) {
+        return res.status(400).json({ message: "URL is required" });
+      }
+      
+      // Validate URL format
+      try {
+        new URL(url);
+      } catch {
+        return res.status(400).json({ message: "Invalid URL format" });
+      }
+      
+      const scraper = new NGOWebScraper();
+      const scrapedData = await scraper.scrapeNGOWebsite(url);
+      
+      res.json({
+        message: "Website scraped successfully",
+        data: scrapedData,
+        url: url
+      });
+      
+    } catch (error) {
+      console.error("Error scraping website:", error);
+      res.status(500).json({ 
+        message: "Failed to scrape website", 
+        error: error.message 
+      });
     }
   });
 
