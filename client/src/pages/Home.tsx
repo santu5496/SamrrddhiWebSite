@@ -28,6 +28,7 @@ import VidyaranyaInspiredStats from "@/components/VidyaranyaInspiredStats";
 import EnhancedDonationOptions from "@/components/EnhancedDonationOptions";
 import DonationCTA from "@/components/DonationCTA";
 import NewsletterSection from "@/components/NewsletterSection";
+import WhatWeDoSection from "@/components/WhatWeDoSection";
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
           <ImpactSection />
         </div>
         <AboutSection />
+        <WhatWeDoSection />
         <div className="section-bg">
           <ProgramsSection />
         </div>

@@ -58,13 +58,20 @@ export const aboutContent = pgTable("about_content", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// Programs
+// Programs - Enhanced with Vidyaranya-style categories
 export const programs = pgTable("programs", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description").notNull(),
+  detailedDescription: text("detailed_description"),
   imageUrl: text("image_url"),
   icon: text("icon").notNull(),
+  category: text("category").notNull(), // education-childcare, women-empowerment, senior-care, skill-development, health, community-development, environment
+  objectives: text("objectives").array(),
+  targetGroup: text("target_group"),
+  howWeWork: text("how_we_work"),
+  components: text("components").array(),
+  futureInitiatives: text("future_initiatives").array(),
   orderIndex: serial("order_index"),
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
