@@ -70,77 +70,77 @@ export default function Header() {
             <div className="hidden lg:flex items-center space-x-4">
               <button 
                 onClick={() => scrollToSection('about')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 ABOUT
               </button>
               
               <button 
                 onClick={() => scrollToSection('programs')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 PROGRAMS
               </button>
               
               <button 
                 onClick={() => scrollToSection('leadership')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 LEADERSHIP
               </button>
               
               <button 
                 onClick={() => scrollToSection('news')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 NEWS
               </button>
               
               <button 
                 onClick={() => scrollToSection('events')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 EVENTS
               </button>
               
               <button 
                 onClick={() => scrollToSection('media')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 MEDIA
               </button>
               
               <button 
                 onClick={() => scrollToSection('gallery')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 GALLERY
               </button>
               
               <button 
                 onClick={() => scrollToSection('resources')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 RESOURCES
               </button>
               
               <button 
                 onClick={() => scrollToSection('how-to-help')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 HOW TO HELP
               </button>
               
               <button 
                 onClick={() => scrollToSection('contact')} 
-                className="text-neutral hover:text-primary transition-colors font-medium uppercase text-xs tracking-wide"
+                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
               >
                 CONTACT
               </button>
               
               <Button 
                 onClick={() => scrollToSection('donate')} 
-                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-xs font-medium uppercase tracking-wide"
+                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-xs font-medium uppercase tracking-wide transform hover:scale-110 transition-all duration-300 hover:shadow-lg animate-pulse-hover"
               >
                 DONATE
               </Button>

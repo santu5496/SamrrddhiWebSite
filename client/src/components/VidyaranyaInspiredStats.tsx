@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { 
   Users, 
   Heart, 
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 
 export default function VidyaranyaInspiredStats() {
+  const animationRef = useScrollAnimation();
   const [counts, setCounts] = useState({
     children: 0,
     specialNeeds: 0,
@@ -116,18 +118,18 @@ export default function VidyaranyaInspiredStats() {
     <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-green-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero-style Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 fade-in-section" ref={animationRef}>
           <div className="relative">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4 animate-fade-in-up">
               TOWARDS
             </h1>
-            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-8">
+            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-8 animate-fade-in-up animate-delay-200">
               SUSTAINABLE CHANGE
             </h2>
           </div>
           <Button 
             size="lg" 
-            className="bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transform hover:scale-105 transition-all"
+            className="bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transform hover:scale-105 transition-all animate-fade-in-up animate-delay-400 animate-pulse-hover"
             onClick={() => document.getElementById('how-to-help')?.scrollIntoView({ behavior: 'smooth' })}
           >
             HOW YOU CAN HELP
@@ -141,7 +143,7 @@ export default function VidyaranyaInspiredStats() {
             return (
               <Card 
                 key={index} 
-                className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer overflow-hidden"
+                className="group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer overflow-hidden fade-in-section hover:scale-105"
                 onClick={() => {
                   const element = document.querySelector(stat.link);
                   element?.scrollIntoView({ behavior: 'smooth' });

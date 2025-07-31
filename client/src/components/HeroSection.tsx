@@ -27,17 +27,17 @@ export default function HeroSection() {
       />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-        <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+        <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 animate-fade-in-up">
           {heroContent?.headline || "Give Her a Chance to Learn, Grow, and Thrive."}
         </h1>
-        <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">
+        <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light animate-fade-in-up animate-delay-200">
           {heroContent?.subheading || "Empowering rural girls and differently-abled children through education and care since 1995."}
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animate-delay-400">
           <Button 
             onClick={() => scrollToSection('donate')}
-            className="btn-gradient text-white px-8 py-4 rounded-full text-lg font-semibold border-0"
+            className="btn-gradient text-white px-8 py-4 rounded-full text-lg font-semibold border-0 transform hover:scale-105 transition-all duration-300 animate-pulse-hover"
           >
             <Heart className="mr-2 h-5 w-5" />
             Donate Now
@@ -45,27 +45,27 @@ export default function HeroSection() {
           <Button 
             onClick={() => scrollToSection('programs')}
             variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold transition-all hover:transform hover:scale-105"
+            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg"
           >
             Learn More
           </Button>
         </div>
         
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className="text-center">
-            <div className="text-4xl font-bold text-white mb-2">
+          <div className="text-center animate-fade-in-up animate-delay-500 transform hover:scale-105 transition-all duration-300">
+            <div className="text-4xl font-bold text-white mb-2 hover:text-secondary transition-colors duration-300">
               {heroContent?.yearsOfService || "29"}
             </div>
             <div className="text-sm uppercase tracking-wide">Years of Service</div>
           </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-white mb-2">
+          <div className="text-center animate-fade-in-up animate-delay-600 transform hover:scale-105 transition-all duration-300">
+            <div className="text-4xl font-bold text-white mb-2 hover:text-secondary transition-colors duration-300">
               {heroContent?.childrenSupported || "50+"}
             </div>
             <div className="text-sm uppercase tracking-wide">Children Supported</div>
           </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-secondary mb-2">
+          <div className="text-center animate-fade-in-up animate-delay-700 transform hover:scale-105 transition-all duration-300">
+            <div className="text-4xl font-bold text-secondary mb-2 hover:text-white transition-colors duration-300">
               {heroContent?.corePrograms || "3"}
             </div>
             <div className="text-sm uppercase tracking-wide">Core Programs</div>
