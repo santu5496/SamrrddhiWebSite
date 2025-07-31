@@ -17,7 +17,7 @@ export default function HeroSection() {
 
   const backgroundImageStyle = heroContent?.backgroundImageUrl 
     ? `linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.7)), url('${heroContent.backgroundImageUrl}')`
-    : `linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.7)), url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080')`;
+    : `linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.7)), url('https://images.unsplash.com/photo-1491013516836-7db643ee125a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')`;
 
   return (
     <section id="home" className="relative min-h-screen flex items-center">
