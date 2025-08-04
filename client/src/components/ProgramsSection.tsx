@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple, Leaf, Droplets, User, UserCheck } from "lucide-react";
+import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple, Leaf, Droplets, User, UserCheck, Zap } from "lucide-react";
 import { Program } from "@shared/schema";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState } from "react";
@@ -14,6 +14,7 @@ const iconMap: Record<string, any> = {
   "fas fa-heart": Heart,
   "fas fa-female": User,
   "fas fa-wheelchair": UserCheck,
+  "fas fa-fist-raised": Zap,
 };
 
 const getIconComponent = (iconClass: string) => {
