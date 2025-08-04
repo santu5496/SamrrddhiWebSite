@@ -1,20 +1,15 @@
 import {
-  pgTable,
+  sqliteTable,
   text,
   integer,
-  boolean,
-  serial,
-  timestamp,
   real,
   index,
-  varchar,
-  uuid,
-} from "drizzle-orm/pg-core";
+} from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Session storage table for Replit Auth
-export const sessions = pgTable(
+export const sessions = sqliteTable(
   "sessions",
   {
     sid: text("sid").primaryKey(),
@@ -27,42 +22,42 @@ export const sessions = pgTable(
 );
 
 // User storage table for Replit Auth
-export const users = pgTable("users", {
+export const users = sqliteTable("users", {
   id: text("id").primaryKey().notNull(),
   email: text("email").unique(),
   firstName: text("first_name"),
   lastName: text("last_name"),
   profileImageUrl: text("profile_image_url"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Hero section content
-export const heroContent = pgTable("hero_content", {
-  id: serial("id").primaryKey(),
+export const heroContent = sqliteTable("hero_content", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   headline: text("headline").notNull(),
   subheading: text("subheading").notNull(),
   backgroundImageUrl: text("background_image_url"),
   yearsOfService: text("years_of_service").default("29"),
   childrenSupported: text("children_supported").default("50+"),
   corePrograms: text("core_programs").default("8"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // About section content
-export const aboutContent = pgTable("about_content", {
-  id: serial("id").primaryKey(),
+export const aboutContent = sqliteTable("about_content", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   missionTitle: text("mission_title").notNull(),
   missionDescription: text("mission_description").notNull(),
   journeyTitle: text("journey_title").notNull(),
   journeyDescription: text("journey_description").notNull(),
   imageUrl: text("image_url"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Programs
-export const programs = pgTable("programs", {
-  id: serial("id").primaryKey(),
+export const programs = sqliteTable("programs", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   description: text("description").notNull(),
   detailedDescription: text("detailed_description"),
@@ -75,52 +70,52 @@ export const programs = pgTable("programs", {
   components: text("components"),
   futureInitiatives: text("future_initiatives"),
   orderIndex: integer("order_index").default(0),
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Events - Enhanced for better functionality
-export const events = pgTable("events", {
-  id: serial("id").primaryKey(),
+export const events = sqliteTable("events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   description: text("description"),
-  eventDate: timestamp("event_date").notNull(),
+  eventDate: integer("event_date").notNull(),
   startTime: text("start_time"),
   endTime: text("end_time"),
   location: text("location"),
   eventType: text("event_type").notNull(),
   maxParticipants: integer("max_participants"),
   currentParticipants: integer("current_participants").default(0),
-  registrationDeadline: timestamp("registration_deadline"),
-  isRegistrationOpen: boolean("is_registration_open").default(true),
+  registrationDeadline: integer("registration_deadline"),
+  isRegistrationOpen: integer("is_registration_open", { mode: "boolean" }).default(true),
   organizer: text("organizer"),
-  isActive: boolean("is_active").default(true),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
   imageUrl: text("image_url"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Contact Information
-export const contactInfo = pgTable("contact_info", {
-  id: serial("id").primaryKey(),
+export const contactInfo = sqliteTable("contact_info", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   address: text("address").notNull(),
   phone: text("phone").notNull(),
   email: text("email").notNull(),
   website: text("website"),
   socialMedia: text("social_media"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Donation Configuration
-export const donationConfig = pgTable("donation_config", {
-  id: serial("id").primaryKey(),
+export const donationConfig = sqliteTable("donation_config", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   monthlyAmount: text("monthly_amount").notNull(),
   description: text("description").notNull(),
   bankDetails: text("bank_details"),
   paymentMethods: text("payment_methods"),
   taxBenefits: text("tax_benefits"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Schema exports for validation
