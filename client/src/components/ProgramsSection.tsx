@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink } from "lucide-react";
+import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple } from "lucide-react";
 import { Program } from "@shared/schema";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState } from "react";
@@ -9,6 +9,7 @@ const iconMap: Record<string, any> = {
   "fas fa-home": Home,
   "fas fa-graduation-cap": GraduationCap,
   "fas fa-utensils": Utensils,
+  "fas fa-apple": Apple,
 };
 
 const getIconComponent = (iconClass: string) => {
@@ -36,7 +37,7 @@ export default function ProgramsSection() {
         <div className="text-center mb-16 fade-in-section" ref={animationRef}>
           <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Three core programs designed to provide comprehensive support and education to rural girls and differently-abled children.
+            Four comprehensive programs designed to provide education, nutrition, and support to rural girls, differently-abled children, and school children.
           </p>
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
@@ -59,7 +60,7 @@ export default function ProgramsSection() {
           </div>
         )}
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {programs && programs.length > 0 ? (
             programs.map((program, index) => {
               const IconComponent = getIconComponent(program.icon);
@@ -84,7 +85,8 @@ export default function ProgramsSection() {
                       <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg mr-3 transform group-hover:rotate-12 transition-transform duration-300 ${
                         index === 0 ? 'gradient-primary' : 
                         index === 1 ? 'gradient-secondary' : 
-                        'gradient-accent'
+                        index === 2 ? 'gradient-accent' :
+                        'bg-gradient-to-r from-green-500 to-emerald-600'
                       }`}>
                         <IconComponent className="text-white h-5 w-5" />
                       </div>
@@ -110,6 +112,12 @@ export default function ProgramsSection() {
                         <>
                           <Shield className="h-4 w-4 mr-2" />
                           <span>Complete Care</span>
+                        </>
+                      )}
+                      {program.title.includes("Midday Meal") && (
+                        <>
+                          <Apple className="h-4 w-4 mr-2" />
+                          <span>Nutritious School Meals</span>
                         </>
                       )}
                     </div>
@@ -228,6 +236,31 @@ export default function ProgramsSection() {
                           <li>• Improved health outcomes</li>
                           <li>• Better academic performance</li>
                           <li>• Reduced malnutrition rates</li>
+                          <li>• Enhanced physical development</li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedProgram.title.includes("Midday Meal") && (
+                    <>
+                      <div className="bg-green-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-green-800">Program Features</h4>
+                        <ul className="space-y-2 text-green-700">
+                          <li>• Fresh, hot meals prepared daily</li>
+                          <li>• Nutritionally balanced menu</li>
+                          <li>• Local ingredient sourcing</li>
+                          <li>• Hygiene and food safety standards</li>
+                          <li>• Regular nutrition assessment</li>
+                        </ul>
+                      </div>
+                      <div className="bg-emerald-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-emerald-800">Impact</h4>
+                        <ul className="space-y-2 text-emerald-700">
+                          <li>• 300+ school children served daily</li>
+                          <li>• 95% improvement in attendance</li>
+                          <li>• Better concentration and learning</li>
+                          <li>• Reduced dropout rates</li>
                           <li>• Enhanced physical development</li>
                         </ul>
                       </div>
