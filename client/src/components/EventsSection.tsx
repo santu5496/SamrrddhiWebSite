@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { Calendar, MapPin, Clock, Users, ArrowRight, Filter, Search, Star, Share2, Heart } from "lucide-react";
+import { Calendar, MapPin, Clock, Users, ArrowRight, Filter, Search, Star, Share2, Heart, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Progress } from "./ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { useState } from "react";
 
 interface Event {
@@ -32,24 +34,29 @@ export default function EventsSection() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("all");
-  const [showPast, setShowPast] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   if (isLoading) {
     return (
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-300 rounded w-64 mx-auto mb-4"></div>
-            <div className="h-4 bg-gray-300 rounded w-96 mx-auto mb-12"></div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-gray-50 rounded-lg p-6 space-y-4">
-                  <div className="h-40 bg-gray-300 rounded"></div>
-                  <div className="h-6 bg-gray-300 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-300 rounded"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
-                  <div className="h-10 bg-gray-300 rounded"></div>
+            <div className="h-12 bg-gradient-to-r from-gray-300 to-gray-200 rounded-lg w-80 mx-auto mb-6"></div>
+            <div className="h-6 bg-gradient-to-r from-gray-200 to-gray-100 rounded w-96 mx-auto mb-16"></div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                  <div className="h-48 bg-gradient-to-r from-gray-300 to-gray-200"></div>
+                  <div className="p-6 space-y-4">
+                    <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-4 bg-gray-100 rounded"></div>
+                    <div className="h-4 bg-gray-100 rounded w-2/3"></div>
+                    <div className="flex gap-2">
+                      <div className="h-6 bg-gray-200 rounded-full w-16"></div>
+                      <div className="h-6 bg-gray-200 rounded-full w-20"></div>
+                    </div>
+                    <div className="h-10 bg-gradient-to-r from-blue-200 to-purple-200 rounded-lg"></div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -60,7 +67,8 @@ export default function EventsSection() {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    const date = new Date(parseInt(dateString));
+    return date.toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -69,6 +77,7 @@ export default function EventsSection() {
   };
 
   const formatTime = (timeString: string) => {
+    if (!timeString) return '';
     return new Date(`2024-01-01T${timeString}`).toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',
@@ -76,376 +85,409 @@ export default function EventsSection() {
     });
   };
 
-  const isUpcoming = (eventDate: string) => {
-    return new Date(eventDate) > new Date();
+  const isUpcoming = (dateString: string) => {
+    return new Date(parseInt(dateString)) > new Date();
   };
 
-  const getEventTypeColor = (eventType: string) => {
-    switch (eventType.toLowerCase()) {
-      case 'workshop':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'fundraiser':
-        return 'bg-green-100 text-green-800 border-green-200';
-      case 'community':
-        return 'bg-purple-100 text-purple-800 border-purple-200';
-      case 'educational':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
+  const daysUntilEvent = (dateString: string) => {
+    const eventDate = new Date(parseInt(dateString));
+    const today = new Date();
+    const diffTime = eventDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
   };
 
-  const getEventTypeIcon = (eventType: string) => {
-    switch (eventType.toLowerCase()) {
-      case 'workshop':
-        return '🔧';
-      case 'fundraiser':
-        return '💝';
-      case 'community':
-        return '👥';
-      case 'educational':
-        return '📚';
-      default:
-        return '📅';
-    }
-  };
-
+  // Filter events based on search and type
   const filteredEvents = events.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (event.description?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
-    const matchesType = selectedType === "all" || event.eventType.toLowerCase() === selectedType;
-    const matchesTimeFilter = showPast ? !isUpcoming(event.eventDate) : isUpcoming(event.eventDate);
-    
-    return matchesSearch && matchesType && matchesTimeFilter;
+                         event.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         event.location?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = selectedType === "all" || event.eventType === selectedType;
+    return matchesSearch && matchesType;
   });
 
-  const eventTypes = Array.from(new Set(events.map(event => event.eventType.toLowerCase())));
+  // Separate upcoming and past events
+  const upcomingEvents = filteredEvents.filter(event => isUpcoming(event.eventDate));
+  const pastEvents = filteredEvents.filter(event => !isUpcoming(event.eventDate));
 
-  const getDaysUntilEvent = (eventDate: string) => {
-    const days = Math.ceil((new Date(eventDate).getTime() - new Date().getTime()) / (1000 * 3600 * 24));
-    return days;
+  const getEventTypeColor = (type: string) => {
+    const colors = {
+      fundraiser: "bg-gradient-to-r from-pink-500 to-rose-500 text-white",
+      educational: "bg-gradient-to-r from-blue-500 to-indigo-500 text-white",
+      workshop: "bg-gradient-to-r from-purple-500 to-violet-500 text-white",
+      community: "bg-gradient-to-r from-green-500 to-emerald-500 text-white",
+      health: "bg-gradient-to-r from-red-500 to-pink-500 text-white"
+    };
+    return colors[type as keyof typeof colors] || "bg-gradient-to-r from-gray-500 to-slate-500 text-white";
   };
 
-  return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50" id="events">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-4">
-            <div className="bg-primary/10 p-3 rounded-full mr-3">
-              <Calendar className="h-8 w-8 text-primary" />
-            </div>
-            <h2 className="text-4xl font-bold text-neutral">Events & Programs</h2>
-          </div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-            Join us in our community events, workshops, and fundraising activities that create lasting impact.
-          </p>
+  const getEventIcon = (type: string) => {
+    const icons = {
+      fundraiser: "💰",
+      educational: "📚",
+      workshop: "🛠️",
+      community: "🤝",
+      health: "🏥"
+    };
+    return icons[type as keyof typeof icons] || "📅";
+  };
+
+  const EventCard = ({ event }: { event: Event }) => {
+    const participationRate = event.maxParticipants 
+      ? (event.currentParticipants || 0) / event.maxParticipants * 100 
+      : 0;
+    const daysLeft = daysUntilEvent(event.eventDate);
+    const upcoming = isUpcoming(event.eventDate);
+
+    return (
+      <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white rounded-2xl">
+        <div className="relative overflow-hidden">
+          <img 
+            src={event.imageUrl || '/api/placeholder/600/400'} 
+            alt={event.title}
+            className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           
-          {/* Filter Controls */}
-          <div className="bg-white rounded-xl shadow-sm border p-6 max-w-4xl mx-auto mb-8">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Search events..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              
-              <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="w-full md:w-48">
-                  <SelectValue placeholder="Event Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Events</SelectItem>
-                  {eventTypes.map(type => (
-                    <SelectItem key={type} value={type}>
-                      {getEventTypeIcon(type)} {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              
-              <div className="flex gap-2">
-                <Button
-                  variant={!showPast ? "default" : "outline"}
-                  onClick={() => setShowPast(false)}
-                  size="sm"
-                >
+          {/* Event Type Badge */}
+          <div className="absolute top-4 left-4">
+            <Badge className={`${getEventTypeColor(event.eventType)} px-3 py-1 text-sm font-medium shadow-lg`}>
+              <span className="mr-1">{getEventIcon(event.eventType)}</span>
+              {event.eventType}
+            </Badge>
+          </div>
+
+          {/* Status Badge */}
+          <div className="absolute top-4 right-4">
+            {upcoming ? (
+              daysLeft <= 7 ? (
+                <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 shadow-lg animate-pulse">
+                  <AlertCircle className="w-3 h-3 mr-1" />
+                  {daysLeft} days left
+                </Badge>
+              ) : (
+                <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-1 shadow-lg">
+                  <Sparkles className="w-3 h-3 mr-1" />
                   Upcoming
-                </Button>
-                <Button
-                  variant={showPast ? "default" : "outline"}
-                  onClick={() => setShowPast(true)}
-                  size="sm"
-                >
-                  Past Events
-                </Button>
-              </div>
+                </Badge>
+              )
+            ) : (
+              <Badge className="bg-gradient-to-r from-gray-500 to-slate-500 text-white px-3 py-1 shadow-lg">
+                <CheckCircle className="w-3 h-3 mr-1" />
+                Completed
+              </Badge>
+            )}
+          </div>
+
+          {/* Quick Actions */}
+          <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="flex gap-2">
+              <Button size="sm" variant="secondary" className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/30">
+                <Heart className="w-4 h-4" />
+              </Button>
+              <Button size="sm" variant="secondary" className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/30">
+                <Share2 className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         </div>
 
-        {/* Events Grid */}
-        {filteredEvents.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredEvents.map((event) => (
-              <Card key={event.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm border-0 shadow-md overflow-hidden">
-                <div className="relative">
-                  {event.imageUrl ? (
-                    <div className="aspect-video overflow-hidden">
-                      <img
-                        src={event.imageUrl}
-                        alt={event.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  ) : (
-                    <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                      <div className="text-6xl opacity-20">{getEventTypeIcon(event.eventType)}</div>
-                    </div>
-                  )}
-                  
-                  {/* Event Type Badge */}
-                  <div className="absolute top-4 left-4">
-                    <Badge className={`${getEventTypeColor(event.eventType)} border`}>
-                      {getEventTypeIcon(event.eventType)} {event.eventType.charAt(0).toUpperCase() + event.eventType.slice(1)}
-                    </Badge>
-                  </div>
-
-                  {/* Registration Status */}
-                  {isUpcoming(event.eventDate) && (
-                    <div className="absolute top-4 right-4">
-                      {event.isRegistrationOpen ? (
-                        <Badge className="bg-green-500 text-white">
-                          <Heart className="h-3 w-3 mr-1" />
-                          Open
-                        </Badge>
-                      ) : (
-                        <Badge variant="secondary">Closed</Badge>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Days Until Event */}
-                  {isUpcoming(event.eventDate) && (
-                    <div className="absolute bottom-4 right-4">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium">
-                        {getDaysUntilEvent(event.eventDate)} days to go
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-neutral mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                    {event.title}
-                  </h3>
-
-                  {event.description && (
-                    <p className="text-gray-600 mb-4 line-clamp-3 text-sm leading-relaxed">
-                      {event.description}
-                    </p>
-                  )}
-
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Calendar className="h-4 w-4 mr-3 text-primary flex-shrink-0" />
-                      <span className="font-medium">{formatDate(event.eventDate)}</span>
-                    </div>
-                    
-                    {event.startTime && (
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Clock className="h-4 w-4 mr-3 text-primary flex-shrink-0" />
-                        <span>
-                          {formatTime(event.startTime)}
-                          {event.endTime && ` - ${formatTime(event.endTime)}`}
-                        </span>
-                      </div>
-                    )}
-
-                    {event.location && (
-                      <div className="flex items-center text-sm text-gray-600">
-                        <MapPin className="h-4 w-4 mr-3 text-primary flex-shrink-0" />
-                        <span className="line-clamp-1">{event.location}</span>
-                      </div>
-                    )}
-
-                    {event.maxParticipants && (
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Users className="h-4 w-4 mr-3 text-primary flex-shrink-0" />
-                        <span>
-                          {event.currentParticipants || 0} / {event.maxParticipants} participants
-                        </span>
-                        {event.maxParticipants && (
-                          <div className="ml-auto">
-                            <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
-                              <div 
-                                className="h-full bg-primary rounded-full transition-all"
-                                style={{ width: `${Math.min(((event.currentParticipants || 0) / event.maxParticipants) * 100, 100)}%` }}
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button variant="outline" className="flex-1" onClick={() => setSelectedEvent(event)}>
-                          View Details
-                        </Button>
-                      </DialogTrigger>
-                    </Dialog>
-
-                    {isUpcoming(event.eventDate) && event.isRegistrationOpen && (
-                      <Button className="flex-1 group">
-                        Register
-                        <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    )}
-                    
-                    <Button variant="ghost" size="icon" className="flex-shrink-0">
-                      <Share2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16">
-            <div className="text-gray-400 text-6xl mb-4">📅</div>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No events found</h3>
-            <p className="text-gray-500">
-              {searchTerm || selectedType !== "all" 
-                ? "Try adjusting your search or filters" 
-                : showPast 
-                  ? "No past events to display" 
-                  : "No upcoming events scheduled at the moment"
-              }
+        <CardContent className="p-6 space-y-4">
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+              {event.title}
+            </h3>
+            <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
+              {event.description}
             </p>
           </div>
-        )}
 
-        {/* Event Details Modal */}
-        <Dialog>
-          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold">
-                {selectedEvent?.title}
-              </DialogTitle>
-              <DialogDescription>
-                Event Details & Information
-              </DialogDescription>
-            </DialogHeader>
+          <div className="space-y-3">
+            <div className="flex items-center text-sm text-gray-500">
+              <Calendar className="w-4 h-4 mr-2 text-blue-500" />
+              <span className="font-medium">{formatDate(event.eventDate)}</span>
+            </div>
             
-            {selectedEvent && (
-              <div className="space-y-6">
-                {selectedEvent.imageUrl && (
-                  <img
-                    src={selectedEvent.imageUrl}
-                    alt={selectedEvent.title}
-                    className="w-full h-64 object-cover rounded-lg"
-                  />
-                )}
-                
-                <div className="flex gap-2 flex-wrap">
-                  <Badge className={getEventTypeColor(selectedEvent.eventType)}>
-                    {getEventTypeIcon(selectedEvent.eventType)} {selectedEvent.eventType}
-                  </Badge>
-                  {selectedEvent.isRegistrationOpen && isUpcoming(selectedEvent.eventDate) && (
-                    <Badge className="bg-green-500 text-white">Registration Open</Badge>
-                  )}
-                </div>
-
-                {selectedEvent.description && (
-                  <div>
-                    <h3 className="font-semibold mb-2">About This Event</h3>
-                    <p className="text-gray-600 leading-relaxed">{selectedEvent.description}</p>
-                  </div>
-                )}
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-3">
-                    <h3 className="font-semibold">Event Details</h3>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-2 text-primary" />
-                        {formatDate(selectedEvent.eventDate)}
-                      </div>
-                      {selectedEvent.startTime && (
-                        <div className="flex items-center">
-                          <Clock className="h-4 w-4 mr-2 text-primary" />
-                          {formatTime(selectedEvent.startTime)}
-                          {selectedEvent.endTime && ` - ${formatTime(selectedEvent.endTime)}`}
-                        </div>
-                      )}
-                      {selectedEvent.location && (
-                        <div className="flex items-center">
-                          <MapPin className="h-4 w-4 mr-2 text-primary" />
-                          {selectedEvent.location}
-                        </div>
-                      )}
-                      {selectedEvent.organizer && (
-                        <div className="flex items-center">
-                          <Users className="h-4 w-4 mr-2 text-primary" />
-                          Organized by {selectedEvent.organizer}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {selectedEvent.maxParticipants && (
-                    <div className="space-y-3">
-                      <h3 className="font-semibold">Participation</h3>
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>Registered</span>
-                          <span>{selectedEvent.currentParticipants || 0} / {selectedEvent.maxParticipants}</span>
-                        </div>
-                        <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-primary rounded-full transition-all"
-                            style={{ width: `${Math.min(((selectedEvent.currentParticipants || 0) / selectedEvent.maxParticipants) * 100, 100)}%` }}
-                          />
-                        </div>
-                        {selectedEvent.registrationDeadline && isUpcoming(selectedEvent.registrationDeadline) && (
-                          <p className="text-xs text-gray-500">
-                            Registration closes on {formatDate(selectedEvent.registrationDeadline)}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {isUpcoming(selectedEvent.eventDate) && selectedEvent.isRegistrationOpen && (
-                  <div className="flex gap-3 pt-4 border-t">
-                    <Button className="flex-1">
-                      Register for This Event
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                    <Button variant="outline">
-                      <Share2 className="h-4 w-4 mr-2" />
-                      Share
-                    </Button>
-                  </div>
-                )}
+            {event.startTime && (
+              <div className="flex items-center text-sm text-gray-500">
+                <Clock className="w-4 h-4 mr-2 text-green-500" />
+                <span>{formatTime(event.startTime)} - {formatTime(event.endTime || '')}</span>
               </div>
             )}
-          </DialogContent>
-        </Dialog>
+            
+            {event.location && (
+              <div className="flex items-center text-sm text-gray-500">
+                <MapPin className="w-4 h-4 mr-2 text-red-500" />
+                <span className="line-clamp-1">{event.location}</span>
+              </div>
+            )}
 
-        {events.length === 0 && (
-          <div className="text-center py-12">
-            <Calendar className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500">No events scheduled at the moment. Check back soon!</p>
+            {event.organizer && (
+              <div className="flex items-center text-sm text-gray-500">
+                <Star className="w-4 h-4 mr-2 text-yellow-500" />
+                <span className="font-medium">by {event.organizer}</span>
+              </div>
+            )}
           </div>
-        )}
+
+          {/* Participation Progress */}
+          {event.maxParticipants && (
+            <div className="space-y-2">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-gray-600">
+                  <Users className="w-4 h-4 inline mr-1" />
+                  {event.currentParticipants || 0} / {event.maxParticipants} participants
+                </span>
+                <span className="text-sm font-semibold text-blue-600">
+                  {Math.round(participationRate)}% full
+                </span>
+              </div>
+              <Progress 
+                value={participationRate} 
+                className="h-2 bg-gray-100"
+              />
+            </div>
+          )}
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button 
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                onClick={() => setSelectedEvent(event)}
+              >
+                {upcoming && event.isRegistrationOpen ? (
+                  <>
+                    Register Now
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </>
+                ) : (
+                  <>
+                    View Details
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </>
+                )}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold text-gray-900 pr-8">
+                  {event.title}
+                </DialogTitle>
+                <DialogDescription className="text-gray-600 mt-2">
+                  {event.description}
+                </DialogDescription>
+              </DialogHeader>
+              
+              <div className="mt-6 space-y-6">
+                <img 
+                  src={event.imageUrl || '/api/placeholder/800/400'} 
+                  alt={event.title}
+                  className="w-full h-64 object-cover rounded-xl shadow-lg"
+                />
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-lg text-gray-900">Event Details</h4>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <Calendar className="w-5 h-5 text-blue-500 mt-0.5" />
+                        <div>
+                          <p className="font-medium text-gray-900">{formatDate(event.eventDate)}</p>
+                          <p className="text-sm text-gray-500">
+                            {event.startTime && `${formatTime(event.startTime)} - ${formatTime(event.endTime || '')}`}
+                          </p>
+                        </div>
+                      </div>
+
+                      {event.location && (
+                        <div className="flex items-start gap-3">
+                          <MapPin className="w-5 h-5 text-red-500 mt-0.5" />
+                          <p className="text-gray-700">{event.location}</p>
+                        </div>
+                      )}
+
+                      {event.organizer && (
+                        <div className="flex items-start gap-3">
+                          <Star className="w-5 h-5 text-yellow-500 mt-0.5" />
+                          <p className="text-gray-700">Organized by {event.organizer}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-lg text-gray-900">Registration Info</h4>
+                    
+                    {event.maxParticipants && (
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-xl">
+                        <div className="flex justify-between items-center mb-3">
+                          <span className="text-sm font-medium text-gray-700">Participation</span>
+                          <span className="text-sm font-bold text-blue-600">
+                            {Math.round(participationRate)}% Full
+                          </span>
+                        </div>
+                        <Progress value={participationRate} className="h-3 mb-2" />
+                        <p className="text-sm text-gray-600">
+                          {event.currentParticipants || 0} out of {event.maxParticipants} spots filled
+                        </p>
+                      </div>
+                    )}
+
+                    {upcoming && event.isRegistrationOpen ? (
+                      <div className="space-y-3">
+                        {event.registrationDeadline && (
+                          <p className="text-sm text-gray-600">
+                            <strong>Registration Deadline:</strong> {formatDate(event.registrationDeadline)}
+                          </p>
+                        )}
+                        <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold py-3 rounded-xl shadow-lg">
+                          Register for This Event
+                        </Button>
+                      </div>
+                    ) : upcoming ? (
+                      <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-xl">
+                        <p className="text-yellow-800 font-medium">Registration Closed</p>
+                        <p className="text-yellow-600 text-sm mt-1">Registration for this event is no longer available.</p>
+                      </div>
+                    ) : (
+                      <div className="bg-gray-50 border border-gray-200 p-4 rounded-xl">
+                        <p className="text-gray-800 font-medium">Event Completed</p>
+                        <p className="text-gray-600 text-sm mt-1">This event has already taken place.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  return (
+    <section className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-pink-400/20 to-indigo-400/20 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Upcoming <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Events</span>
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Join us in our mission to empower communities. Discover upcoming workshops, fundraisers, and community events that make a difference.
+          </p>
+        </div>
+
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-12 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-white/20">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Input
+              type="text"
+              placeholder="Search events, locations, or organizers..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 pr-4 py-3 border-gray-200 focus:border-blue-500 focus:ring-blue-500 rounded-xl bg-white/90"
+            />
+          </div>
+          <Select value={selectedType} onValueChange={setSelectedType}>
+            <SelectTrigger className="w-full sm:w-64 py-3 border-gray-200 focus:border-blue-500 focus:ring-blue-500 rounded-xl bg-white/90">
+              <Filter className="w-4 h-4 mr-2 text-gray-400" />
+              <SelectValue placeholder="Filter by type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Events</SelectItem>
+              <SelectItem value="fundraiser">💰 Fundraisers</SelectItem>
+              <SelectItem value="educational">📚 Educational</SelectItem>
+              <SelectItem value="workshop">🛠️ Workshops</SelectItem>
+              <SelectItem value="community">🤝 Community</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Events Tabs */}
+        <Tabs defaultValue="upcoming" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/80 backdrop-blur-sm p-1 rounded-xl shadow-lg border border-white/20">
+            <TabsTrigger 
+              value="upcoming" 
+              className="text-sm font-medium py-3 px-6 rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white transition-all duration-300"
+            >
+              🔥 Upcoming Events ({upcomingEvents.length})
+            </TabsTrigger>
+            <TabsTrigger 
+              value="past"
+              className="text-sm font-medium py-3 px-6 rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-gray-500 data-[state=active]:to-slate-500 data-[state=active]:text-white transition-all duration-300"
+            >
+              📅 Past Events ({pastEvents.length})
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="upcoming" className="mt-0">
+            {upcomingEvents.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {upcomingEvents.map((event) => (
+                  <EventCard key={event.id} event={event} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-12 shadow-lg border border-white/20 max-w-md mx-auto">
+                  <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No Upcoming Events</h3>
+                  <p className="text-gray-600">
+                    {searchTerm || selectedType !== "all" 
+                      ? "No events match your search criteria. Try adjusting your filters."
+                      : "Check back soon for new events and opportunities to get involved!"
+                    }
+                  </p>
+                </div>
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="past" className="mt-0">
+            {pastEvents.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {pastEvents.map((event) => (
+                  <EventCard key={event.id} event={event} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-12 shadow-lg border border-white/20 max-w-md mx-auto">
+                  <CheckCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No Past Events</h3>
+                  <p className="text-gray-600">
+                    {searchTerm || selectedType !== "all" 
+                      ? "No past events match your search criteria."
+                      : "Past events will appear here once they are completed."
+                    }
+                  </p>
+                </div>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+
+        {/* Call to Action */}
+        <div className="mt-16 text-center">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 shadow-2xl text-white">
+            <h3 className="text-2xl font-bold mb-4">Stay Updated on Our Events</h3>
+            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+              Don't miss out on upcoming opportunities to make a difference. Subscribe to our newsletter for event updates and community news.
+            </p>
+            <Button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              Subscribe to Updates
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );
