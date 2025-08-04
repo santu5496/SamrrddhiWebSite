@@ -401,19 +401,19 @@ export const impactStats = sqliteTable("impact_stats", {
 });
 
 // Research papers and publications
-export const publications = pgTable("publications", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  type: varchar("type", { length: 100 }).notNull(), // research, report, case-study, etc.
-  authors: text("authors").array(),
+export const publications = sqliteTable("publications", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
+  type: text("type").notNull(), // research, report, case-study, etc.
+  authors: text("authors"),
   abstract: text("abstract"),
-  publishedDate: timestamp("published_date"),
-  journal: varchar("journal", { length: 255 }),
-  fileUrl: varchar("file_url", { length: 500 }),
-  tags: text("tags").array(),
-  isPublished: boolean("is_published").default(true),
+  publishedDate: integer("published_date"),
+  journal: text("journal"),
+  fileUrl: text("file_url"),
+  tags: text("tags"),
+  isPublished: integer("is_published", { mode: "boolean" }).default(true),
   downloadCount: integer("download_count").default(0),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
 });
 
 // Create insert schemas for new tables
