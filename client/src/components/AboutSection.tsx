@@ -4,12 +4,27 @@ import { AboutContent } from "@shared/schema";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export default function AboutSection() {
-  const { data: aboutContent } = useQuery<AboutContent>({
+  const { data: aboutContent, isLoading: aboutLoading } = useQuery<AboutContent>({
     queryKey: ["/api/about"],
   });
   const animationRef = useScrollAnimation();
 
+  console.log("About Content:", aboutContent);
+
   const defaultImageUrl = "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600";
+
+  if (aboutLoading) {
+    return (
+      <section id="about" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-lg text-gray-600">Loading about content...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="about" className="py-20 bg-gray-50">

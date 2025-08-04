@@ -1,35 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { Calendar, MapPin, Clock, Users, ArrowRight, Filter, Search, Star, Share2, Heart, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
-import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
-import { Badge } from "./ui/badge";
-import { Input } from "./ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { Progress } from "./ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { useState } from "react";
-
-interface Event {
-  id: number;
-  title: string;
-  description?: string;
-  eventDate: string;
-  startTime?: string;
-  endTime?: string;
-  location?: string;
-  maxParticipants?: number;
-  currentParticipants?: number;
-  eventType: string;
-  isRegistrationOpen: boolean;
-  registrationDeadline?: string;
-  organizer?: string;
-  imageUrl?: string;
-}
+import { Calendar, Clock, MapPin, Users, Filter, Search, X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Event } from "@shared/schema";
+import { ArrowRight, Star, Share2, Heart, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
+import { Progress } from "./ui/progress";
 
 export default function EventsSection() {
   const { data: events = [], isLoading } = useQuery<Event[]>({
-    queryKey: ['/api/events'],
+    queryKey: ["/api/events"],
   });
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -148,7 +133,7 @@ export default function EventsSection() {
             className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          
+
           {/* Event Type Badge */}
           <div className="absolute top-4 left-4">
             <Badge className={`${getEventTypeColor(event.eventType)} px-3 py-1 text-sm font-medium shadow-lg`}>
@@ -207,14 +192,14 @@ export default function EventsSection() {
               <Calendar className="w-4 h-4 mr-2 text-blue-500" />
               <span className="font-medium">{formatDate(event.eventDate)}</span>
             </div>
-            
+
             {event.startTime && (
               <div className="flex items-center text-sm text-gray-500">
                 <Clock className="w-4 h-4 mr-2 text-green-500" />
                 <span>{formatTime(event.startTime)} - {formatTime(event.endTime || '')}</span>
               </div>
             )}
-            
+
             {event.location && (
               <div className="flex items-center text-sm text-gray-500">
                 <MapPin className="w-4 h-4 mr-2 text-red-500" />
@@ -277,7 +262,7 @@ export default function EventsSection() {
                   {event.description}
                 </DialogDescription>
               </DialogHeader>
-              
+
               <div className="mt-6 space-y-6">
                 <img 
                   src={event.imageUrl || '/api/placeholder/800/400'} 
@@ -288,7 +273,7 @@ export default function EventsSection() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <h4 className="font-semibold text-lg text-gray-900">Event Details</h4>
-                    
+
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
                         <Calendar className="w-5 h-5 text-blue-500 mt-0.5" />
@@ -318,7 +303,7 @@ export default function EventsSection() {
 
                   <div className="space-y-4">
                     <h4 className="font-semibold text-lg text-gray-900">Registration Info</h4>
-                    
+
                     {event.maxParticipants && (
                       <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-xl">
                         <div className="flex justify-between items-center mb-3">
