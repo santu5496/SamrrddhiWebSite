@@ -22,10 +22,7 @@ export default function ProgramsSection() {
   const animationRef = useScrollAnimation();
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
 
-  // Debug logging
-  console.log("Programs data:", programs);
-  console.log("Is loading:", isLoading);
-  console.log("Error:", error);
+
 
   const defaultImages = [
     "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400",
@@ -56,6 +53,12 @@ export default function ProgramsSection() {
           </div>
         )}
         
+        {!isLoading && !error && (!programs || programs.length === 0) && (
+          <div className="text-center py-12">
+            <div className="text-lg text-gray-600">No programs available.</div>
+          </div>
+        )}
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {programs && programs.length > 0 ? (
             programs.map((program, index) => {
@@ -63,7 +66,7 @@ export default function ProgramsSection() {
               return (
                 <div 
                   key={program.id} 
-                  className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-500 fade-in-section group cursor-pointer"
+                  className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-500 group cursor-pointer"
                   onClick={() => setSelectedProgram(program)}
                 >
                   <div className="relative overflow-hidden">
