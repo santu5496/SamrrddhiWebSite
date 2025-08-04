@@ -81,7 +81,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: 1,
             title: "Free Girls' Hostel",
             description: "Providing safe accommodation and supportive environment for rural girls from 1st to 10th standard. Our hostel ensures that distance and family circumstances don't become barriers to education.",
-            imageUrl: "/api/placeholder/400/300?text=Girls+Hostel",
+            imageUrl: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop&crop=center",
             icon: "fas fa-home",
             isActive: true
           },
@@ -89,7 +89,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: 2,
             title: "IDC - Integrated Education",
             description: "Integrated Education for Disabled Children (IDC) program provides specialized education and support for differently-abled children, promoting inclusive learning with state and central government support.",
-            imageUrl: "/api/placeholder/400/300?text=Education+Program",
+            imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop&crop=center",
             icon: "fas fa-graduation-cap",
             isActive: true
           },
@@ -97,7 +97,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: 3,
             title: "Food & Shelter",
             description: "Comprehensive food and shelter program ensuring nutritious meals and safe accommodation for all children in our care. Basic needs are met so children can focus on learning and growth.",
-            imageUrl: "/api/placeholder/400/300?text=Food+Shelter",
+            imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&h=300&fit=crop&crop=center",
             icon: "fas fa-utensils",
             isActive: true
           },
@@ -105,7 +105,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: 4,
             title: "Free Karate Coaching",
             description: "Empowering girls with self-defense skills through professional karate training. Building confidence, physical fitness, and personal safety awareness in a supportive environment.",
-            imageUrl: "/api/placeholder/400/300?text=Karate+Training",
+            imageUrl: "https://images.unsplash.com/photo-1555597673-b21d5c935865?w=400&h=300&fit=crop&crop=center",
             icon: "fas fa-fist-raised",
             isActive: true
           }
