@@ -1,6 +1,6 @@
 import Database from 'better-sqlite3';
 
-const db = new Database('./database.sqlite');
+const db = new Database('./samruddhi.sqlite');
 
 // Check events table structure
 console.log('=== EVENTS TABLE STRUCTURE ===');
