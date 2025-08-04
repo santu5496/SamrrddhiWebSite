@@ -1,7 +1,4 @@
-The code has been refactored to fix undefined variables, improve component structure, address dialog warnings, and enhance accessibility.
-```
 
-```replit_final_file
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Calendar, Clock, MapPin, Users, Filter, Search, X } from "lucide-react";
@@ -25,8 +22,8 @@ const EventsSection = () => {
   const [selectedType, setSelectedType] = useState("all");
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(parseInt(dateString));
+  const formatDate = (dateValue: string | number) => {
+    const date = new Date(typeof dateValue === 'string' ? parseInt(dateValue) : dateValue);
     return date.toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
@@ -44,12 +41,12 @@ const EventsSection = () => {
     });
   };
 
-  const isUpcoming = (dateString: string) => {
-    return new Date(parseInt(dateString)) > new Date();
+  const isUpcoming = (dateValue: string | number) => {
+    return new Date(typeof dateValue === 'string' ? parseInt(dateValue) : dateValue) > new Date();
   };
 
-  const daysUntilEvent = (dateString: string) => {
-    const eventDate = new Date(parseInt(dateString));
+  const daysUntilEvent = (dateValue: string | number) => {
+    const eventDate = new Date(typeof dateValue === 'string' ? parseInt(dateValue) : dateValue);
     const today = new Date();
     const diffTime = eventDate.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
