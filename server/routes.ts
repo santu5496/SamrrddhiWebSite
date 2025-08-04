@@ -132,6 +132,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=300&fit=crop&crop=center",
             icon: "fas fa-user-friends",
             isActive: true
+          },
+          {
+            id: 8,
+            title: "Mid Day Meal Program",
+            description: "Nutritious mid day meals provided to school children and community members. Ensuring proper nutrition, promoting school attendance, and supporting healthy growth and development of children in rural areas.",
+            imageUrl: "https://images.unsplash.com/photo-1574484284002-952d92456975?w=400&h=300&fit=crop&crop=center",
+            icon: "fas fa-apple",
+            isActive: true
           }
         ]);
       } else {
