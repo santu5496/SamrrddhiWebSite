@@ -4,6 +4,7 @@ import {
   aboutContent,
   programs,
   events,
+  leadership,
   contactInfo,
   donationConfig,
   type HeroContent,
@@ -14,6 +15,8 @@ import {
   type InsertProgram,
   type Event,
   type InsertEvent,
+  type Leadership,
+  type InsertLeadership,
   type ContactInfo,
   type InsertContactInfo,
   type DonationConfig,
@@ -47,6 +50,13 @@ export interface IStorage {
   createEvent(event: InsertEvent): Promise<Event>;
   updateEvent(id: number, event: Partial<InsertEvent>): Promise<Event>;
   deleteEvent(id: number): Promise<void>;
+
+  // Leadership operations
+  getLeadership(): Promise<Leadership[]>;
+  getActiveLeadership(): Promise<Leadership[]>;
+  createLeadership(leadership: InsertLeadership): Promise<Leadership>;
+  updateLeadership(id: number, leadership: Partial<InsertLeadership>): Promise<Leadership>;
+  deleteLeadership(id: number): Promise<void>;
 
   // Contact operations
   getContactInfo(): Promise<ContactInfo | undefined>;
@@ -183,6 +193,35 @@ export class PostgreSQLStorage implements IStorage {
 
   async deleteEvent(id: number): Promise<void> {
     await db.delete(events).where(eq(events.id, id));
+  }
+
+  // Leadership operations
+  async getLeadership(): Promise<Leadership[]> {
+    return await db.select().from(leadership).orderBy(asc(leadership.orderIndex));
+  }
+
+  async getActiveLeadership(): Promise<Leadership[]> {
+    return await db.select().from(leadership)
+      .where(eq(leadership.isActive, true))
+      .orderBy(asc(leadership.orderIndex));
+  }
+
+  async createLeadership(leadershipData: InsertLeadership): Promise<Leadership> {
+    const result = await db.insert(leadership).values(leadershipData).returning();
+    return result[0];
+  }
+
+  async updateLeadership(id: number, leadershipData: Partial<InsertLeadership>): Promise<Leadership> {
+    const result = await db
+      .update(leadership)
+      .set({ ...leadershipData, updatedAt: Date.now() })
+      .where(eq(leadership.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteLeadership(id: number): Promise<void> {
+    await db.delete(leadership).where(eq(leadership.id, id));
   }
 
   // Contact operations

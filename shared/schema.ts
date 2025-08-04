@@ -96,6 +96,23 @@ export const events = sqliteTable("events", {
   updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
+// Leadership team
+export const leadership = sqliteTable("leadership", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  role: text("role").notNull(),
+  bio: text("bio"),
+  imageUrl: text("image_url"),
+  qualification: text("qualification"),
+  experience: text("experience"),
+  email: text("email"),
+  linkedIn: text("linked_in"),
+  orderIndex: integer("order_index").default(0),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
+});
+
 // Contact Information
 export const contactInfo = sqliteTable("contact_info", {
   id: integer("id").primaryKey({ autoIncrement: true }),
@@ -123,6 +140,7 @@ export const insertHeroContentSchema = createInsertSchema(heroContent);
 export const insertAboutContentSchema = createInsertSchema(aboutContent);
 export const insertProgramSchema = createInsertSchema(programs);
 export const insertEventSchema = createInsertSchema(events);
+export const insertLeadershipSchema = createInsertSchema(leadership);
 export const insertContactInfoSchema = createInsertSchema(contactInfo);
 export const insertDonationConfigSchema = createInsertSchema(donationConfig);
 
@@ -131,6 +149,7 @@ export type InsertHeroContent = z.infer<typeof insertHeroContentSchema>;
 export type InsertAboutContent = z.infer<typeof insertAboutContentSchema>;
 export type InsertProgram = z.infer<typeof insertProgramSchema>;
 export type InsertEvent = z.infer<typeof insertEventSchema>;
+export type InsertLeadership = z.infer<typeof insertLeadershipSchema>;
 export type InsertContactInfo = z.infer<typeof insertContactInfoSchema>;
 export type InsertDonationConfig = z.infer<typeof insertDonationConfigSchema>;
 
@@ -138,5 +157,6 @@ export type HeroContent = typeof heroContent.$inferSelect;
 export type AboutContent = typeof aboutContent.$inferSelect;
 export type Program = typeof programs.$inferSelect;
 export type Event = typeof events.$inferSelect;
+export type Leadership = typeof leadership.$inferSelect;
 export type ContactInfo = typeof contactInfo.$inferSelect;
 export type DonationConfig = typeof donationConfig.$inferSelect;

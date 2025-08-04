@@ -7,6 +7,7 @@ import {
   insertAboutContentSchema,
   insertProgramSchema,
   insertEventSchema,
+  insertLeadershipSchema,
   insertContactInfoSchema,
   insertDonationConfigSchema,
 } from "@shared/schema";
@@ -96,6 +97,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching programs:", error);
       res.status(500).json({ message: "Failed to fetch programs" });
+    }
+  });
+
+  // Leadership routes
+  app.get('/api/leadership', async (req, res) => {
+    try {
+      const leaders = await storage.getActiveLeadership();
+      res.json(leaders);
+    } catch (error) {
+      console.error("Error fetching leadership:", error);
+      res.status(500).json({ message: "Failed to fetch leadership" });
     }
   });
 
