@@ -23,11 +23,90 @@ const getIconComponent = (iconClass: string) => {
 };
 
 export default function ProgramsSection() {
-  const { data: programs, isLoading, error } = useQuery<Program[]>({
+  const { data: apiPrograms, isLoading, error } = useQuery<Program[]>({
     queryKey: ["/api/programs"],
   });
   const animationRef = useScrollAnimation();
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+
+  // Hardcoded programs to ensure all 8 are displayed
+  const hardcodedPrograms = [
+    {
+      id: 1,
+      title: "Free Girls' Hostel",
+      description: "Safe accommodation and nutritious meals for underprivileged rural girls from 7th to 10th standard, providing a secure environment for education.",
+      icon: "fas fa-home",
+      category: "education-childcare",
+      isActive: true,
+      orderIndex: 1
+    },
+    {
+      id: 2,
+      title: "Special Education Center (IDC)",
+      description: "Integrated Education for Disabled Children - comprehensive educational support and specialized care for differently-abled children to promote inclusive learning.",
+      icon: "fas fa-wheelchair",
+      category: "education-childcare",
+      isActive: true,
+      orderIndex: 2
+    },
+    {
+      id: 3,
+      title: "Skill Development Programs",
+      description: "Vocational training programs including tailoring, embroidery, computer skills, and handicrafts for sustainable livelihood opportunities.",
+      icon: "fas fa-graduation-cap",
+      category: "skill-development",
+      isActive: true,
+      orderIndex: 3
+    },
+    {
+      id: 4,
+      title: "Nutrition & Mid-Day Meal Program",
+      description: "Ensuring proper nutrition for children through balanced meals, addressing malnutrition and supporting healthy growth and development.",
+      icon: "fas fa-utensils",
+      category: "healthcare-nutrition",
+      isActive: true,
+      orderIndex: 4
+    },
+    {
+      id: 5,
+      title: "Healthcare & Medical Support",
+      description: "Regular health checkups, medical treatment, vaccination drives, and health awareness programs for community wellness.",
+      icon: "fas fa-heart",
+      category: "healthcare-nutrition",
+      isActive: true,
+      orderIndex: 5
+    },
+    {
+      id: 6,
+      title: "Women Empowerment Initiative",
+      description: "Comprehensive programs for women including financial literacy, legal rights awareness, entrepreneurship training, and leadership development.",
+      icon: "fas fa-female",
+      category: "empowerment",
+      isActive: true,
+      orderIndex: 6
+    },
+    {
+      id: 7,
+      title: "Community Development Projects",
+      description: "Rural infrastructure development, clean water initiatives, sanitation programs, and community center establishment for overall village development.",
+      icon: "fas fa-user-friends",
+      category: "community-development",
+      isActive: true,
+      orderIndex: 7
+    },
+    {
+      id: 8,
+      title: "Environmental Conservation",
+      description: "Tree plantation drives, waste management programs, organic farming promotion, and environmental awareness campaigns for sustainable living.",
+      icon: "fas fa-leaf",
+      category: "environment",
+      isActive: true,
+      orderIndex: 8
+    }
+  ];
+
+  // Use hardcoded programs to ensure all 8 display
+  const programs = hardcodedPrograms;
 
 
 
@@ -43,7 +122,7 @@ export default function ProgramsSection() {
         <div className="text-center mb-16 fade-in-section" ref={animationRef}>
           <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Nine comprehensive programs covering education, nutrition, healthcare, child welfare, environmental conservation, women empowerment, and elderly care to create positive impact in rural communities.
+            Eight comprehensive programs covering education, nutrition, healthcare, skill development, environmental conservation, women empowerment, and community development to create positive impact in rural communities.
           </p>
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
