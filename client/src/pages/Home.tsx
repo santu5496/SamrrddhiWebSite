@@ -31,14 +31,29 @@ import NewsletterSection from "@/components/NewsletterSection";
 import WhatWeDoSection from "@/components/WhatWeDoSection";
 import VidyaranyaInspiredHowToHelp from "@/components/VidyaranyaInspiredHowToHelp";
 import ProfessionalImageGallery from "@/components/ProfessionalImageGallery";
+import UrgentAppealBanner from "@/components/UrgentAppealBanner";
+import DonationImpactCalculator from "@/components/DonationImpactCalculator";
+import DonorRecognitionWall from "@/components/DonorRecognitionWall";
+import LiveImpactFeed from "@/components/LiveImpactFeed";
+import TrustIndicators from "@/components/TrustIndicators";
+import StickyDonationButton from "@/components/StickyDonationButton";
+import EnhancedHeroSection from "@/components/EnhancedHeroSection";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        <HeroSection />
+        {/* Urgent Appeal Banner - Top priority for donations */}
+        <UrgentAppealBanner />
+        
+        {/* Enhanced Hero with Urgent Campaign */}
+        <EnhancedHeroSection />
         <VidyaranyaInspiredStats />
+        
+        {/* Live Impact Feed - Show real-time impact early */}
+        <LiveImpactFeed />
+        
         <div className="section-bg">
           <ImpactSection />
         </div>
@@ -47,10 +62,18 @@ export default function Home() {
         <div className="section-bg">
           <ProgramsSection />
         </div>
+        
+        {/* Donation Impact Calculator - Interactive engagement */}
+        <DonationImpactCalculator />
+        
         <SuccessStoriesSection />
         <div className="section-bg">
           <TestimonialsSection />
         </div>
+        
+        {/* Trust Indicators - Build confidence before major CTA */}
+        <TrustIndicators />
+        
         <LeadershipSection />
         <div className="section-bg">
           <NewsSection />
@@ -59,6 +82,10 @@ export default function Home() {
         <div className="section-bg">
           <AnnualReportsSection />
         </div>
+
+        {/* Donor Recognition Wall - Social proof and aspiration */}
+        <DonorRecognitionWall />
+        
         <VidyaranyaInspiredHowToHelp />
         <EnhancedDonationOptions />
         <DonationCTA />
@@ -92,6 +119,9 @@ export default function Home() {
         <ContactSection />
       </main>
       <Footer />
+      
+      {/* Sticky Donation Button - Always accessible */}
+      <StickyDonationButton />
     </div>
   );
 }
