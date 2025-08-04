@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple, Leaf, Droplets, User } from "lucide-react";
+import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple, Leaf, Droplets, User, UserCheck } from "lucide-react";
 import { Program } from "@shared/schema";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState } from "react";
@@ -13,6 +13,7 @@ const iconMap: Record<string, any> = {
   "fas fa-leaf": Leaf,
   "fas fa-heart": Heart,
   "fas fa-female": User,
+  "fas fa-wheelchair": UserCheck,
 };
 
 const getIconComponent = (iconClass: string) => {
@@ -40,7 +41,7 @@ export default function ProgramsSection() {
         <div className="text-center mb-16 fade-in-section" ref={animationRef}>
           <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Seven comprehensive programs covering education, nutrition, healthcare, environmental conservation, and women empowerment to create positive impact in rural communities.
+            Eight comprehensive programs covering education, nutrition, healthcare, environmental conservation, women empowerment, and elderly care to create positive impact in rural communities.
           </p>
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
@@ -92,7 +93,8 @@ export default function ProgramsSection() {
                         index === 3 ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
                         index === 4 ? 'bg-gradient-to-r from-emerald-600 to-teal-600' :
                         index === 5 ? 'bg-gradient-to-r from-red-500 to-pink-600' :
-                        'bg-gradient-to-r from-purple-500 to-violet-600'
+                        index === 6 ? 'bg-gradient-to-r from-purple-500 to-violet-600' :
+                        'bg-gradient-to-r from-orange-500 to-amber-600'
                       }`}>
                         <IconComponent className="text-white h-5 w-5" />
                       </div>
@@ -142,6 +144,12 @@ export default function ProgramsSection() {
                         <>
                           <User className="h-4 w-4 mr-2" />
                           <span>Leadership & Skills Development</span>
+                        </>
+                      )}
+                      {program.title.includes("Old Age Care") && (
+                        <>
+                          <UserCheck className="h-4 w-4 mr-2" />
+                          <span>Comprehensive Elderly Support</span>
                         </>
                       )}
                     </div>
@@ -361,6 +369,31 @@ export default function ProgramsSection() {
                           <li>• 90% increase in family income</li>
                           <li>• Enhanced decision-making power</li>
                           <li>• Strengthened community leadership</li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedProgram.title.includes("Old Age Care") && (
+                    <>
+                      <div className="bg-orange-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-orange-800">Care Services</h4>
+                        <ul className="space-y-2 text-orange-700">
+                          <li>• Regular health check-ups and medical assistance</li>
+                          <li>• Nutritious meals and dietary support</li>
+                          <li>• Companionship and social activities</li>
+                          <li>• Physical therapy and mobility assistance</li>
+                          <li>• Mental health support and counseling</li>
+                        </ul>
+                      </div>
+                      <div className="bg-amber-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-amber-800">Impact</h4>
+                        <ul className="space-y-2 text-amber-700">
+                          <li>• 75+ elderly individuals receiving care</li>
+                          <li>• Improved quality of life and health outcomes</li>
+                          <li>• Reduced isolation and loneliness</li>
+                          <li>• Family support and respite care</li>
+                          <li>• Dignified aging in community settings</li>
                         </ul>
                       </div>
                     </>
