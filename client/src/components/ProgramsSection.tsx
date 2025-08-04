@@ -29,83 +29,227 @@ export default function ProgramsSection() {
   const animationRef = useScrollAnimation();
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
 
-  // Hardcoded programs to ensure all 8 are displayed
-  const hardcodedPrograms = [
+  // Hardcoded programs to ensure all 12 are displayed
+  const hardcodedPrograms: Program[] = [
     {
       id: 1,
       title: "Free Girls' Hostel",
       description: "Safe accommodation and nutritious meals for underprivileged rural girls from 7th to 10th standard, providing a secure environment for education.",
+      detailedDescription: null,
+      imageUrl: null,
       icon: "fas fa-home",
       category: "education-childcare",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 1,
       isActive: true,
-      orderIndex: 1
+      createdAt: null,
+      updatedAt: null
     },
     {
       id: 2,
       title: "Special Education Center (IDC)",
       description: "Integrated Education for Disabled Children - comprehensive educational support and specialized care for differently-abled children to promote inclusive learning.",
+      detailedDescription: null,
+      imageUrl: null,
       icon: "fas fa-wheelchair",
       category: "education-childcare",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 2,
       isActive: true,
-      orderIndex: 2
+      createdAt: null,
+      updatedAt: null
     },
     {
       id: 3,
       title: "Skill Development Programs",
       description: "Vocational training programs including tailoring, embroidery, computer skills, and handicrafts for sustainable livelihood opportunities.",
+      detailedDescription: null,
+      imageUrl: null,
       icon: "fas fa-graduation-cap",
       category: "skill-development",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 3,
       isActive: true,
-      orderIndex: 3
+      createdAt: null,
+      updatedAt: null
     },
     {
       id: 4,
       title: "Nutrition & Mid-Day Meal Program",
       description: "Ensuring proper nutrition for children through balanced meals, addressing malnutrition and supporting healthy growth and development.",
+      detailedDescription: null,
+      imageUrl: null,
       icon: "fas fa-utensils",
       category: "healthcare-nutrition",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 4,
       isActive: true,
-      orderIndex: 4
+      createdAt: null,
+      updatedAt: null
     },
     {
       id: 5,
       title: "Healthcare & Medical Support",
       description: "Regular health checkups, medical treatment, vaccination drives, and health awareness programs for community wellness.",
+      detailedDescription: null,
+      imageUrl: null,
       icon: "fas fa-heart",
       category: "healthcare-nutrition",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 5,
       isActive: true,
-      orderIndex: 5
+      createdAt: null,
+      updatedAt: null
     },
     {
       id: 6,
       title: "Women Empowerment Initiative",
       description: "Comprehensive programs for women including financial literacy, legal rights awareness, entrepreneurship training, and leadership development.",
+      detailedDescription: null,
+      imageUrl: null,
       icon: "fas fa-female",
       category: "empowerment",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 6,
       isActive: true,
-      orderIndex: 6
+      createdAt: null,
+      updatedAt: null
     },
     {
       id: 7,
       title: "Community Development Projects",
       description: "Rural infrastructure development, clean water initiatives, sanitation programs, and community center establishment for overall village development.",
+      detailedDescription: null,
+      imageUrl: null,
       icon: "fas fa-user-friends",
       category: "community-development",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 7,
       isActive: true,
-      orderIndex: 7
+      createdAt: null,
+      updatedAt: null
     },
     {
       id: 8,
       title: "Environmental Conservation",
       description: "Tree plantation drives, waste management programs, organic farming promotion, and environmental awareness campaigns for sustainable living.",
+      detailedDescription: null,
+      imageUrl: null,
       icon: "fas fa-leaf",
       category: "environment",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 8,
       isActive: true,
-      orderIndex: 8
+      createdAt: null,
+      updatedAt: null
+    },
+    {
+      id: 9,
+      title: "Child Care & Shelter for Orphans",
+      description: "Providing shelter, food, and education for children whose parents are not there - comprehensive care for non-parent children including accommodation, nutrition, and quality education.",
+      detailedDescription: null,
+      imageUrl: null,
+      icon: "fas fa-home",
+      category: "childcare-orphan",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 9,
+      isActive: true,
+      createdAt: null,
+      updatedAt: null
+    },
+    {
+      id: 10,
+      title: "Free Karate Coaching for Rural Girls",
+      description: "Empowering rural girls through free karate coaching to build self-defense skills, confidence, and physical strength for self-support and protection.",
+      detailedDescription: null,
+      imageUrl: null,
+      icon: "fas fa-fist-raised",
+      category: "self-defense",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 10,
+      isActive: true,
+      createdAt: null,
+      updatedAt: null
+    },
+    {
+      id: 11,
+      title: "Women Empowerment Programs",
+      description: "Comprehensive women empowerment initiatives including leadership training, financial independence, skill development, and awareness programs for rural women.",
+      detailedDescription: null,
+      imageUrl: null,
+      icon: "fas fa-female",
+      category: "women-empowerment",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 11,
+      isActive: true,
+      createdAt: null,
+      updatedAt: null
+    },
+    {
+      id: 12,
+      title: "Old Age Care Services",
+      description: "Dedicated care services for elderly people including health support, social activities, nutrition programs, and companionship for senior citizens in rural areas.",
+      detailedDescription: null,
+      imageUrl: null,
+      icon: "fas fa-user-friends",
+      category: "elderly-care",
+      objectives: null,
+      targetGroup: null,
+      howWeWork: null,
+      components: null,
+      futureInitiatives: null,
+      orderIndex: 12,
+      isActive: true,
+      createdAt: null,
+      updatedAt: null
     }
   ];
 
-  // Use hardcoded programs to ensure all 8 display
+  // Use hardcoded programs to ensure all 12 display
   const programs = hardcodedPrograms;
 
 
@@ -122,7 +266,7 @@ export default function ProgramsSection() {
         <div className="text-center mb-16 fade-in-section" ref={animationRef}>
           <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Eight comprehensive programs covering education, nutrition, healthcare, skill development, environmental conservation, women empowerment, and community development to create positive impact in rural communities.
+            Twelve comprehensive programs covering education, nutrition, healthcare, skill development, environmental conservation, women empowerment, community development, child care, self-defense training, and elderly care to create positive impact in rural communities.
           </p>
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
