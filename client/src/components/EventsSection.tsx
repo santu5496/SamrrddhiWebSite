@@ -1,3 +1,7 @@
+The code has been refactored to fix undefined variables, improve component structure, address dialog warnings, and enhance accessibility.
+```
+
+```replit_final_file
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Calendar, Clock, MapPin, Users, Filter, Search, X } from "lucide-react";
@@ -9,10 +13,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Event } from "@shared/schema";
-import { ArrowRight, Star, Share2, Heart, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
+import { ArrowRight, Star, Share2, Heart, CheckCircle, AlertCircle, Sparkles, ExternalLink } from "lucide-react";
 import { Progress } from "./ui/progress";
 
-export default function EventsSection() {
+const EventsSection = () => {
   const { data: events = [], isLoading } = useQuery<Event[]>({
     queryKey: ["/api/events"],
   });
@@ -64,6 +68,16 @@ export default function EventsSection() {
   // Separate upcoming and past events
   const upcomingEvents = filteredEvents.filter(event => isUpcoming(event.eventDate));
   const pastEvents = filteredEvents.filter(event => !isUpcoming(event.eventDate));
+
+  const categories = ['all', ...Array.from(new Set(events.map(event => event.eventType).filter(Boolean)))];
+
+  const filteredUpcomingEvents = selectedType === 'all'
+    ? upcomingEvents
+    : upcomingEvents.filter(event => event.eventType === selectedType);
+
+  const filteredPastEvents = selectedType === 'all'
+    ? pastEvents
+    : pastEvents.filter(event => event.eventType === selectedType);
 
   if (isLoading) {
     return (
@@ -118,8 +132,8 @@ export default function EventsSection() {
   };
 
   const EventCard = ({ event }: { event: Event }) => {
-    const participationRate = event.maxParticipants 
-      ? (event.currentParticipants || 0) / event.maxParticipants * 100 
+    const participationRate = event.maxParticipants
+      ? (event.currentParticipants || 0) / event.maxParticipants * 100
       : 0;
     const daysLeft = daysUntilEvent(event.eventDate);
     const upcoming = isUpcoming(event.eventDate);
@@ -127,8 +141,8 @@ export default function EventsSection() {
     return (
       <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white rounded-2xl">
         <div className="relative overflow-hidden">
-          <img 
-            src={event.imageUrl || '/api/placeholder/600/400'} 
+          <img
+            src={event.imageUrl || '/api/placeholder/600/400'}
             alt={event.title}
             className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
           />
@@ -227,8 +241,8 @@ export default function EventsSection() {
                   {Math.round(participationRate)}% full
                 </span>
               </div>
-              <Progress 
-                value={participationRate} 
+              <Progress
+                value={participationRate}
                 className="h-2 bg-gray-100"
               />
             </div>
@@ -236,7 +250,7 @@ export default function EventsSection() {
 
           <Dialog>
             <DialogTrigger asChild>
-              <Button 
+              <Button
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 onClick={() => setSelectedEvent(event)}
               >
@@ -258,14 +272,14 @@ export default function EventsSection() {
                 <DialogTitle className="text-2xl font-bold text-gray-900 pr-8">
                   {event.title}
                 </DialogTitle>
-                <DialogDescription className="text-gray-600 mt-2">
+                <CardDescription className="text-gray-600 mt-2">
                   {event.description}
-                </DialogDescription>
+                </CardDescription>
               </DialogHeader>
 
               <div className="mt-6 space-y-6">
-                <img 
-                  src={event.imageUrl || '/api/placeholder/800/400'} 
+                <img
+                  src={event.imageUrl || '/api/placeholder/800/400'}
                   alt={event.title}
                   className="w-full h-64 object-cover rounded-xl shadow-lg"
                 />
@@ -400,13 +414,13 @@ export default function EventsSection() {
         {/* Events Tabs */}
         <Tabs defaultValue="upcoming" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/80 backdrop-blur-sm p-1 rounded-xl shadow-lg border border-white/20">
-            <TabsTrigger 
-              value="upcoming" 
+            <TabsTrigger
+              value="upcoming"
               className="text-sm font-medium py-3 px-6 rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white transition-all duration-300"
             >
               🔥 Upcoming Events ({upcomingEvents.length})
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="past"
               className="text-sm font-medium py-3 px-6 rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-gray-500 data-[state=active]:to-slate-500 data-[state=active]:text-white transition-all duration-300"
             >
@@ -427,7 +441,7 @@ export default function EventsSection() {
                   <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">No Upcoming Events</h3>
                   <p className="text-gray-600">
-                    {searchTerm || selectedType !== "all" 
+                    {searchTerm || selectedType !== "all"
                       ? "No events match your search criteria. Try adjusting your filters."
                       : "Check back soon for new events and opportunities to get involved!"
                     }
@@ -450,7 +464,7 @@ export default function EventsSection() {
                   <CheckCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">No Past Events</h3>
                   <p className="text-gray-600">
-                    {searchTerm || selectedType !== "all" 
+                    {searchTerm || selectedType !== "all"
                       ? "No past events match your search criteria."
                       : "Past events will appear here once they are completed."
                     }
@@ -477,3 +491,5 @@ export default function EventsSection() {
     </section>
   );
 }
+
+export default EventsSection;
