@@ -16,11 +16,16 @@ const getIconComponent = (iconClass: string) => {
 };
 
 export default function ProgramsSection() {
-  const { data: programs } = useQuery<Program[]>({
+  const { data: programs, isLoading, error } = useQuery<Program[]>({
     queryKey: ["/api/programs"],
   });
   const animationRef = useScrollAnimation();
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+
+  // Debug logging
+  console.log("Programs data:", programs);
+  console.log("Is loading:", isLoading);
+  console.log("Error:", error);
 
   const defaultImages = [
     "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400",
@@ -39,67 +44,85 @@ export default function ProgramsSection() {
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
         
+        {isLoading && (
+          <div className="text-center py-12">
+            <div className="text-lg text-gray-600">Loading programs...</div>
+          </div>
+        )}
+        
+        {error && (
+          <div className="text-center py-12">
+            <div className="text-lg text-red-600">Error loading programs: {error.message}</div>
+          </div>
+        )}
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {programs?.map((program, index) => {
-            const IconComponent = getIconComponent(program.icon);
-            return (
-              <div 
-                key={program.id} 
-                className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-500 fade-in-section group cursor-pointer"
-                onClick={() => setSelectedProgram(program)}
-              >
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={program.imageUrl || defaultImages[index % defaultImages.length]}
-                    alt={program.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-                
-                <div className="p-6">
-                  <div className="flex items-center mb-3">
-                    <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg mr-3 transform group-hover:rotate-12 transition-transform duration-300 ${
-                      index === 0 ? 'gradient-primary' : 
-                      index === 1 ? 'gradient-secondary' : 
-                      'gradient-accent'
-                    }`}>
-                      <IconComponent className="text-white h-5 w-5" />
+          {programs && programs.length > 0 ? (
+            programs.map((program, index) => {
+              const IconComponent = getIconComponent(program.icon);
+              return (
+                <div 
+                  key={program.id} 
+                  className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-500 fade-in-section group cursor-pointer"
+                  onClick={() => setSelectedProgram(program)}
+                >
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={program.imageUrl || defaultImages[index % defaultImages.length]}
+                      alt={program.title}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  
+                  <div className="p-6">
+                    <div className="flex items-center mb-3">
+                      <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg mr-3 transform group-hover:rotate-12 transition-transform duration-300 ${
+                        index === 0 ? 'gradient-primary' : 
+                        index === 1 ? 'gradient-secondary' : 
+                        'gradient-accent'
+                      }`}>
+                        <IconComponent className="text-white h-5 w-5" />
+                      </div>
+                      <h3 className="text-xl font-bold text-neutral group-hover:text-primary transition-colors duration-300">{program.title}</h3>
                     </div>
-                    <h3 className="text-xl font-bold text-neutral group-hover:text-primary transition-colors duration-300">{program.title}</h3>
-                  </div>
-                  <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                    {program.description}
-                  </p>
-                  <div className="mt-4 flex items-center text-accent font-medium">
-                    {program.title.includes("Girls") && (
-                      <>
-                        <Users className="h-4 w-4 mr-2" />
-                        <span>50+ Girls Supported</span>
-                      </>
-                    )}
-                    {program.title.includes("IDC") && (
-                      <>
-                        <Heart className="h-4 w-4 mr-2" />
-                        <span>Inclusive Education</span>
-                      </>
-                    )}
-                    {program.title.includes("Food") && (
-                      <>
-                        <Shield className="h-4 w-4 mr-2" />
-                        <span>Complete Care</span>
-                      </>
-                    )}
-                  </div>
-                  <div className="mt-4 flex items-center text-primary font-medium group-hover:text-secondary transition-colors duration-300">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    <span>Click to learn more</span>
+                    <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
+                      {program.description}
+                    </p>
+                    <div className="mt-4 flex items-center text-accent font-medium">
+                      {program.title.includes("Girls") && (
+                        <>
+                          <Users className="h-4 w-4 mr-2" />
+                          <span>50+ Girls Supported</span>
+                        </>
+                      )}
+                      {program.title.includes("IDC") && (
+                        <>
+                          <Heart className="h-4 w-4 mr-2" />
+                          <span>Inclusive Education</span>
+                        </>
+                      )}
+                      {program.title.includes("Food") && (
+                        <>
+                          <Shield className="h-4 w-4 mr-2" />
+                          <span>Complete Care</span>
+                        </>
+                      )}
+                    </div>
+                    <div className="mt-4 flex items-center text-primary font-medium group-hover:text-secondary transition-colors duration-300">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      <span>Click to learn more</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <div className="text-lg text-gray-600">No programs available at the moment.</div>
+            </div>
+          )}
         </div>
       </div>
 
