@@ -36,36 +36,6 @@ export default function EventsSection() {
   const [selectedType, setSelectedType] = useState("all");
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
-  if (isLoading) {
-    return (
-      <section className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="animate-pulse">
-            <div className="h-12 bg-gradient-to-r from-gray-300 to-gray-200 rounded-lg w-80 mx-auto mb-6"></div>
-            <div className="h-6 bg-gradient-to-r from-gray-200 to-gray-100 rounded w-96 mx-auto mb-16"></div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                  <div className="h-48 bg-gradient-to-r from-gray-300 to-gray-200"></div>
-                  <div className="p-6 space-y-4">
-                    <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-                    <div className="h-4 bg-gray-100 rounded"></div>
-                    <div className="h-4 bg-gray-100 rounded w-2/3"></div>
-                    <div className="flex gap-2">
-                      <div className="h-6 bg-gray-200 rounded-full w-16"></div>
-                      <div className="h-6 bg-gray-200 rounded-full w-20"></div>
-                    </div>
-                    <div className="h-10 bg-gradient-to-r from-blue-200 to-purple-200 rounded-lg"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   const formatDate = (dateString: string) => {
     const date = new Date(parseInt(dateString));
     return date.toLocaleDateString('en-US', {
@@ -109,6 +79,36 @@ export default function EventsSection() {
   // Separate upcoming and past events
   const upcomingEvents = filteredEvents.filter(event => isUpcoming(event.eventDate));
   const pastEvents = filteredEvents.filter(event => !isUpcoming(event.eventDate));
+
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="animate-pulse">
+            <div className="h-12 bg-gradient-to-r from-gray-300 to-gray-200 rounded-lg w-80 mx-auto mb-6"></div>
+            <div className="h-6 bg-gradient-to-r from-gray-200 to-gray-100 rounded w-96 mx-auto mb-16"></div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                  <div className="h-48 bg-gradient-to-r from-gray-300 to-gray-200"></div>
+                  <div className="p-6 space-y-4">
+                    <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-4 bg-gray-100 rounded"></div>
+                    <div className="h-4 bg-gray-100 rounded w-2/3"></div>
+                    <div className="flex gap-2">
+                      <div className="h-6 bg-gray-200 rounded-full w-16"></div>
+                      <div className="h-6 bg-gray-200 rounded-full w-20"></div>
+                    </div>
+                    <div className="h-10 bg-gradient-to-r from-blue-200 to-purple-200 rounded-lg"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const getEventTypeColor = (type: string) => {
     const colors = {
