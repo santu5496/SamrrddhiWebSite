@@ -1,210 +1,208 @@
 import {
-  pgTable,
+  sqliteTable,
   text,
-  varchar,
-  timestamp,
-  jsonb,
-  index,
-  serial,
-  boolean,
   integer,
-  decimal,
-} from "drizzle-orm/pg-core";
+  blob,
+  index,
+  real,
+} from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Session storage table for Replit Auth
-export const sessions = pgTable(
+export const sessions = sqliteTable(
   "sessions",
   {
-    sid: varchar("sid").primaryKey(),
-    sess: jsonb("sess").notNull(),
-    expire: timestamp("expire").notNull(),
+    sid: text("sid").primaryKey(),
+    sess: text("sess").notNull(),
+    expire: integer("expire").notNull(),
   },
-  (table) => [index("IDX_session_expire").on(table.expire)],
+  (table) => ({
+    expireIdx: index("IDX_session_expire").on(table.expire),
+  }),
 );
 
 // User storage table for Replit Auth
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().notNull(),
-  email: varchar("email").unique(),
-  firstName: varchar("first_name"),
-  lastName: varchar("last_name"),
-  profileImageUrl: varchar("profile_image_url"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+export const users = sqliteTable("users", {
+  id: text("id").primaryKey().notNull(),
+  email: text("email").unique(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  profileImageUrl: text("profile_image_url"),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Hero section content
-export const heroContent = pgTable("hero_content", {
-  id: serial("id").primaryKey(),
+export const heroContent = sqliteTable("hero_content", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   headline: text("headline").notNull(),
   subheading: text("subheading").notNull(),
   backgroundImageUrl: text("background_image_url"),
   yearsOfService: text("years_of_service").default("29"),
   childrenSupported: text("children_supported").default("50+"),
   corePrograms: text("core_programs").default("3"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // About section content
-export const aboutContent = pgTable("about_content", {
-  id: serial("id").primaryKey(),
+export const aboutContent = sqliteTable("about_content", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   missionTitle: text("mission_title").notNull(),
   missionDescription: text("mission_description").notNull(),
   journeyTitle: text("journey_title").notNull(),
   journeyDescription: text("journey_description").notNull(),
   imageUrl: text("image_url"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Programs - Enhanced with Vidyaranya-style categories
-export const programs = pgTable("programs", {
-  id: serial("id").primaryKey(),
+export const programs = sqliteTable("programs", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   description: text("description").notNull(),
   detailedDescription: text("detailed_description"),
   imageUrl: text("image_url"),
   icon: text("icon").notNull(),
   category: text("category").notNull(), // education-childcare, women-empowerment, senior-care, skill-development, health, community-development, environment
-  objectives: text("objectives").array(),
+  objectives: text("objectives"),
   targetGroup: text("target_group"),
   howWeWork: text("how_we_work"),
-  components: text("components").array(),
-  futureInitiatives: text("future_initiatives").array(),
-  orderIndex: serial("order_index"),
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  components: text("components"),
+  futureInitiatives: text("future_initiatives"),
+  orderIndex: integer("order_index").default(0),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Testimonials
-export const testimonials = pgTable("testimonials", {
-  id: serial("id").primaryKey(),
+export const testimonials = sqliteTable("testimonials", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   role: text("role").notNull(),
   quote: text("quote").notNull(),
   imageUrl: text("image_url"),
-  isActive: boolean("is_active").default(true),
-  orderIndex: serial("order_index"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  orderIndex: integer("order_index").default(0),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Contact information
-export const contactInfo = pgTable("contact_info", {
-  id: serial("id").primaryKey(),
+export const contactInfo = sqliteTable("contact_info", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   address: text("address").notNull(),
   phone: text("phone").notNull(),
   email: text("email").notNull(),
   facebook: text("facebook"),
   twitter: text("twitter"),
   instagram: text("instagram"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Contact form submissions
-export const contactSubmissions = pgTable("contact_submissions", {
-  id: serial("id").primaryKey(),
+export const contactSubmissions = sqliteTable("contact_submissions", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   email: text("email").notNull(),
-  phone: varchar("phone", { length: 20 }),
+  phone: text("phone"),
   subject: text("subject").notNull(),
   message: text("message").notNull(),
-  organization: varchar("organization", { length: 255 }),
-  inquiryType: varchar("inquiry_type", { length: 100 }),
-  preferredContact: varchar("preferred_contact", { length: 50 }),
-  isRead: boolean("is_read").default(false),
-  status: varchar("status", { length: 50 }).default("pending"),
-  createdAt: timestamp("created_at").defaultNow(),
+  organization: text("organization"),
+  inquiryType: text("inquiry_type"),
+  preferredContact: text("preferred_contact"),
+  isRead: integer("is_read", { mode: "boolean" }).default(false),
+  status: text("status").default("pending"),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
 });
 
 // Volunteer applications
-export const volunteerApplications = pgTable("volunteer_applications", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email", { length: 255 }).notNull(),
-  phone: varchar("phone", { length: 20 }).notNull(),
+export const volunteerApplications = sqliteTable("volunteer_applications", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
   age: integer("age"),
   address: text("address"),
-  occupation: varchar("occupation", { length: 255 }),
+  occupation: text("occupation"),
   skills: text("skills"),
-  availability: varchar("availability", { length: 255 }),
+  availability: text("availability"),
   experience: text("experience"),
   motivation: text("motivation"),
-  preferredProgram: varchar("preferred_program", { length: 255 }),
-  emergencyContact: varchar("emergency_contact", { length: 255 }),
-  backgroundCheck: boolean("background_check").default(false),
-  status: varchar("status", { length: 50 }).default("pending"),
-  createdAt: timestamp("created_at").defaultNow(),
+  preferredProgram: text("preferred_program"),
+  emergencyContact: text("emergency_contact"),
+  backgroundCheck: integer("background_check", { mode: "boolean" }).default(false),
+  status: text("status").default("pending"),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
 });
 
 // Newsletter subscriptions
-export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
-  id: serial("id").primaryKey(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
-  name: varchar("name", { length: 255 }),
-  interests: text("interests").array(),
-  subscribed: boolean("subscribed").default(true),
-  source: varchar("source", { length: 100 }),
-  createdAt: timestamp("created_at").defaultNow(),
+export const newsletterSubscriptions = sqliteTable("newsletter_subscriptions", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  email: text("email").notNull().unique(),
+  name: text("name"),
+  interests: text("interests"),
+  subscribed: integer("subscribed", { mode: "boolean" }).default(true),
+  source: text("source"),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
 });
 
 // Events
-export const events = pgTable("events", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
+export const events = sqliteTable("events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
   description: text("description"),
-  eventDate: timestamp("event_date").notNull(),
-  location: varchar("location", { length: 255 }),
-  eventType: varchar("event_type", { length: 100 }),
+  eventDate: integer("event_date").notNull(),
+  location: text("location"),
+  eventType: text("event_type"),
   maxParticipants: integer("max_participants"),
-  registrationDeadline: timestamp("registration_deadline"),
-  isActive: boolean("is_active").default(true),
-  imageUrl: varchar("image_url", { length: 500 }),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  registrationDeadline: integer("registration_deadline"),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  imageUrl: text("image_url"),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Event registrations
-export const eventRegistrations = pgTable("event_registrations", {
-  id: serial("id").primaryKey(),
+export const eventRegistrations = sqliteTable("event_registrations", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   eventId: integer("event_id").references(() => events.id),
-  name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email", { length: 255 }).notNull(),
-  phone: varchar("phone", { length: 20 }),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone"),
   specialRequirements: text("special_requirements"),
-  status: varchar("status", { length: 50 }).default("registered"),
-  createdAt: timestamp("created_at").defaultNow(),
+  status: text("status").default("registered"),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
 });
 
 // Donation records
-export const donations = pgTable("donations", {
-  id: serial("id").primaryKey(),
-  donorName: varchar("donor_name", { length: 255 }).notNull(),
-  donorEmail: varchar("donor_email", { length: 255 }).notNull(),
-  donorPhone: varchar("donor_phone", { length: 20 }),
-  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
-  currency: varchar("currency", { length: 10 }).default("INR"),
-  donationType: varchar("donation_type", { length: 50 }).notNull(), // monthly, one-time
-  program: varchar("program", { length: 255 }), // which program to support
-  paymentMethod: varchar("payment_method", { length: 50 }),
-  transactionId: varchar("transaction_id", { length: 255 }).unique(),
-  status: varchar("status", { length: 50 }).default("pending"),
+export const donations = sqliteTable("donations", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  donorName: text("donor_name").notNull(),
+  donorEmail: text("donor_email").notNull(),
+  donorPhone: text("donor_phone"),
+  amount: real("amount").notNull(),
+  currency: text("currency").default("INR"),
+  donationType: text("donation_type").notNull(), // monthly, one-time
+  program: text("program"), // which program to support
+  paymentMethod: text("payment_method"),
+  transactionId: text("transaction_id").unique(),
+  status: text("status").default("pending"),
   message: text("message"),
-  isAnonymous: boolean("is_anonymous").default(false),
-  taxReceiptSent: boolean("tax_receipt_sent").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
+  isAnonymous: integer("is_anonymous", { mode: "boolean" }).default(false),
+  taxReceiptSent: integer("tax_receipt_sent", { mode: "boolean" }).default(false),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
 });
 
 // Donation configuration
-export const donationConfig = pgTable("donation_config", {
-  id: serial("id").primaryKey(),
+export const donationConfig = sqliteTable("donation_config", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   monthlyAmount: text("monthly_amount").default("₹1,500"),
   description: text("description").notNull(),
   taxBenefits: text("tax_benefits").default("80G Tax Benefits"),
   razorpayKeyId: text("razorpay_key_id"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Create insert schemas
@@ -312,94 +310,94 @@ export type DonationConfig = typeof donationConfig.$inferSelect;
 export type InsertDonationConfig = z.infer<typeof insertDonationConfigSchema>;
 
 // Leadership team
-export const leadership = pgTable("leadership", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  role: varchar("role", { length: 255 }).notNull(),
+export const leadership = sqliteTable("leadership", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  role: text("role").notNull(),
   bio: text("bio"),
-  imageUrl: varchar("image_url", { length: 500 }),
+  imageUrl: text("image_url"),
   qualification: text("qualification"),
   experience: text("experience"),
-  email: varchar("email", { length: 255 }),
-  linkedIn: varchar("linkedin", { length: 255 }),
+  email: text("email"),
+  linkedIn: text("linkedin"),
   orderIndex: integer("order_index").default(0),
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Annual reports
-export const annualReports = pgTable("annual_reports", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
+export const annualReports = sqliteTable("annual_reports", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
   year: integer("year").notNull(),
   description: text("description"),
-  fileUrl: varchar("file_url", { length: 500 }).notNull(),
-  fileSize: varchar("file_size", { length: 50 }),
+  fileUrl: text("file_url").notNull(),
+  fileSize: text("file_size"),
   downloadCount: integer("download_count").default(0),
-  isPublished: boolean("is_published").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  isPublished: integer("is_published", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Photo gallery
-export const photoGallery = pgTable("photo_gallery", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
+export const photoGallery = sqliteTable("photo_gallery", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
   description: text("description"),
-  imageUrl: varchar("image_url", { length: 500 }).notNull(),
-  category: varchar("category", { length: 100 }), // education, events, programs, etc.
-  event: varchar("event", { length: 255 }),
-  date: timestamp("date").defaultNow(),
-  photographer: varchar("photographer", { length: 255 }),
-  isActive: boolean("is_active").default(true),
+  imageUrl: text("image_url").notNull(),
+  category: text("category"), // education, events, programs, etc.
+  event: text("event"),
+  date: integer("date").$defaultFn(() => Date.now()),
+  photographer: text("photographer"),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
   orderIndex: integer("order_index").default(0),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
 });
 
 // News and blog posts
-export const news = pgTable("news", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
+export const news = sqliteTable("news", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
   excerpt: text("excerpt"),
   content: text("content").notNull(),
-  authorName: varchar("author_name", { length: 255 }),
-  category: varchar("category", { length: 100 }), // news, blog, press-release
-  tags: text("tags").array(),
-  featuredImageUrl: varchar("featured_image_url", { length: 500 }),
-  isPublished: boolean("is_published").default(false),
-  publishedAt: timestamp("published_at"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  authorName: text("author_name"),
+  category: text("category"), // news, blog, press-release
+  tags: text("tags"),
+  featuredImageUrl: text("featured_image_url"),
+  isPublished: integer("is_published", { mode: "boolean" }).default(false),
+  publishedAt: integer("published_at"),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Certifications and registrations
-export const certifications = pgTable("certifications", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  issuingAuthority: varchar("issuing_authority", { length: 255 }).notNull(),
-  certificateNumber: varchar("certificate_number", { length: 255 }),
-  issueDate: timestamp("issue_date"),
-  expiryDate: timestamp("expiry_date"),
+export const certifications = sqliteTable("certifications", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
+  issuingAuthority: text("issuing_authority").notNull(),
+  certificateNumber: text("certificate_number"),
+  issueDate: integer("issue_date"),
+  expiryDate: integer("expiry_date"),
   description: text("description"),
-  certificateUrl: varchar("certificate_url", { length: 500 }),
-  category: varchar("category", { length: 100 }), // registration, tax-exemption, iso, etc.
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
+  certificateUrl: text("certificate_url"),
+  category: text("category"), // registration, tax-exemption, iso, etc.
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
 });
 
 // Success metrics and impact stats
-export const impactStats = pgTable("impact_stats", {
-  id: serial("id").primaryKey(),
-  metric: varchar("metric", { length: 255 }).notNull(),
-  value: varchar("value", { length: 100 }).notNull(),
+export const impactStats = sqliteTable("impact_stats", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  metric: text("metric").notNull(),
+  value: text("value").notNull(),
   description: text("description"),
-  icon: varchar("icon", { length: 100 }),
-  category: varchar("category", { length: 100 }), // education, health, community, etc.
+  icon: text("icon"),
+  category: text("category"), // education, health, community, etc.
   orderIndex: integer("order_index").default(0),
-  isActive: boolean("is_active").default(true),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
 // Research papers and publications
