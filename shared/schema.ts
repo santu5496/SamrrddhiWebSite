@@ -41,7 +41,7 @@ export const heroContent = sqliteTable("hero_content", {
   backgroundImageUrl: text("background_image_url"),
   yearsOfService: text("years_of_service").default("29"),
   childrenSupported: text("children_supported").default("50+"),
-  corePrograms: text("core_programs").default("3"),
+  corePrograms: text("core_programs").default("8"),
   updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 

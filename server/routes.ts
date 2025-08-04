@@ -47,7 +47,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         backgroundImageUrl: null,
         yearsOfService: "29",
         childrenSupported: "50+",
-        corePrograms: "3"
+        corePrograms: "8"
       });
     } catch (error) {
       console.error("Error fetching hero content:", error);

@@ -121,7 +121,7 @@ export default function EnhancedHeroSection() {
               </div>
               <div className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-blue-400">
-                  {heroContent?.corePrograms || "3"}
+                  {heroContent?.corePrograms || "8"}
                 </div>
                 <div className="text-sm text-white/80">Core Programs</div>
               </div>

@@ -14,7 +14,7 @@ Founded in 1995, Samruddhi Service Society has been dedicated to breaking the cy
 
 - **29+ Years** of dedicated service to communities
 - **50+ Children** currently supported with education and care
-- **3 Core Programs** providing comprehensive development
+- **8 Core Programs** providing comprehensive development
 - **100% Commitment** to transparency and child welfare
 
 ---

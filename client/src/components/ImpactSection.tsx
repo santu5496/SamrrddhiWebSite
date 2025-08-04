@@ -54,7 +54,7 @@ export default function ImpactSection() {
 
   const yearsCount = useAnimatedCounter(parseInt(heroContent?.yearsOfService || "29"), 2000);
   const childrenCount = useAnimatedCounter(parseInt(heroContent?.childrenSupported?.replace('+', '') || "50"), 2500);
-  const programsCount = useAnimatedCounter(parseInt(heroContent?.corePrograms || "3"), 1500);
+  const programsCount = useAnimatedCounter(parseInt(heroContent?.corePrograms || "8"), 1500);
   const volunteersCount = useAnimatedCounter(25, 2200);
   const graduatesCount = useAnimatedCounter(200, 3000);
   const monthlyMealsCount = useAnimatedCounter(4500, 2800);

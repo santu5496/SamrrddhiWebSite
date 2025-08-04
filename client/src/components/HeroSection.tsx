@@ -69,7 +69,7 @@ export default function HeroSection() {
           </div>
           <div className="text-center animate-fade-in-up animate-delay-700 transform hover:scale-105 transition-all duration-300">
             <div className="text-4xl font-bold text-secondary mb-2 hover:text-white transition-colors duration-300">
-              {heroContent?.corePrograms || "3"}
+              {heroContent?.corePrograms || "8"}
             </div>
             <div className="text-sm uppercase tracking-wide">Core Programs</div>
           </div>
