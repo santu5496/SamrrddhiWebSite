@@ -108,6 +108,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1555597673-b21d5c935865?w=400&h=300&fit=crop&crop=center",
             icon: "fas fa-fist-raised",
             isActive: true
+          },
+          {
+            id: 5,
+            title: "Women Empowerment",
+            description: "Comprehensive programs for women's skill development, vocational training, and economic independence. Providing education, healthcare awareness, and leadership opportunities to empower women in rural communities.",
+            imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop&crop=center",
+            icon: "fas fa-female",
+            isActive: true
+          },
+          {
+            id: 6,
+            title: "Orphan Care & Support",
+            description: "Complete care and support for children who have lost their parents. Providing shelter, education, healthcare, emotional support, and family-like environment to ensure their holistic development and bright future.",
+            imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&h=300&fit=crop&crop=center",
+            icon: "fas fa-heart",
+            isActive: true
+          },
+          {
+            id: 7,
+            title: "Old Age Care",
+            description: "Dedicated care and support services for elderly members of our community. Providing healthcare, companionship, recreational activities, and ensuring dignity and comfort in their golden years.",
+            imageUrl: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=300&fit=crop&crop=center",
+            icon: "fas fa-user-friends",
+            isActive: true
           }
         ]);
       } else {

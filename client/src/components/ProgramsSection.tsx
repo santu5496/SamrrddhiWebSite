@@ -15,6 +15,7 @@ const iconMap: Record<string, any> = {
   "fas fa-female": User,
   "fas fa-wheelchair": UserCheck,
   "fas fa-fist-raised": Zap,
+  "fas fa-user-friends": Users,
 };
 
 const getIconComponent = (iconClass: string) => {
