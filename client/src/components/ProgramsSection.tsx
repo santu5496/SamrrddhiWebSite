@@ -41,7 +41,7 @@ export default function ProgramsSection() {
         <div className="text-center mb-16 fade-in-section" ref={animationRef}>
           <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Eight comprehensive programs covering education, nutrition, healthcare, environmental conservation, women empowerment, and elderly care to create positive impact in rural communities.
+            Nine comprehensive programs covering education, nutrition, healthcare, child welfare, environmental conservation, women empowerment, and elderly care to create positive impact in rural communities.
           </p>
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
@@ -94,7 +94,8 @@ export default function ProgramsSection() {
                         index === 4 ? 'bg-gradient-to-r from-emerald-600 to-teal-600' :
                         index === 5 ? 'bg-gradient-to-r from-red-500 to-pink-600' :
                         index === 6 ? 'bg-gradient-to-r from-purple-500 to-violet-600' :
-                        'bg-gradient-to-r from-orange-500 to-amber-600'
+                        index === 7 ? 'bg-gradient-to-r from-orange-500 to-amber-600' :
+                        'bg-gradient-to-r from-blue-500 to-cyan-600'
                       }`}>
                         <IconComponent className="text-white h-5 w-5" />
                       </div>
@@ -150,6 +151,12 @@ export default function ProgramsSection() {
                         <>
                           <UserCheck className="h-4 w-4 mr-2" />
                           <span>Comprehensive Elderly Support</span>
+                        </>
+                      )}
+                      {program.title.includes("Orphan Care") && (
+                        <>
+                          <Users className="h-4 w-4 mr-2" />
+                          <span>Complete Child Care & Education</span>
                         </>
                       )}
                     </div>
@@ -394,6 +401,31 @@ export default function ProgramsSection() {
                           <li>• Reduced isolation and loneliness</li>
                           <li>• Family support and respite care</li>
                           <li>• Dignified aging in community settings</li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedProgram.title.includes("Orphan Care") && (
+                    <>
+                      <div className="bg-blue-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-blue-800">Complete Care Services</h4>
+                        <ul className="space-y-2 text-blue-700">
+                          <li>• Safe residential accommodation and loving home environment</li>
+                          <li>• Quality education from primary to higher secondary</li>
+                          <li>• Nutritious meals and healthcare services</li>
+                          <li>• Emotional support and psychological counseling</li>
+                          <li>• Life skills development and vocational training</li>
+                        </ul>
+                      </div>
+                      <div className="bg-cyan-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-cyan-800">Impact</h4>
+                        <ul className="space-y-2 text-cyan-700">
+                          <li>• 120+ orphaned children in our care</li>
+                          <li>• 100% enrollment in education programs</li>
+                          <li>• Holistic development and bright futures</li>
+                          <li>• Successful integration into society</li>
+                          <li>• Breaking the cycle of poverty and abandonment</li>
                         </ul>
                       </div>
                     </>
