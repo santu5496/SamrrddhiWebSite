@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple, Leaf, Droplets } from "lucide-react";
+import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple, Leaf, Droplets, User } from "lucide-react";
 import { Program } from "@shared/schema";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState } from "react";
@@ -12,6 +12,7 @@ const iconMap: Record<string, any> = {
   "fas fa-apple": Apple,
   "fas fa-leaf": Leaf,
   "fas fa-heart": Heart,
+  "fas fa-female": User,
 };
 
 const getIconComponent = (iconClass: string) => {
@@ -39,7 +40,7 @@ export default function ProgramsSection() {
         <div className="text-center mb-16 fade-in-section" ref={animationRef}>
           <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Six comprehensive programs covering education, nutrition, healthcare, and environmental conservation to create positive impact in rural communities.
+            Seven comprehensive programs covering education, nutrition, healthcare, environmental conservation, and women empowerment to create positive impact in rural communities.
           </p>
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
@@ -90,7 +91,8 @@ export default function ProgramsSection() {
                         index === 2 ? 'gradient-accent' :
                         index === 3 ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
                         index === 4 ? 'bg-gradient-to-r from-emerald-600 to-teal-600' :
-                        'bg-gradient-to-r from-red-500 to-pink-600'
+                        index === 5 ? 'bg-gradient-to-r from-red-500 to-pink-600' :
+                        'bg-gradient-to-r from-purple-500 to-violet-600'
                       }`}>
                         <IconComponent className="text-white h-5 w-5" />
                       </div>
@@ -134,6 +136,12 @@ export default function ProgramsSection() {
                         <>
                           <Droplets className="h-4 w-4 mr-2" />
                           <span>Save Lives Through Donation</span>
+                        </>
+                      )}
+                      {program.title.includes("Women Empowerment") && (
+                        <>
+                          <User className="h-4 w-4 mr-2" />
+                          <span>Leadership & Skills Development</span>
                         </>
                       )}
                     </div>
@@ -328,6 +336,31 @@ export default function ProgramsSection() {
                           <li>• Network of 300+ regular donors</li>
                           <li>• 24/7 emergency blood supply</li>
                           <li>• Community health awareness increased</li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedProgram.title.includes("Women Empowerment") && (
+                    <>
+                      <div className="bg-purple-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-purple-800">Empowerment Activities</h4>
+                        <ul className="space-y-2 text-purple-700">
+                          <li>• Skill development and vocational training</li>
+                          <li>• Financial literacy and microfinance programs</li>
+                          <li>• Leadership development workshops</li>
+                          <li>• Entrepreneurship support and mentoring</li>
+                          <li>• Legal awareness and rights education</li>
+                        </ul>
+                      </div>
+                      <div className="bg-violet-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-violet-800">Impact</h4>
+                        <ul className="space-y-2 text-violet-700">
+                          <li>• 150+ women trained in various skills</li>
+                          <li>• 80+ women started their own businesses</li>
+                          <li>• 90% increase in family income</li>
+                          <li>• Enhanced decision-making power</li>
+                          <li>• Strengthened community leadership</li>
                         </ul>
                       </div>
                     </>
