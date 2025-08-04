@@ -163,9 +163,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Placeholder image endpoint
   app.get('/api/placeholder/:width/:height', (req, res) => {
     const { width, height } = req.params;
-    const color = req.query.color || 'cccccc';
-    const textColor = req.query.text || '333333';
-    const text = req.query.t || `${width}x${height}`;
+    const color = (req.query.color as string) || 'cccccc';
+    const textColor = (req.query.text as string) || '333333';
+    const text = (req.query.t as string) || `${width}x${height}`;
     
     res.redirect(`https://via.placeholder.com/${width}x${height}/${color}/${textColor}?text=${encodeURIComponent(text)}`);
   });

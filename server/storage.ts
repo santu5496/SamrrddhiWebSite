@@ -69,7 +69,7 @@ export class PostgreSQLStorage implements IStorage {
     if (existing) {
       const result = await db
         .update(heroContent)
-        .set({ ...content, updatedAt: new Date() })
+        .set({ ...content, updatedAt: Date.now() })
         .where(eq(heroContent.id, existing.id))
         .returning();
       return result[0];
@@ -90,7 +90,7 @@ export class PostgreSQLStorage implements IStorage {
     if (existing) {
       const result = await db
         .update(aboutContent)
-        .set({ ...content, updatedAt: new Date() })
+        .set({ ...content, updatedAt: Date.now() })
         .where(eq(aboutContent.id, existing.id))
         .returning();
       return result[0];
@@ -121,7 +121,7 @@ export class PostgreSQLStorage implements IStorage {
   async updateProgram(id: number, program: Partial<InsertProgram>): Promise<Program> {
     const result = await db
       .update(programs)
-      .set({ ...program, updatedAt: new Date() })
+      .set({ ...program, updatedAt: Date.now() })
       .where(eq(programs.id, id))
       .returning();
     return result[0];
@@ -175,7 +175,7 @@ export class PostgreSQLStorage implements IStorage {
   async updateEvent(id: number, event: Partial<InsertEvent>): Promise<Event> {
     const result = await db
       .update(events)
-      .set({ ...event, updatedAt: new Date() })
+      .set({ ...event, updatedAt: Date.now() })
       .where(eq(events.id, id))
       .returning();
     return result[0];
@@ -196,7 +196,7 @@ export class PostgreSQLStorage implements IStorage {
     if (existing) {
       const result = await db
         .update(contactInfo)
-        .set({ ...info, updatedAt: new Date() })
+        .set({ ...info, updatedAt: Date.now() })
         .where(eq(contactInfo.id, existing.id))
         .returning();
       return result[0];
@@ -217,7 +217,7 @@ export class PostgreSQLStorage implements IStorage {
     if (existing) {
       const result = await db
         .update(donationConfig)
-        .set({ ...config, updatedAt: new Date() })
+        .set({ ...config, updatedAt: Date.now() })
         .where(eq(donationConfig.id, existing.id))
         .returning();
       return result[0];
