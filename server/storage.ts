@@ -544,7 +544,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateNews(id: number, newsData: Partial<InsertNews>): Promise<News> {
-    const updateData = { ...newsData, updatedAt: new Date() };
+    const updateData: any = { ...newsData, updatedAt: new Date() };
     if (newsData.title) {
       updateData.slug = newsData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
