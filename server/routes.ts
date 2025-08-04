@@ -100,6 +100,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: null,
             icon: "fas fa-utensils",
             isActive: true
+          },
+          {
+            id: 4,
+            title: "Free Karate Coaching",
+            description: "Empowering girls with self-defense skills through professional karate training. Building confidence, physical fitness, and personal safety awareness in a supportive environment.",
+            imageUrl: null,
+            icon: "fas fa-fist-raised",
+            isActive: true
           }
         ]);
       } else {
