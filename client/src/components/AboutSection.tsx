@@ -4,12 +4,12 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 export default function AboutSection() {
   const animationRef = useScrollAnimation();
 
-  // Hardcoded About section data
+  // Authentic About section data based on organization details
   const aboutContent = {
     missionTitle: "Our Mission",
-    missionDescription: "To empower underprivileged rural girls and differently-abled children by providing quality education, safe accommodation, and comprehensive care, enabling them to build independent and dignified lives.",
-    journeyTitle: "Our Journey",
-    journeyDescription: "Since 1995, Samruddhi Service Society has been a beacon of hope for marginalized communities. What started as a small initiative has grown into a comprehensive organization touching hundreds of lives through education, empowerment, and care.",
+    missionDescription: "Samruddhi Service Society was registered in 1995 to promote rural girls' development of education. The organization provides free girls' hostel from 7th to 10th standard, ensuring access to quality accommodation and education.",
+    journeyTitle: "Our Journey & Programs",
+    journeyDescription: "The organization has started education for physically handicapped/disabled children to promote free education and quality of life support. Our key program 'IDC' (Integrated Education for Disabled Children) focuses on comprehensive support for differently-abled students.",
     imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
   };
 
@@ -52,10 +52,18 @@ export default function AboutSection() {
               </p>
             </div>
             
-            <div className="flex items-center space-x-4 pt-4 transform hover:translate-x-2 transition-all duration-300">
-              <div className="flex items-center space-x-2">
+            <div className="space-y-3 pt-4">
+              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300">
                 <CheckCircle className="text-green-600 h-5 w-5 hover:text-blue-600 transition-colors duration-300" />
                 <span className="text-gray-800 font-medium">Registered NGO since 1995</span>
+              </div>
+              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300">
+                <CheckCircle className="text-green-600 h-5 w-5 hover:text-blue-600 transition-colors duration-300" />
+                <span className="text-gray-800 font-medium">Free girls' hostel for 7th to 10th standard</span>
+              </div>
+              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300">
+                <CheckCircle className="text-green-600 h-5 w-5 hover:text-blue-600 transition-colors duration-300" />
+                <span className="text-gray-800 font-medium">IDC Program for disabled children</span>
               </div>
             </div>
           </div>
