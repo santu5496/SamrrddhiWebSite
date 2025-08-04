@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple } from "lucide-react";
+import { Home, GraduationCap, Utensils, Users, Heart, Shield, X, ExternalLink, Apple, Leaf, Droplets } from "lucide-react";
 import { Program } from "@shared/schema";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState } from "react";
@@ -10,6 +10,8 @@ const iconMap: Record<string, any> = {
   "fas fa-graduation-cap": GraduationCap,
   "fas fa-utensils": Utensils,
   "fas fa-apple": Apple,
+  "fas fa-leaf": Leaf,
+  "fas fa-heart": Heart,
 };
 
 const getIconComponent = (iconClass: string) => {
@@ -37,7 +39,7 @@ export default function ProgramsSection() {
         <div className="text-center mb-16 fade-in-section" ref={animationRef}>
           <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Four comprehensive programs designed to provide education, nutrition, and support to rural girls, differently-abled children, and school children.
+            Six comprehensive programs covering education, nutrition, healthcare, and environmental conservation to create positive impact in rural communities.
           </p>
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
@@ -60,7 +62,7 @@ export default function ProgramsSection() {
           </div>
         )}
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {programs && programs.length > 0 ? (
             programs.map((program, index) => {
               const IconComponent = getIconComponent(program.icon);
@@ -86,7 +88,9 @@ export default function ProgramsSection() {
                         index === 0 ? 'gradient-primary' : 
                         index === 1 ? 'gradient-secondary' : 
                         index === 2 ? 'gradient-accent' :
-                        'bg-gradient-to-r from-green-500 to-emerald-600'
+                        index === 3 ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
+                        index === 4 ? 'bg-gradient-to-r from-emerald-600 to-teal-600' :
+                        'bg-gradient-to-r from-red-500 to-pink-600'
                       }`}>
                         <IconComponent className="text-white h-5 w-5" />
                       </div>
@@ -118,6 +122,18 @@ export default function ProgramsSection() {
                         <>
                           <Apple className="h-4 w-4 mr-2" />
                           <span>Nutritious School Meals</span>
+                        </>
+                      )}
+                      {program.title.includes("Environmental") && (
+                        <>
+                          <Leaf className="h-4 w-4 mr-2" />
+                          <span>Eco-Friendly Initiatives</span>
+                        </>
+                      )}
+                      {program.title.includes("Blood Donation") && (
+                        <>
+                          <Droplets className="h-4 w-4 mr-2" />
+                          <span>Save Lives Through Donation</span>
                         </>
                       )}
                     </div>
@@ -262,6 +278,56 @@ export default function ProgramsSection() {
                           <li>• Better concentration and learning</li>
                           <li>• Reduced dropout rates</li>
                           <li>• Enhanced physical development</li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedProgram.title.includes("Environmental") && (
+                    <>
+                      <div className="bg-emerald-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-emerald-800">Conservation Activities</h4>
+                        <ul className="space-y-2 text-emerald-700">
+                          <li>• Tree plantation drives in rural areas</li>
+                          <li>• Waste management and recycling programs</li>
+                          <li>• Water conservation initiatives</li>
+                          <li>• Organic farming promotion</li>
+                          <li>• Environmental awareness workshops</li>
+                        </ul>
+                      </div>
+                      <div className="bg-teal-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-teal-800">Impact</h4>
+                        <ul className="space-y-2 text-teal-700">
+                          <li>• 2,500+ trees planted annually</li>
+                          <li>• 50+ villages reached with awareness</li>
+                          <li>• Improved air and water quality</li>
+                          <li>• Sustainable farming practices adopted</li>
+                          <li>• Enhanced community environmental awareness</li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedProgram.title.includes("Blood Donation") && (
+                    <>
+                      <div className="bg-red-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-red-800">Campaign Activities</h4>
+                        <ul className="space-y-2 text-red-700">
+                          <li>• Regular blood donation camps</li>
+                          <li>• Donor awareness and education</li>
+                          <li>• Mobile blood collection units</li>
+                          <li>• Partnership with local hospitals</li>
+                          <li>• Emergency blood supply coordination</li>
+                        </ul>
+                      </div>
+                      <div className="bg-pink-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-lg mb-3 text-pink-800">Impact</h4>
+                        <ul className="space-y-2 text-pink-700">
+                          <li>• 500+ units of blood collected annually</li>
+                          <li>• 1,200+ lives potentially saved</li>
+                          <li>• Network of 300+ regular donors</li>
+                          <li>• 24/7 emergency blood supply</li>
+                          <li>• Community health awareness increased</li>
                         </ul>
                       </div>
                     </>
