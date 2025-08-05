@@ -37,12 +37,43 @@ const categoryLabels: Record<string, string> = {
   'elderly-care': 'Elderly Care Services'
 };
 
+const getCategoryBadgeStyle = (category: string) => {
+  switch (category) {
+    case 'education-childcare':
+      return 'bg-blue-500/90 text-white';
+    case 'skill-development':
+      return 'bg-purple-500/90 text-white';
+    case 'healthcare-nutrition':
+      return 'bg-green-500/90 text-white';
+    case 'empowerment':
+    case 'women-empowerment':
+      return 'bg-pink-500/90 text-white';
+    case 'community-development':
+      return 'bg-orange-500/90 text-white';
+    case 'environment':
+      return 'bg-emerald-500/90 text-white';
+    case 'childcare-orphan':
+      return 'bg-cyan-500/90 text-white';
+    case 'self-defense':
+      return 'bg-red-500/90 text-white';
+    case 'elderly-care':
+      return 'bg-amber-500/90 text-white';
+    default:
+      return 'bg-gray-500/90 text-white';
+  }
+};
+
+const getCategoryDisplayName = (category: string) => {
+  return categoryLabels[category] || 'Program';
+};
+
 export default function ProgramsSection() {
   const { data: apiPrograms, isLoading, error } = useQuery<Program[]>({
     queryKey: ["/api/programs"],
   });
   const animationRef = useScrollAnimation();
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState('all');
 
   // Hardcoded programs to ensure all 12 are displayed
   const hardcodedPrograms: Program[] = [
@@ -267,6 +298,20 @@ export default function ProgramsSection() {
   // Use hardcoded programs to ensure all 12 display
   const programs = hardcodedPrograms;
 
+  // Filter programs based on category
+  const filteredPrograms = categoryFilter === 'all' ? programs : programs.filter(program => {
+    switch (categoryFilter) {
+      case 'education':
+        return program.category.includes('education') || program.category.includes('childcare');
+      case 'empowerment':
+        return program.category.includes('empowerment') || program.category.includes('skill');
+      case 'healthcare':
+        return program.category.includes('healthcare') || program.category.includes('nutrition');
+      default:
+        return true;
+    }
+  });
+
   // Program-specific images based on program type
   const programImages: Record<string, string> = {
     "Free Girls' Hostel": "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
@@ -291,11 +336,20 @@ export default function ProgramsSection() {
     <section id="programs" className="py-12 sm:py-16 lg:py-20 bg-white mb-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-optimized">
         <div className="text-center mb-8 sm:mb-12 lg:mb-16 fade-in-section" ref={animationRef}>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mobile-text">
-            Twelve comprehensive programs covering education, nutrition, healthcare, skill development, environmental conservation, women empowerment, community development, child care, self-defense training, and elderly care to create positive impact in rural communities.
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full mb-6">
+            <span className="text-2xl font-bold text-white">12</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral mb-4">
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Programs</span>
+          </h2>
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl mx-auto mobile-text leading-relaxed">
+            Transforming lives through twelve comprehensive programs that address education, nutrition, healthcare, skill development, environmental conservation, women empowerment, community development, child care, self-defense training, and elderly care across rural communities.
           </p>
-          <div className="w-24 h-1 bg-secondary mx-auto mt-4 sm:mt-6"></div>
+          <div className="flex items-center justify-center space-x-2 mt-6">
+            <div className="w-12 h-1 bg-primary rounded-full"></div>
+            <div className="w-3 h-3 bg-secondary rounded-full"></div>
+            <div className="w-12 h-1 bg-primary rounded-full"></div>
+          </div>
         </div>
         
         {isLoading && (
@@ -316,49 +370,102 @@ export default function ProgramsSection() {
           </div>
         )}
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {programs && programs.length > 0 ? (
-            programs.map((program, index) => {
+        {/* Category Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8 sm:mb-12">
+          <button 
+            onClick={() => setCategoryFilter('all')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 touch-target ${
+              categoryFilter === 'all' 
+                ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            All Programs (12)
+          </button>
+          <button 
+            onClick={() => setCategoryFilter('education')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 touch-target ${
+              categoryFilter === 'education' 
+                ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            Education & Child Care
+          </button>
+          <button 
+            onClick={() => setCategoryFilter('empowerment')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 touch-target ${
+              categoryFilter === 'empowerment' 
+                ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            Empowerment
+          </button>
+          <button 
+            onClick={() => setCategoryFilter('healthcare')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 touch-target ${
+              categoryFilter === 'healthcare' 
+                ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            Healthcare & Nutrition
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {filteredPrograms && filteredPrograms.length > 0 ? (
+            filteredPrograms.map((program, index) => {
               const IconComponent = getIconComponent(program.icon);
               return (
                 <div 
                   key={program.id} 
-                  className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-500 group cursor-pointer touch-target"
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500 group cursor-pointer touch-target border border-gray-100"
                   onClick={() => setSelectedProgram(program)}
                 >
                   <div className="relative overflow-hidden">
                     <img 
                       src={program.imageUrl || getImageForProgram(program.title)}
                       alt={program.title}
-                      className="w-full h-40 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-48 sm:h-52 object-cover group-hover:scale-105 transition-transform duration-700"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm bg-blue-500/90 text-white">
+                      {categoryLabels[program.category] || 'Program'}
+                    </div>
+                    
+                    {/* Icon Overlay */}
+                    <div className="absolute top-4 right-4 w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral shadow-lg group-hover:scale-110 transition-all duration-300">
+                      <IconComponent className="h-6 w-6" />
+                    </div>
+
+                    {/* Quick action overlay */}
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="text-white text-center">
+                        <div className="text-lg font-semibold mb-2">Learn More</div>
+                        <div className="text-sm opacity-90">Click to view details</div>
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="p-4 sm:p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center">
-                        <div className={`inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg mr-2 sm:mr-3 transform group-hover:rotate-12 transition-transform duration-300 ${
-                          index === 0 ? 'gradient-primary' : 
-                          index === 1 ? 'gradient-secondary' : 
-                          index === 2 ? 'gradient-accent' :
-                          index === 3 ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
-                          index === 4 ? 'bg-gradient-to-r from-emerald-600 to-teal-600' :
-                          index === 5 ? 'bg-gradient-to-r from-red-500 to-pink-600' :
-                          index === 6 ? 'bg-gradient-to-r from-purple-500 to-violet-600' :
-                          index === 7 ? 'bg-gradient-to-r from-orange-500 to-amber-600' :
-                          'bg-gradient-to-r from-blue-500 to-cyan-600'
-                        }`}>
-                          <IconComponent className="text-white h-4 w-4 sm:h-5 sm:w-5" />
+                  <div className="p-5 sm:p-6">
+                    <div className="mb-4">
+                      <h3 className="text-lg sm:text-xl font-bold text-neutral group-hover:text-primary transition-colors duration-300 mb-2 leading-tight">{program.title}</h3>
+                      <div className="flex items-center justify-between">
+                        <Badge variant="secondary" className="text-xs font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                          {categoryLabels[program.category] || 'Program'}
+                        </Badge>
+                        <div className="text-xs text-gray-500 font-medium">
+                          Impact Program
                         </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-neutral group-hover:text-primary transition-colors duration-300">{program.title}</h3>
                       </div>
-                      <Badge variant="secondary" className="text-xs sm:text-sm bg-blue-100 text-blue-700">
-                        {categoryLabels[program.category] || 'Program'}
-                      </Badge>
                     </div>
-                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300 mobile-text mb-4">
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300 mobile-text mb-5 line-clamp-3">
                       {program.description}
                     </p>
                     <div className="mt-3 sm:mt-4 flex items-center text-accent font-medium text-sm sm:text-base">
@@ -417,28 +524,31 @@ export default function ProgramsSection() {
                         </>
                       )}
                     </div>
-                    {/* Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4">
+                    {/* Enhanced Action Buttons */}
+                    <div className="flex gap-2 sm:gap-3 mt-4">
                       <Button 
-                        className="flex-1 text-sm sm:text-base touch-target"
+                        variant="default" 
                         size="sm"
+                        className="flex-1 text-sm sm:text-base bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 touch-target shadow-lg hover:shadow-xl transform hover:scale-105"
                         onClick={(e) => {
                           e.stopPropagation();
                           document.getElementById('donate')?.scrollIntoView({ behavior: 'smooth' });
                         }}
                       >
-                        Support This Program
+                        <Heart className="h-4 w-4 mr-1" />
+                        Support Now
                       </Button>
                       <Button 
                         variant="outline" 
                         size="sm"
-                        className="text-sm sm:text-base touch-target"
+                        className="text-sm sm:text-base touch-target hover:bg-blue-50 border-blue-200 text-blue-600 hover:border-blue-300 transition-all duration-300"
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedProgram(program);
                         }}
                       >
-                        Learn More
+                        <ExternalLink className="h-4 w-4 mr-1" />
+                        Details
                       </Button>
                     </div>
                   </div>
