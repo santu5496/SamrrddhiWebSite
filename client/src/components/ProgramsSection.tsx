@@ -267,13 +267,25 @@ export default function ProgramsSection() {
   // Use hardcoded programs to ensure all 12 display
   const programs = hardcodedPrograms;
 
+  // Program-specific images based on program type
+  const programImages: Record<string, string> = {
+    "Free Girls' Hostel": "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Special Education Center (IDC)": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Skill Development Programs": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Nutrition & Mid-Day Meal Program": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Healthcare & Medical Support": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Women Empowerment Initiative": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Community Development Projects": "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Environmental Conservation": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Child Care & Shelter for Orphans": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Free Karate Coaching for Rural Girls": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Women Empowerment Programs": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    "Old Age Care Services": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
+  };
 
-
-  const defaultImages = [
-    "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400",
-    "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400",
-    "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400"
-  ];
+  const getImageForProgram = (programTitle: string): string => {
+    return programImages[programTitle] || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400";
+  };
 
   return (
     <section id="programs" className="py-12 sm:py-16 lg:py-20 bg-white">
@@ -316,7 +328,7 @@ export default function ProgramsSection() {
                 >
                   <div className="relative overflow-hidden">
                     <img 
-                      src={program.imageUrl || defaultImages[index % defaultImages.length]}
+                      src={program.imageUrl || getImageForProgram(program.title)}
                       alt={program.title}
                       className="w-full h-40 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                       loading="lazy"
@@ -456,7 +468,7 @@ export default function ProgramsSection() {
                 {/* Program Image */}
                 <div className="relative overflow-hidden rounded-lg">
                   <img 
-                    src={selectedProgram.imageUrl || defaultImages[0]}
+                    src={selectedProgram.imageUrl || getImageForProgram(selectedProgram.title)}
                     alt={selectedProgram.title}
                     className="w-full h-64 object-cover"
                   />

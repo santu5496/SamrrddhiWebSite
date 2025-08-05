@@ -28,6 +28,7 @@ The application employs a modern full-stack architecture consisting of:
 -   **Admin Dashboard**: A comprehensive CMS for managing all website content, including user management, hero content, organizational information, programs, testimonials, contact details, and donation configurations.
 -   **Donor Engagement Features**: Animated impact counters, success story carousels, volunteer application forms, partner showcases, and downloadable brochures. Features also include multiple payment methods, newsletter integration, and trust indicators.
 -   **Core Organizational Features**: Sections for Leadership, News & Blog, Photo Gallery, Annual Reports, Certifications, Events Management with registration, Resources & Publications, and Media Coverage.
+-   **Programs Section Enhancement**: Features 12 comprehensive programs with program-specific relevant images, category badges, and action buttons ("Support This Program" and "Learn More"). Each program card displays proper categorization and mobile-optimized layout.
 -   **Data Flow**: React components fetch content from API endpoints; the server retrieves data from PostgreSQL via Drizzle ORM. For admin management, changes are validated and saved to the database, reflecting immediately on the public site. Authentication is handled by Replit OIDC, with sessions stored in PostgreSQL.
 
 ## External Dependencies
