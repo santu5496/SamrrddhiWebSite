@@ -1,25 +1,17 @@
 import { useState } from "react";
-import { Menu, X, Volume2, Type, Eye, ChevronDown, Heart, Users, Handshake, UserPlus, Building } from "lucide-react";
+import { Menu, X, Type, Eye, Home } from "lucide-react";
 import { Button } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+import { Link, useLocation } from "wouter";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [isHighContrast, setIsHighContrast] = useState(false);
+  const [location] = useLocation();
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMenuOpen(false);
-  };
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const isActive = (path: string) => location === path;
 
   return (
     <>
@@ -57,93 +49,77 @@ export default function Header() {
       <header className={`bg-white shadow-md sticky top-0 z-50 ${isHighContrast ? 'high-contrast' : ''}`} style={{fontSize: `${fontSize}px`}}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
           <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl">
                 S
               </div>
               <div>
-                <h1 className="text-xl font-bold text-neutral">Samruddhi Service Society</h1>
-                <p className="text-sm text-gray-600">Empowering since 1995</p>
+                <h1 className="text-lg sm:text-xl font-bold text-neutral">Samruddhi Service Society</h1>
+                <p className="text-xs sm:text-sm text-gray-600">Empowering since 1995</p>
               </div>
-            </div>
+            </Link>
 
-            <div className="hidden lg:flex items-center space-x-4">
-              <button 
-                onClick={() => scrollToSection('about')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                ABOUT
-              </button>
+            <div className="hidden lg:flex items-center space-x-2 xl:space-x-4">
+              <Link href="/">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/') ? 'text-primary bg-primary/10' : ''}`}>
+                  <Home className="inline h-4 w-4 mr-1" />
+                  HOME
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('programs')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                PROGRAMS
-              </button>
+              <Link href="/about">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/about') ? 'text-primary bg-primary/10' : ''}`}>
+                  ABOUT
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('leadership')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                LEADERSHIP
-              </button>
+              <Link href="/programs">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/programs') ? 'text-primary bg-primary/10' : ''}`}>
+                  PROGRAMS
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('news')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                NEWS
-              </button>
+              <Link href="/leadership">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/leadership') ? 'text-primary bg-primary/10' : ''}`}>
+                  LEADERSHIP
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('events')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                EVENTS
-              </button>
+              <Link href="/news">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/news') ? 'text-primary bg-primary/10' : ''}`}>
+                  NEWS
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('media')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                MEDIA
-              </button>
+              <Link href="/events">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/events') ? 'text-primary bg-primary/10' : ''}`}>
+                  EVENTS
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('gallery')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                GALLERY
-              </button>
+              <Link href="/media">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/media') ? 'text-primary bg-primary/10' : ''}`}>
+                  MEDIA
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('resources')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                RESOURCES
-              </button>
+              <Link href="/gallery">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/gallery') ? 'text-primary bg-primary/10' : ''}`}>
+                  GALLERY
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('how-to-help')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                HOW TO HELP
-              </button>
+              <Link href="/resources">
+                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/resources') ? 'text-primary bg-primary/10' : ''}`}>
+                  RESOURCES
+                </button>
+              </Link>
               
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded"
-              >
-                CONTACT
-              </button>
-              
-              <Button 
-                onClick={() => scrollToSection('donate')} 
-                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-xs font-medium uppercase tracking-wide transform hover:scale-110 transition-all duration-300 hover:shadow-lg animate-pulse-hover"
-              >
-                DONATE
-              </Button>
+              <Link href="/donate">
+                <Button className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-xs font-medium uppercase tracking-wide transform hover:scale-110 transition-all duration-300 hover:shadow-lg animate-pulse-hover">
+                  DONATE
+                </Button>
+              </Link>
             </div>
 
             {/* Mobile menu button */}
@@ -160,74 +136,59 @@ export default function Header() {
 
           {/* Mobile menu */}
           {isMenuOpen && (
-            <div className="lg:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-                <button 
-                  onClick={() => scrollToSection('about')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  About Us
-                </button>
-                <button 
-                  onClick={() => scrollToSection('what-we-do')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  What We Do
-                </button>
-                <button 
-                  onClick={() => scrollToSection('how-to-help')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  How to Help
-                </button>
-                <button 
-                  onClick={() => scrollToSection('programs')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  Programs
-                </button>
-                <button 
-                  onClick={() => scrollToSection('leadership')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  Leadership
-                </button>
-                <button 
-                  onClick={() => scrollToSection('news')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  News
-                </button>
-                <button 
-                  onClick={() => scrollToSection('gallery')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  Gallery
-                </button>
-                <button 
-                  onClick={() => scrollToSection('events')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  Events
-                </button>
-                <button 
-                  onClick={() => scrollToSection('media')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  Media
-                </button>
-                <button 
-                  onClick={() => scrollToSection('contact')}
-                  className="block px-3 py-2 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left"
-                >
-                  Contact Us
-                </button>
-                <button 
-                  onClick={() => scrollToSection('donate')}
-                  className="block px-3 py-2 text-base font-medium text-white bg-primary hover:bg-primary/90 rounded-md w-full text-left"
-                >
-                  Donate Now
-                </button>
+            <div className="lg:hidden absolute left-0 right-0 top-full z-40">
+              <div className="px-4 pt-2 pb-4 space-y-2 bg-white border-t shadow-lg max-h-screen overflow-y-auto">
+                <Link href="/" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/') ? 'text-primary bg-primary/10' : ''}`}>
+                    <Home className="inline h-4 w-4 mr-2" />
+                    Home
+                  </div>
+                </Link>
+                <Link href="/about" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/about') ? 'text-primary bg-primary/10' : ''}`}>
+                    About Us
+                  </div>
+                </Link>
+                <Link href="/programs" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/programs') ? 'text-primary bg-primary/10' : ''}`}>
+                    Programs
+                  </div>
+                </Link>
+                <Link href="/leadership" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/leadership') ? 'text-primary bg-primary/10' : ''}`}>
+                    Leadership
+                  </div>
+                </Link>
+                <Link href="/news" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/news') ? 'text-primary bg-primary/10' : ''}`}>
+                    News
+                  </div>
+                </Link>
+                <Link href="/events" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/events') ? 'text-primary bg-primary/10' : ''}`}>
+                    Events
+                  </div>
+                </Link>
+                <Link href="/media" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/media') ? 'text-primary bg-primary/10' : ''}`}>
+                    Media
+                  </div>
+                </Link>
+                <Link href="/gallery" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/gallery') ? 'text-primary bg-primary/10' : ''}`}>
+                    Gallery
+                  </div>
+                </Link>
+                <Link href="/resources" onClick={closeMenu}>
+                  <div className={`block px-3 py-3 text-base font-medium text-neutral hover:text-primary hover:bg-gray-50 w-full text-left rounded-md transition-colors ${isActive('/resources') ? 'text-primary bg-primary/10' : ''}`}>
+                    Resources
+                  </div>
+                </Link>
+                <Link href="/donate" onClick={closeMenu}>
+                  <div className="block px-3 py-3 text-base font-medium text-white bg-primary hover:bg-primary/90 rounded-md w-full text-left transition-colors">
+                    Donate Now
+                  </div>
+                </Link>
               </div>
             </div>
           )}

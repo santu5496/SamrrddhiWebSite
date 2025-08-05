@@ -16,14 +16,14 @@ export default function AboutSection() {
   console.log("About Content (Hardcoded):", aboutContent);
 
   return (
-    <section id="about" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16" ref={animationRef}>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">About Samruddhi Service Society</h2>
+    <section id="about" className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-optimized">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16" ref={animationRef}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">About Samruddhi Service Society</h2>
           <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           <div className="transform hover:scale-105 transition-all duration-500">
             <img 
               src={aboutContent.imageUrl}
@@ -33,37 +33,37 @@ export default function AboutSection() {
             />
           </div>
           
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div className="transform hover:translate-x-2 transition-all duration-300">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4 hover:text-blue-600 transition-colors duration-300">
+              <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4 hover:text-blue-600 transition-colors duration-300">
                 {aboutContent.missionTitle}
               </h3>
-              <p className="text-gray-700 leading-relaxed text-lg">
+              <p className="text-gray-700 leading-relaxed text-base sm:text-lg mobile-text">
                 {aboutContent.missionDescription}
               </p>
             </div>
             
             <div className="transform hover:translate-x-2 transition-all duration-300">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4 hover:text-blue-600 transition-colors duration-300">
+              <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4 hover:text-blue-600 transition-colors duration-300">
                 {aboutContent.journeyTitle}
               </h3>
-              <p className="text-gray-700 leading-relaxed text-lg">
+              <p className="text-gray-700 leading-relaxed text-base sm:text-lg mobile-text">
                 {aboutContent.journeyDescription}
               </p>
             </div>
             
-            <div className="space-y-3 pt-4">
-              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300">
-                <CheckCircle className="text-green-600 h-5 w-5 hover:text-blue-600 transition-colors duration-300" />
-                <span className="text-gray-800 font-medium">Registered NGO since 1995</span>
+            <div className="space-y-2 sm:space-y-3 pt-3 sm:pt-4">
+              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300 touch-target">
+                <CheckCircle className="text-green-600 h-4 w-4 sm:h-5 sm:w-5 hover:text-blue-600 transition-colors duration-300" />
+                <span className="text-gray-800 font-medium text-sm sm:text-base">Registered NGO since 1995</span>
               </div>
-              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300">
-                <CheckCircle className="text-green-600 h-5 w-5 hover:text-blue-600 transition-colors duration-300" />
-                <span className="text-gray-800 font-medium">Free girls' hostel for 7th to 10th standard</span>
+              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300 touch-target">
+                <CheckCircle className="text-green-600 h-4 w-4 sm:h-5 sm:w-5 hover:text-blue-600 transition-colors duration-300" />
+                <span className="text-gray-800 font-medium text-sm sm:text-base">Free girls' hostel for 7th to 10th standard</span>
               </div>
-              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300">
-                <CheckCircle className="text-green-600 h-5 w-5 hover:text-blue-600 transition-colors duration-300" />
-                <span className="text-gray-800 font-medium">IDC Program for disabled children</span>
+              <div className="flex items-center space-x-2 transform hover:translate-x-2 transition-all duration-300 touch-target">
+                <CheckCircle className="text-green-600 h-4 w-4 sm:h-5 sm:w-5 hover:text-blue-600 transition-colors duration-300" />
+                <span className="text-gray-800 font-medium text-sm sm:text-base">IDC Program for disabled children</span>
               </div>
             </div>
           </div>
