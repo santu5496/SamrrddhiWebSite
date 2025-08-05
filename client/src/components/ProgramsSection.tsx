@@ -261,14 +261,14 @@ export default function ProgramsSection() {
   ];
 
   return (
-    <section id="programs" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 fade-in-section" ref={animationRef}>
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+    <section id="programs" className="py-12 sm:py-16 lg:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-optimized">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16 fade-in-section" ref={animationRef}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mobile-text">
             Twelve comprehensive programs covering education, nutrition, healthcare, skill development, environmental conservation, women empowerment, community development, child care, self-defense training, and elderly care to create positive impact in rural communities.
           </p>
-          <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-secondary mx-auto mt-4 sm:mt-6"></div>
         </div>
         
         {isLoading && (
@@ -289,29 +289,29 @@ export default function ProgramsSection() {
           </div>
         )}
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {programs && programs.length > 0 ? (
             programs.map((program, index) => {
               const IconComponent = getIconComponent(program.icon);
               return (
                 <div 
                   key={program.id} 
-                  className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-500 group cursor-pointer"
+                  className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-500 group cursor-pointer touch-target"
                   onClick={() => setSelectedProgram(program)}
                 >
                   <div className="relative overflow-hidden">
                     <img 
                       src={program.imageUrl || defaultImages[index % defaultImages.length]}
                       alt={program.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-40 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   
-                  <div className="p-6">
+                  <div className="p-4 sm:p-6">
                     <div className="flex items-center mb-3">
-                      <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg mr-3 transform group-hover:rotate-12 transition-transform duration-300 ${
+                      <div className={`inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg mr-2 sm:mr-3 transform group-hover:rotate-12 transition-transform duration-300 ${
                         index === 0 ? 'gradient-primary' : 
                         index === 1 ? 'gradient-secondary' : 
                         index === 2 ? 'gradient-accent' :
@@ -322,17 +322,17 @@ export default function ProgramsSection() {
                         index === 7 ? 'bg-gradient-to-r from-orange-500 to-amber-600' :
                         'bg-gradient-to-r from-blue-500 to-cyan-600'
                       }`}>
-                        <IconComponent className="text-white h-5 w-5" />
+                        <IconComponent className="text-white h-4 w-4 sm:h-5 sm:w-5" />
                       </div>
-                      <h3 className="text-xl font-bold text-neutral group-hover:text-primary transition-colors duration-300">{program.title}</h3>
+                      <h3 className="text-lg sm:text-xl font-bold text-neutral group-hover:text-primary transition-colors duration-300">{program.title}</h3>
                     </div>
-                    <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
+                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300 mobile-text">
                       {program.description}
                     </p>
-                    <div className="mt-4 flex items-center text-accent font-medium">
+                    <div className="mt-3 sm:mt-4 flex items-center text-accent font-medium text-sm sm:text-base">
                       {program.title.includes("Girls") && (
                         <>
-                          <Users className="h-4 w-4 mr-2" />
+                          <Users className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                           <span>50+ Girls Supported</span>
                         </>
                       )}
@@ -385,8 +385,8 @@ export default function ProgramsSection() {
                         </>
                       )}
                     </div>
-                    <div className="mt-4 flex items-center text-primary font-medium group-hover:text-secondary transition-colors duration-300">
-                      <ExternalLink className="h-4 w-4 mr-2" />
+                    <div className="mt-3 sm:mt-4 flex items-center text-primary font-medium group-hover:text-secondary transition-colors duration-300 text-sm sm:text-base">
+                      <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                       <span>Click to learn more</span>
                     </div>
                   </div>
