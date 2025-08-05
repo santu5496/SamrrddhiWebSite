@@ -288,7 +288,7 @@ export default function ProgramsSection() {
   };
 
   return (
-    <section id="programs" className="py-12 sm:py-16 lg:py-20 bg-white">
+    <section id="programs" className="py-12 sm:py-16 lg:py-20 bg-white mb-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-optimized">
         <div className="text-center mb-8 sm:mb-12 lg:mb-16 fade-in-section" ref={animationRef}>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral mb-4">Our Programs</h2>
