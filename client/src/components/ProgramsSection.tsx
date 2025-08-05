@@ -4,6 +4,8 @@ import { Program } from "@shared/schema";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const iconMap: Record<string, any> = {
   "fas fa-home": Home,
@@ -20,6 +22,19 @@ const iconMap: Record<string, any> = {
 
 const getIconComponent = (iconClass: string) => {
   return iconMap[iconClass] || Home;
+};
+
+const categoryLabels: Record<string, string> = {
+  'education-childcare': 'Education & Child Care',
+  'skill-development': 'Skill Development & Livelihood',
+  'healthcare-nutrition': 'Healthcare & Nutrition',
+  'empowerment': 'Women Empowerment',
+  'community-development': 'Community Development',
+  'environment': 'Environment & Sustainability',
+  'childcare-orphan': 'Child Care & Shelter',
+  'self-defense': 'Self-Defense Training',
+  'women-empowerment': 'Women Empowerment',
+  'elderly-care': 'Elderly Care Services'
 };
 
 export default function ProgramsSection() {
@@ -310,23 +325,28 @@ export default function ProgramsSection() {
                   </div>
                   
                   <div className="p-4 sm:p-6">
-                    <div className="flex items-center mb-3">
-                      <div className={`inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg mr-2 sm:mr-3 transform group-hover:rotate-12 transition-transform duration-300 ${
-                        index === 0 ? 'gradient-primary' : 
-                        index === 1 ? 'gradient-secondary' : 
-                        index === 2 ? 'gradient-accent' :
-                        index === 3 ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
-                        index === 4 ? 'bg-gradient-to-r from-emerald-600 to-teal-600' :
-                        index === 5 ? 'bg-gradient-to-r from-red-500 to-pink-600' :
-                        index === 6 ? 'bg-gradient-to-r from-purple-500 to-violet-600' :
-                        index === 7 ? 'bg-gradient-to-r from-orange-500 to-amber-600' :
-                        'bg-gradient-to-r from-blue-500 to-cyan-600'
-                      }`}>
-                        <IconComponent className="text-white h-4 w-4 sm:h-5 sm:w-5" />
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center">
+                        <div className={`inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg mr-2 sm:mr-3 transform group-hover:rotate-12 transition-transform duration-300 ${
+                          index === 0 ? 'gradient-primary' : 
+                          index === 1 ? 'gradient-secondary' : 
+                          index === 2 ? 'gradient-accent' :
+                          index === 3 ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
+                          index === 4 ? 'bg-gradient-to-r from-emerald-600 to-teal-600' :
+                          index === 5 ? 'bg-gradient-to-r from-red-500 to-pink-600' :
+                          index === 6 ? 'bg-gradient-to-r from-purple-500 to-violet-600' :
+                          index === 7 ? 'bg-gradient-to-r from-orange-500 to-amber-600' :
+                          'bg-gradient-to-r from-blue-500 to-cyan-600'
+                        }`}>
+                          <IconComponent className="text-white h-4 w-4 sm:h-5 sm:w-5" />
+                        </div>
+                        <h3 className="text-lg sm:text-xl font-bold text-neutral group-hover:text-primary transition-colors duration-300">{program.title}</h3>
                       </div>
-                      <h3 className="text-lg sm:text-xl font-bold text-neutral group-hover:text-primary transition-colors duration-300">{program.title}</h3>
+                      <Badge variant="secondary" className="text-xs sm:text-sm bg-blue-100 text-blue-700">
+                        {categoryLabels[program.category] || 'Program'}
+                      </Badge>
                     </div>
-                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300 mobile-text">
+                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300 mobile-text mb-4">
                       {program.description}
                     </p>
                     <div className="mt-3 sm:mt-4 flex items-center text-accent font-medium text-sm sm:text-base">
@@ -385,9 +405,29 @@ export default function ProgramsSection() {
                         </>
                       )}
                     </div>
-                    <div className="mt-3 sm:mt-4 flex items-center text-primary font-medium group-hover:text-secondary transition-colors duration-300 text-sm sm:text-base">
-                      <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                      <span>Click to learn more</span>
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4">
+                      <Button 
+                        className="flex-1 text-sm sm:text-base touch-target"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          document.getElementById('donate')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                      >
+                        Support This Program
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-sm sm:text-base touch-target"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProgram(program);
+                        }}
+                      >
+                        Learn More
+                      </Button>
                     </div>
                   </div>
                 </div>
