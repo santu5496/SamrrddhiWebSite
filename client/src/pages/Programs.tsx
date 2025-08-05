@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import ProgramsSection from "@/components/ProgramsSection";
-import WhatWeDoSection from "@/components/WhatWeDoSection";
 import Footer from "@/components/Footer";
 
 export default function Programs() {
@@ -8,8 +7,7 @@ export default function Programs() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-8">
-        {/* Programs page specific content */}
-        <WhatWeDoSection />
+        {/* Programs page - showing only Our Programs section */}
         <ProgramsSection />
       </main>
       <Footer />
