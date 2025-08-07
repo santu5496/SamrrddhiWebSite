@@ -19,7 +19,7 @@ export default function PhotoGallerySection() {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   const { data: photos = [], isLoading } = useQuery<Photo[]>({
-    queryKey: ['/api/photo-gallery', selectedCategory !== 'all' ? { category: selectedCategory } : {}],
+    queryKey: ['/api/photo-gallery'],
   });
 
   const categories = [
@@ -99,21 +99,22 @@ export default function PhotoGallerySection() {
 
           {/* Photo Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {photos.map((photo) => {
-              // Map filter categories to actual data categories
-              const categoryMap: Record<string, string[]> = {
-                'Education': ['education', 'special_education', 'program'],
-                'Events': ['event', 'fundraising', 'community'],
-                'Programs': ['program', 'therapy', 'skill_development', 'healthcare'],
-                'Community': ['community', 'event', 'fundraising']
-              };
+            {photos
+              .filter(photo => {
+                if (selectedCategory === 'all') return true;
+                
+                // Map filter categories to actual data categories
+                const categoryMap: Record<string, string[]> = {
+                  'education': ['education', 'special_education'],
+                  'events': ['event', 'fundraising'],
+                  'programs': ['program', 'therapy', 'skill_development', 'healthcare'],
+                  'community': ['community']
+                };
 
-              const isActiveCategory = selectedCategory === 'all' || 
-                                       (categoryMap[selectedCategory] && categoryMap[selectedCategory].includes(photo.category));
-
-              if (!isActiveCategory) {
-                return null; // Skip rendering this photo if it doesn't match the selected category
-              }
+                const mappedCategories = categoryMap[selectedCategory.toLowerCase()] || [selectedCategory.toLowerCase()];
+                return mappedCategories.includes(photo.category?.toLowerCase() || '');
+              })
+              .map((photo) => {
 
               return (
                 <div
@@ -141,16 +142,20 @@ export default function PhotoGallerySection() {
             })}
           </div>
 
-          {photos.filter(photo => {
-            const categoryMap: Record<string, string[]> = {
-              'Education': ['education', 'special_education', 'program'],
-              'Events': ['event', 'fundraising', 'community'],
-              'Programs': ['program', 'therapy', 'skill_development', 'healthcare'],
-              'Community': ['community', 'event', 'fundraising']
-            };
-            const matchingCategories = categoryMap[selectedCategory] || [selectedCategory.toLowerCase()];
-            return selectedCategory === 'all' || matchingCategories.includes(photo.category);
-          }).length === 0 && (
+          {photos
+            .filter(photo => {
+              if (selectedCategory === 'all') return true;
+              
+              const categoryMap: Record<string, string[]> = {
+                'education': ['education', 'special_education'],
+                'events': ['event', 'fundraising'],
+                'programs': ['program', 'therapy', 'skill_development', 'healthcare'],
+                'community': ['community']
+              };
+
+              const mappedCategories = categoryMap[selectedCategory.toLowerCase()] || [selectedCategory.toLowerCase()];
+              return mappedCategories.includes(photo.category?.toLowerCase() || '');
+            }).length === 0 && (
             <div className="text-center py-12">
               <Camera className="h-16 w-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500">No photos available in this category.</p>
