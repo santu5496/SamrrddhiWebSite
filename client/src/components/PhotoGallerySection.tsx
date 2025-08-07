@@ -86,8 +86,8 @@ export default function PhotoGallerySection() {
                 size="sm"
                 onClick={() => setSelectedCategory(category.value)}
                 className={`
-                  ${selectedCategory === category.value 
-                    ? 'bg-primary text-white' 
+                  ${selectedCategory === category.value
+                    ? 'bg-primary text-white'
                     : 'bg-white text-gray-700 hover:bg-gray-100'
                   }
                 `}
@@ -99,32 +99,58 @@ export default function PhotoGallerySection() {
 
           {/* Photo Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {photos.map((photo) => (
-              <div
-                key={photo.id}
-                className="group cursor-pointer overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
-                onClick={() => setSelectedPhoto(photo)}
-              >
-                <div className="relative aspect-square overflow-hidden">
-                  <img
-                    src={photo.imageUrl}
-                    alt={photo.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300 flex items-end">
-                    <div className="p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <h3 className="font-semibold text-sm mb-1">{photo.title}</h3>
-                      {photo.event && (
-                        <p className="text-xs opacity-90">{photo.event}</p>
-                      )}
+            {photos.map((photo) => {
+              // Map filter categories to actual data categories
+              const categoryMap: Record<string, string[]> = {
+                'Education': ['education', 'special_education', 'program'],
+                'Events': ['event', 'fundraising', 'community'],
+                'Programs': ['program', 'therapy', 'skill_development', 'healthcare'],
+                'Community': ['community', 'event', 'fundraising']
+              };
+
+              const isActiveCategory = selectedCategory === 'all' || 
+                                       (categoryMap[selectedCategory] && categoryMap[selectedCategory].includes(photo.category));
+
+              if (!isActiveCategory) {
+                return null; // Skip rendering this photo if it doesn't match the selected category
+              }
+
+              return (
+                <div
+                  key={photo.id}
+                  className="group cursor-pointer overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+                  onClick={() => setSelectedPhoto(photo)}
+                >
+                  <div className="relative aspect-square overflow-hidden">
+                    <img
+                      src={photo.imageUrl}
+                      alt={photo.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300 flex items-end">
+                      <div className="p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <h3 className="font-semibold text-sm mb-1">{photo.title}</h3>
+                        {photo.event && (
+                          <p className="text-xs opacity-90">{photo.event}</p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          {photos.length === 0 && (
+          {photos.filter(photo => {
+            const categoryMap: Record<string, string[]> = {
+              'Education': ['education', 'special_education', 'program'],
+              'Events': ['event', 'fundraising', 'community'],
+              'Programs': ['program', 'therapy', 'skill_development', 'healthcare'],
+              'Community': ['community', 'event', 'fundraising']
+            };
+            const matchingCategories = categoryMap[selectedCategory] || [selectedCategory.toLowerCase()];
+            return selectedCategory === 'all' || matchingCategories.includes(photo.category);
+          }).length === 0 && (
             <div className="text-center py-12">
               <Camera className="h-16 w-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500">No photos available in this category.</p>
@@ -143,7 +169,7 @@ export default function PhotoGallerySection() {
             >
               <X className="h-5 w-5" />
             </button>
-            
+
             <div className="flex flex-col lg:flex-row">
               <div className="lg:flex-1">
                 <img
@@ -152,10 +178,10 @@ export default function PhotoGallerySection() {
                   className="w-full h-auto max-h-[70vh] object-contain"
                 />
               </div>
-              
+
               <div className="lg:w-80 p-6 space-y-4">
                 <h3 className="text-xl font-semibold text-neutral">{selectedPhoto.title}</h3>
-                
+
                 {selectedPhoto.description && (
                   <p className="text-gray-600">{selectedPhoto.description}</p>
                 )}
@@ -167,7 +193,7 @@ export default function PhotoGallerySection() {
                       {selectedPhoto.event}
                     </div>
                   )}
-                  
+
                   {selectedPhoto.date && (
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2" />
