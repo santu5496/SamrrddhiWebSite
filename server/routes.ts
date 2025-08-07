@@ -190,7 +190,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 13,
             category: "education",
-            tags: JSON.stringify(["education", "girls empowerment", "rural development"]),
+            tags: ["education", "girls empowerment", "rural development"],
             publishedDate: Date.now() - 86400000,
             isPublished: true,
             isActive: true
@@ -203,7 +203,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 14,
             category: "special-education",
-            tags: JSON.stringify(["special education", "therapy programs", "disability support"]),
+            tags: ["special education", "therapy programs", "disability support"],
             publishedDate: Date.now() - 172800000,
             isPublished: true,
             isActive: true
@@ -216,7 +216,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 15,
             category: "skill-development",
-            tags: JSON.stringify(["skill development", "women empowerment", "livelihood"]),
+            tags: ["skill development", "women empowerment", "livelihood"],
             publishedDate: Date.now() - 259200000,
             isPublished: true,
             isActive: true
@@ -229,7 +229,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 16,
             category: "nutrition",
-            tags: JSON.stringify(["nutrition", "child care", "health"]),
+            tags: ["nutrition", "child care", "health"],
             publishedDate: Date.now() - 345600000,
             isPublished: true,
             isActive: true
@@ -242,7 +242,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 17,
             category: "healthcare",
-            tags: JSON.stringify(["healthcare", "medical camp", "rural health"]),
+            tags: ["healthcare", "medical camp", "rural health"],
             publishedDate: Date.now() - 432000000,
             isPublished: true,
             isActive: true
@@ -255,7 +255,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 18,
             category: "empowerment",
-            tags: JSON.stringify(["women empowerment", "microfinance", "entrepreneurship"]),
+            tags: ["women empowerment", "microfinance", "entrepreneurship"],
             publishedDate: Date.now() - 518400000,
             isPublished: true,
             isActive: true
@@ -268,7 +268,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 19,
             category: "community-development",
-            tags: JSON.stringify(["water access", "community development", "infrastructure"]),
+            tags: ["water access", "community development", "infrastructure"],
             publishedDate: Date.now() - 604800000,
             isPublished: true,
             isActive: true
@@ -281,7 +281,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 20,
             category: "environment",
-            tags: JSON.stringify(["tree plantation", "environmental education", "sustainability"]),
+            tags: ["tree plantation", "environmental education", "sustainability"],
             publishedDate: Date.now() - 691200000,
             isPublished: true,
             isActive: true
@@ -294,7 +294,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 21,
             category: "child-care",
-            tags: JSON.stringify(["child care", "orphan support", "foster care"]),
+            tags: ["child care", "orphan support", "foster care"],
             publishedDate: Date.now() - 777600000,
             isPublished: true,
             isActive: true
@@ -307,7 +307,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 22,
             category: "self-defense",
-            tags: JSON.stringify(["karate", "girls empowerment", "sports achievement"]),
+            tags: ["karate", "girls empowerment", "sports achievement"],
             publishedDate: Date.now() - 864000000,
             isPublished: true,
             isActive: true
@@ -320,7 +320,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 23,
             category: "empowerment",
-            tags: JSON.stringify(["women empowerment", "income generation", "leadership"]),
+            tags: ["women empowerment", "income generation", "leadership"],
             publishedDate: Date.now() - 950400000,
             isPublished: true,
             isActive: true
@@ -333,7 +333,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
             programId: 24,
             category: "elderly-care",
-            tags: JSON.stringify(["elderly care", "day care center", "community service"]),
+            tags: ["elderly care", "day care center", "community service"],
             publishedDate: Date.now() - 1036800000,
             isPublished: true,
             isActive: true
@@ -388,20 +388,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Publications endpoint with comprehensive data
-  app.get("/api/publications", (req, res) => {
-    const publications = [
-      // Research Papers
-      {
-        id: 1,
-        title: "Inclusive Education Models for Rural India: A Comprehensive Study",
-        type: "research",
-        authors: ["Dr. Sarah Patel", "Samruddhi Research Team", "Prof. Ravi Kumar"],
-        abstract: "This research paper examines the effectiveness of inclusive education models implemented in rural Maharashtra. Based on 5 years of data from Samruddhi's Integrated Development Center (IDC), the study analyzes educational outcomes for 200+ differently-abled children. Key findings include 85% improvement in cognitive development, 90% increase in social integration, and successful mainstream integration for 60% of participants.",
-        publishedDate: "2024-01-15",
-        journal: "Journal of Rural Education and Development",
-        fileUrl: "https://example.com/downloads/inclusive-education-rural-india.pdf",
-        tags: ["inclusive education", "rural development", "special needs", "research"]
-      },
+  app.get("/api/publications", async (req, res) => {
+    try {
+      const publications = [
+        // Research Papers
+        {
+          id: 1,
+          title: "Inclusive Education Models for Rural India: A Comprehensive Study",
+          type: "research",
+          authors: ["Dr. Sarah Patel", "Samruddhi Research Team", "Prof. Ravi Kumar"],
+          abstract: "This research paper examines the effectiveness of inclusive education models implemented in rural Maharashtra. Based on 5 years of data from Samruddhi's Integrated Development Center (IDC), the study analyzes educational outcomes for 200+ differently-abled children. Key findings include 85% improvement in cognitive development, 90% increase in social integration, and successful mainstream integration for 60% of participants.",
+          publishedDate: "2024-01-15",
+          journal: "Journal of Rural Education and Development",
+          fileUrl: "https://example.com/downloads/inclusive-education-rural-india.pdf",
+          tags: ["inclusive education", "rural development", "special needs", "research"]
+        },
       {
         id: 2,
         title: "Impact Assessment: Girls' Residential Education Program (2019-2024)",
@@ -570,14 +571,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     ];
 
-    // Filter by type if requested
-    const typeFilter = req.query.type;
-    if (typeFilter && typeFilter !== 'all') {
-      const filtered = publications.filter(pub => pub.type === typeFilter);
-      return res.json(filtered);
-    }
+      // Filter by type if requested
+      const typeFilter = req.query.type;
+      if (typeFilter && typeFilter !== 'all') {
+        const filtered = publications.filter(pub => pub.type === typeFilter);
+        return res.json(filtered);
+      }
 
-    res.json(publications);
+      res.json(publications);
+    } catch (error) {
+      console.error("Error fetching publications:", error);
+      res.status(500).json({ message: "Failed to fetch publications" });
+    }
   });
 
   // Placeholder image endpoint
