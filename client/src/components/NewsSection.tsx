@@ -119,16 +119,23 @@ export default function NewsSection() {
                   </div>
                 )}
 
-                {article.tags && article.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {article.tags.slice(0, 3).map((tag, index) => (
-                      <span key={index} className="flex items-center text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                        <Tag className="h-2 w-2 mr-1" />
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                {article.tags && (() => {
+                  try {
+                    const parsedTags = typeof article.tags === 'string' ? JSON.parse(article.tags) : article.tags;
+                    return parsedTags && Array.isArray(parsedTags) && parsedTags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {parsedTags.slice(0, 3).map((tag, index) => (
+                          <span key={index} className="flex items-center text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                            <Tag className="h-2 w-2 mr-1" />
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    );
+                  } catch (e) {
+                    return null;
+                  }
+                })()}
 
                 <Button
                   variant="outline"
