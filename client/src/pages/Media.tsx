@@ -1,3 +1,4 @@
+
 import Header from "@/components/Header";
 import MediaSection from "@/components/MediaSection";
 import ProfessionalImageGallery from "@/components/ProfessionalImageGallery";
@@ -8,7 +9,7 @@ export default function Media() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-8">
-        {/* Media page specific content */}
+        {/* Media page - focused on media coverage and professional galleries */}
         <MediaSection />
         <ProfessionalImageGallery />
       </main>
