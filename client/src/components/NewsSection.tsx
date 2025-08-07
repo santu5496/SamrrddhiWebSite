@@ -121,8 +121,14 @@ export default function NewsSection() {
 
                 {article.tags && (() => {
                   try {
-                    const parsedTags = typeof article.tags === 'string' ? JSON.parse(article.tags) : article.tags;
-                    return parsedTags && Array.isArray(parsedTags) && parsedTags.length > 0 && (
+                    let parsedTags = typeof article.tags === 'string' ? JSON.parse(article.tags) : article.tags;
+                    
+                    // Ensure parsedTags is an array
+                    if (!Array.isArray(parsedTags)) {
+                      return null;
+                    }
+                    
+                    return parsedTags.length > 0 && (
                       <div className="flex flex-wrap gap-1 mb-4">
                         {parsedTags.slice(0, 3).map((tag, index) => (
                           <span key={index} className="flex items-center text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
@@ -133,6 +139,7 @@ export default function NewsSection() {
                       </div>
                     );
                   } catch (e) {
+                    console.warn('Failed to parse tags:', e);
                     return null;
                   }
                 })()}
