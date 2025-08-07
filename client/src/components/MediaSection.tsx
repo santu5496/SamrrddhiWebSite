@@ -1,20 +1,33 @@
 import { Play, Image as ImageIcon, Newspaper, Video, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
+import { useState, useEffect } from "react";
 
 interface MediaItem {
   id: number;
-  type: 'video' | 'image' | 'article';
+  type: 'video' | 'image' | 'article' | 'interview' | 'documentary';
   title: string;
   description?: string;
   thumbnailUrl: string;
   mediaUrl?: string;
-  publishedDate: string;
+  publishedDate: string | number;
   source?: string;
+  author?: string;
 }
 
 export default function MediaSection() {
-  // Sample media data - in real app this would come from API
-  const mediaItems: MediaItem[] = [
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMediaData = async () => {
+      try {
+        const response = await fetch('/api/media-coverage');
+        const data = await response.json();
+        setMediaItems(data);
+      } catch (error) {
+        console.error('Error fetching media coverage:', error);
+        // Fallback to sample data
+        setMediaItems([
     {
       id: 1,
       type: 'video',
@@ -71,7 +84,36 @@ export default function MediaSection() {
       publishedDate: '2024-01-30',
       source: 'Program Gallery'
     }
-  ];
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMediaData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-gray-50" id="media">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-300 rounded w-64 mx-auto mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-96 mx-auto"></div>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-gray-300 h-64 rounded-lg"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const getMediaIcon = (type: string) => {
     switch (type) {
@@ -99,8 +141,9 @@ export default function MediaSection() {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+  const formatDate = (dateString: string | number) => {
+    const date = typeof dateString === 'number' ? new Date(dateString) : new Date(dateString);
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
