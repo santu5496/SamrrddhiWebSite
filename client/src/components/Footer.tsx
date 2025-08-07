@@ -28,42 +28,68 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-neutral text-white py-8 sm:py-12 lg:py-16 mt-12 sm:mt-16 lg:mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-optimized">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-16 mt-20 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-blue-500 rounded-full blur-2xl"></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="sm:col-span-2 lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-secondary rounded-full flex items-center justify-center text-white font-bold">
+            <div className="flex items-center space-x-4 mb-6">
+              <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-vibrant">
                 S
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-bold">Samruddhi Service Society</h3>
-                <p className="text-xs sm:text-sm text-gray-300">Empowering since 1995</p>
+                <h3 className="text-xl font-bold">Samruddhi Service Society</h3>
+                <p className="text-sm text-gray-300 flex items-center">
+                  ✨ Empowering since 1995 • 29 Years of Impact
+                </p>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-gray-300 leading-relaxed mb-4 mobile-text">
-              Dedicated to empowering underprivileged rural girls and differently-abled children through education, shelter, and comprehensive support services.
+            <p className="text-base text-gray-300 leading-relaxed mb-6">
+              Dedicated to empowering underprivileged rural girls and differently-abled children through education, shelter, and comprehensive support services. Join us in making a lasting impact.
             </p>
-            <div className="flex space-x-4 mt-4">
+            
+            {/* Impact stats mini section */}
+            <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-white/5 rounded-lg backdrop-blur-sm border border-white/10">
+              <div className="text-center">
+                <div className="text-lg font-bold text-yellow-400">501+</div>
+                <div className="text-xs text-gray-400">Children Helped</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold text-green-400">29</div>
+                <div className="text-xs text-gray-400">Years Service</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold text-blue-400">12</div>
+                <div className="text-xs text-gray-400">Programs</div>
+              </div>
+            </div>
+            
+            <div className="flex space-x-3">
               {socialMediaData?.facebook ? (
                 <a 
                   href={socialMediaData.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  className="glass-card text-gray-300 hover:text-blue-400 transition-all duration-300 p-3 rounded-xl hover:scale-110 transform group"
                   aria-label="Follow us on Facebook"
                 >
-                  <Facebook className="h-5 w-5" />
+                  <Facebook className="h-5 w-5 group-hover:animate-pulse" />
                 </a>
               ) : (
                 <a 
                   href="https://facebook.com/samruddhisociety"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  className="glass-card text-gray-300 hover:text-blue-400 transition-all duration-300 p-3 rounded-xl hover:scale-110 transform group"
                   aria-label="Follow us on Facebook"
                 >
-                  <Facebook className="h-5 w-5" />
+                  <Facebook className="h-5 w-5 group-hover:animate-pulse" />
                 </a>
               )}
               {socialMediaData?.twitter ? (
@@ -71,20 +97,20 @@ export default function Footer() {
                   href={socialMediaData.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  className="glass-card text-gray-300 hover:text-sky-400 transition-all duration-300 p-3 rounded-xl hover:scale-110 transform group"
                   aria-label="Follow us on Twitter"
                 >
-                  <Twitter className="h-5 w-5" />
+                  <Twitter className="h-5 w-5 group-hover:animate-pulse" />
                 </a>
               ) : (
                 <a 
                   href="https://twitter.com/samruddhisociety"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  className="glass-card text-gray-300 hover:text-sky-400 transition-all duration-300 p-3 rounded-xl hover:scale-110 transform group"
                   aria-label="Follow us on Twitter"
                 >
-                  <Twitter className="h-5 w-5" />
+                  <Twitter className="h-5 w-5 group-hover:animate-pulse" />
                 </a>
               )}
               {socialMediaData?.instagram ? (
@@ -92,20 +118,20 @@ export default function Footer() {
                   href={socialMediaData.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  className="glass-card text-gray-300 hover:text-pink-400 transition-all duration-300 p-3 rounded-xl hover:scale-110 transform group"
                   aria-label="Follow us on Instagram"
                 >
-                  <Instagram className="h-5 w-5" />
+                  <Instagram className="h-5 w-5 group-hover:animate-pulse" />
                 </a>
               ) : (
                 <a 
                   href="https://instagram.com/samruddhisociety"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  className="glass-card text-gray-300 hover:text-pink-400 transition-all duration-300 p-3 rounded-xl hover:scale-110 transform group"
                   aria-label="Follow us on Instagram"
                 >
-                  <Instagram className="h-5 w-5" />
+                  <Instagram className="h-5 w-5 group-hover:animate-pulse" />
                 </a>
               )}
             </div>

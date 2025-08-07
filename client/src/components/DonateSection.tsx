@@ -36,18 +36,33 @@ export default function DonateSection() {
   };
 
   return (
-    <section id="donate" className="py-20 bg-primary text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="donate" className="py-20 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-20 w-32 h-32 bg-white rounded-full blur-2xl float-animation"></div>
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-yellow-400 rounded-full blur-3xl float-animation" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-pink-400 rounded-full blur-xl float-animation" style={{animationDelay: '1s'}}></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Make a Difference Today</h2>
-          <p className="text-xl max-w-3xl mx-auto opacity-90">
-            Your support directly impacts the lives of rural girls and differently-abled children. Every contribution helps us provide education, shelter, and hope.
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 shimmer">
+            <Heart className="h-8 w-8 text-pink-300" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Make a Difference Today</h2>
+          <p className="text-xl max-w-4xl mx-auto opacity-90 leading-relaxed">
+            Your support directly impacts the lives of rural girls and differently-abled children. Every contribution helps us provide education, shelter, and hope for a brighter future.
           </p>
+          <div className="flex items-center justify-center space-x-2 mt-6">
+            <div className="w-12 h-1 bg-pink-400 rounded-full"></div>
+            <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+            <div className="w-12 h-1 bg-pink-400 rounded-full"></div>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 mb-8">
+            <div className="glass-card p-8 mb-8 shadow-vibrant">
               <h3 className="text-2xl font-semibold mb-6">Your Impact</h3>
               
               <div className="space-y-4">

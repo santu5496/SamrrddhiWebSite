@@ -40,26 +40,26 @@ const categoryLabels: Record<string, string> = {
 const getCategoryBadgeStyle = (category: string) => {
   switch (category) {
     case 'education-childcare':
-      return 'bg-blue-500/90 text-white';
+      return 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg';
     case 'skill-development':
-      return 'bg-purple-500/90 text-white';
+      return 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg';
     case 'healthcare-nutrition':
-      return 'bg-green-500/90 text-white';
+      return 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg';
     case 'empowerment':
     case 'women-empowerment':
-      return 'bg-pink-500/90 text-white';
+      return 'bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-lg';
     case 'community-development':
-      return 'bg-orange-500/90 text-white';
+      return 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg';
     case 'environment':
-      return 'bg-emerald-500/90 text-white';
+      return 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg';
     case 'childcare-orphan':
-      return 'bg-cyan-500/90 text-white';
+      return 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-white shadow-lg';
     case 'self-defense':
-      return 'bg-red-500/90 text-white';
+      return 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg';
     case 'elderly-care':
-      return 'bg-amber-500/90 text-white';
+      return 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg';
     default:
-      return 'bg-gray-500/90 text-white';
+      return 'bg-gradient-to-r from-gray-500 to-gray-600 text-white shadow-lg';
   }
 };
 

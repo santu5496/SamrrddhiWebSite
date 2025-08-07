@@ -46,78 +46,89 @@ export default function Header() {
         </div>
       </div>
 
-      <header className={`bg-white shadow-md sticky top-0 z-50 ${isHighContrast ? 'high-contrast' : ''}`} style={{fontSize: `${fontSize}px`}}>
+      <header className={`bg-white/95 backdrop-blur-md shadow-soft sticky top-0 z-50 border-b border-gray-100 ${isHighContrast ? 'high-contrast' : ''}`} style={{fontSize: `${fontSize}px`}}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
           <div className="flex justify-between items-center py-4">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-vibrant transform group-hover:scale-110 transition-all duration-300">
                 S
               </div>
               <div>
-                <h1 className="text-lg sm:text-xl font-bold text-neutral">Samruddhi Service Society</h1>
-                <p className="text-xs sm:text-sm text-gray-600">Empowering since 1995</p>
+                <h1 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-300">Samruddhi Service Society</h1>
+                <p className="text-xs sm:text-sm text-gray-600">✨ Empowering since 1995</p>
               </div>
             </Link>
 
-            <div className="hidden lg:flex items-center space-x-2 xl:space-x-4">
+            <div className="hidden lg:flex items-center space-x-1">
               <Link href="/">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/') ? 'text-primary bg-primary/10' : ''}`}>
-                  <Home className="inline h-4 w-4 mr-1" />
-                  HOME
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10 flex items-center">
+                    <Home className="inline h-4 w-4 mr-2" />
+                    HOME
+                  </span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/about">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/about') ? 'text-primary bg-primary/10' : ''}`}>
-                  ABOUT
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/about') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10">ABOUT</span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/about') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/programs">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/programs') ? 'text-primary bg-primary/10' : ''}`}>
-                  PROGRAMS
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/programs') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10">PROGRAMS</span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/programs') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/leadership">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/leadership') ? 'text-primary bg-primary/10' : ''}`}>
-                  LEADERSHIP
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/leadership') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10">LEADERSHIP</span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/leadership') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/news">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/news') ? 'text-primary bg-primary/10' : ''}`}>
-                  NEWS
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/news') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10">NEWS</span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/news') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/events">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/events') ? 'text-primary bg-primary/10' : ''}`}>
-                  EVENTS
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/events') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10">EVENTS</span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/events') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/media">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/media') ? 'text-primary bg-primary/10' : ''}`}>
-                  MEDIA
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/media') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10">MEDIA</span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/media') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/gallery">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/gallery') ? 'text-primary bg-primary/10' : ''}`}>
-                  GALLERY
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/gallery') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10">GALLERY</span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/gallery') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/resources">
-                <button className={`text-neutral hover:text-primary transition-all duration-300 font-medium uppercase text-xs tracking-wide transform hover:scale-105 hover:shadow-lg px-2 py-1 rounded ${isActive('/resources') ? 'text-primary bg-primary/10' : ''}`}>
-                  RESOURCES
+                <button className={`relative px-4 py-2 font-medium text-sm text-gray-700 hover:text-primary transition-all duration-300 rounded-lg group ${isActive('/resources') ? 'text-primary' : ''}`}>
+                  <span className="relative z-10">RESOURCES</span>
+                  <div className={`absolute inset-0 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ${isActive('/resources') ? 'scale-100' : ''}`}></div>
                 </button>
               </Link>
               
               <Link href="/donate">
-                <Button className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-xs font-medium uppercase tracking-wide transform hover:scale-110 transition-all duration-300 hover:shadow-lg animate-pulse-hover">
-                  DONATE
+                <Button className="btn-gradient text-white px-6 py-2 text-sm font-medium rounded-lg shadow-vibrant shimmer">
+                  ❤️ DONATE
                 </Button>
               </Link>
             </div>

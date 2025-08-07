@@ -68,10 +68,18 @@ export default function EnhancedHeroSection() {
   const progressPercentage = (urgentCampaign.raised / urgentCampaign.target) * 100;
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-y-12"></div>
+    <section className="relative min-h-screen gradient-hero text-white overflow-hidden">
+      {/* Floating background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl float-animation"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-white/5 rounded-full blur-lg float-animation" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-40 left-1/4 w-40 h-40 bg-white/5 rounded-full blur-xl float-animation" style={{animationDelay: '4s'}}></div>
+        <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-white/10 rounded-full blur-md float-animation" style={{animationDelay: '1s'}}></div>
+      </div>
+
+      {/* Animated background pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-y-12 animate-pulse"></div>
         <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/5 to-transparent transform skew-y-12"></div>
       </div>
 
