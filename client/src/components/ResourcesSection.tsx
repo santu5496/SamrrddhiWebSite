@@ -1,246 +1,284 @@
-import { useQuery } from "@tanstack/react-query";
-import { BookOpen, FileText, Download, ExternalLink, Search } from "lucide-react";
-import { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+
+import { useState, useEffect } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { 
+  BookOpen, 
+  FileText, 
+  Download, 
+  Search,
+  Users,
+  TrendingUp,
+  Award,
+  Target
+} from "lucide-react";
 
 interface Publication {
   id: number;
   title: string;
   type: string;
-  authors?: string[];
-  abstract?: string;
-  publishedDate?: string;
-  journal?: string;
-  fileUrl?: string;
-  tags?: string[];
+  authors: string[];
+  abstract: string;
+  publishedDate: string;
+  journal: string;
+  fileUrl: string;
+  tags: string[];
 }
 
 export default function ResourcesSection() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedType, setSelectedType] = useState<string>('all');
+  const [publications, setPublications] = useState<Publication[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState("all");
 
-  const { data: publications = [], isLoading } = useQuery<Publication[]>({
-    queryKey: ['/api/publications', selectedType !== 'all' ? { type: selectedType } : {}],
+  useEffect(() => {
+    fetchPublications();
+  }, []);
+
+  const fetchPublications = async () => {
+    try {
+      const response = await fetch('/api/publications');
+      const data = await response.json();
+      setPublications(data);
+    } catch (error) {
+      console.error('Error fetching publications:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'research': return <BookOpen className="h-4 w-4" />;
+      case 'case-study': return <Users className="h-4 w-4" />;
+      case 'report': return <TrendingUp className="h-4 w-4" />;
+      case 'guide': return <Target className="h-4 w-4" />;
+      default: return <FileText className="h-4 w-4" />;
+    }
+  };
+
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case 'research': return 'bg-blue-100 text-blue-800';
+      case 'case-study': return 'bg-green-100 text-green-800';
+      case 'report': return 'bg-purple-100 text-purple-800';
+      case 'guide': return 'bg-orange-100 text-orange-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const filteredPublications = publications.filter(pub => {
+    const matchesSearch = pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         pub.abstract.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         pub.authors.some(author => author.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesType = selectedType === "all" || pub.type === selectedType;
+    return matchesSearch && matchesType;
   });
 
-  const filteredPublications = publications.filter(pub =>
-    pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pub.abstract?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pub.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const typeStats = {
+    research: publications.filter(p => p.type === 'research').length,
+    'case-study': publications.filter(p => p.type === 'case-study').length,
+    report: publications.filter(p => p.type === 'report').length,
+    guide: publications.filter(p => p.type === 'guide').length,
+  };
 
-  const publicationTypes = [
-    { value: 'all', label: 'All Resources' },
-    { value: 'research', label: 'Research Papers' },
-    { value: 'case-study', label: 'Case Studies' },
-    { value: 'report', label: 'Reports' },
-    { value: 'guide', label: 'Guides' },
-  ];
-
-  if (isLoading) {
+  if (loading) {
     return (
-      <section className="py-16 bg-gray-50">
+      <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-300 rounded w-64 mx-auto mb-4"></div>
-            <div className="h-4 bg-gray-300 rounded w-96 mx-auto mb-8"></div>
-            <div className="h-10 bg-gray-300 rounded w-full max-w-md mx-auto mb-8"></div>
-            <div className="flex justify-center mb-8">
-              <div className="flex space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-10 bg-gray-300 rounded w-24"></div>
-                ))}
-              </div>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-white rounded-lg p-6 space-y-4">
-                  <div className="h-6 bg-gray-300 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-300 rounded"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
-                  <div className="h-10 bg-gray-300 rounded"></div>
-                </div>
-              ))}
-            </div>
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading resources...</p>
           </div>
         </div>
       </section>
     );
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  const getTypeColor = (type: string) => {
-    switch (type.toLowerCase()) {
-      case 'research':
-        return 'bg-blue-100 text-blue-800';
-      case 'case-study':
-        return 'bg-green-100 text-green-800';
-      case 'report':
-        return 'bg-purple-100 text-purple-800';
-      case 'guide':
-        return 'bg-yellow-100 text-yellow-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
   return (
-    <section className="py-16 bg-gray-50" id="resources">
+    <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-4">
-            <BookOpen className="h-8 w-8 text-primary mr-3" />
-            <h2 className="text-3xl font-bold text-neutral">Resources & Publications</h2>
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 text-white rounded-full mb-6">
+            <BookOpen className="h-8 w-8" />
           </div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Resources & Publications
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Access our research papers, case studies, and educational resources on rural development and child welfare.
           </p>
         </div>
 
-        {/* Search Bar */}
-        <div className="max-w-md mx-auto mb-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+          <Card className="text-center">
+            <CardContent className="pt-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-full mb-4">
+                <BookOpen className="h-6 w-6" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900">{typeStats.research}</div>
+              <div className="text-sm text-gray-600">Research Papers</div>
+            </CardContent>
+          </Card>
+          <Card className="text-center">
+            <CardContent className="pt-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 text-green-600 rounded-full mb-4">
+                <Users className="h-6 w-6" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900">{typeStats['case-study']}</div>
+              <div className="text-sm text-gray-600">Case Studies</div>
+            </CardContent>
+          </Card>
+          <Card className="text-center">
+            <CardContent className="pt-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 text-purple-600 rounded-full mb-4">
+                <TrendingUp className="h-6 w-6" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900">{typeStats.report}</div>
+              <div className="text-sm text-gray-600">Reports</div>
+            </CardContent>
+          </Card>
+          <Card className="text-center">
+            <CardContent className="pt-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-orange-100 text-orange-600 rounded-full mb-4">
+                <Target className="h-6 w-6" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900">{typeStats.guide}</div>
+              <div className="text-sm text-gray-600">Guides</div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Search and Filter */}
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
-              type="text"
               placeholder="Search resources..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
             />
           </div>
-        </div>
-
-        {/* Type Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          {publicationTypes.map((type) => (
+          <div className="flex gap-2">
             <Button
-              key={type.value}
-              variant={selectedType === type.value ? "default" : "outline"}
+              variant={selectedType === "all" ? "default" : "outline"}
+              onClick={() => setSelectedType("all")}
               size="sm"
-              onClick={() => setSelectedType(type.value)}
-              className={`
-                ${selectedType === type.value 
-                  ? 'bg-primary text-white' 
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-                }
-              `}
             >
-              {type.label}
+              All Resources
             </Button>
-          ))}
+            <Button
+              variant={selectedType === "research" ? "default" : "outline"}
+              onClick={() => setSelectedType("research")}
+              size="sm"
+            >
+              Research Papers
+            </Button>
+            <Button
+              variant={selectedType === "case-study" ? "default" : "outline"}
+              onClick={() => setSelectedType("case-study")}
+              size="sm"
+            >
+              Case Studies
+            </Button>
+            <Button
+              variant={selectedType === "report" ? "default" : "outline"}
+              onClick={() => setSelectedType("report")}
+              size="sm"
+            >
+              Reports
+            </Button>
+            <Button
+              variant={selectedType === "guide" ? "default" : "outline"}
+              onClick={() => setSelectedType("guide")}
+              size="sm"
+            >
+              Guides
+            </Button>
+          </div>
         </div>
 
         {/* Publications Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPublications.map((publication) => (
-            <div key={publication.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 border border-gray-100">
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <FileText className="h-6 w-6 text-primary" />
+            <Card key={publication.id} className="h-full flex flex-col hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="flex items-start justify-between mb-2">
+                  <Badge className={`${getTypeColor(publication.type)} flex items-center gap-1`}>
+                    {getTypeIcon(publication.type)}
+                    {publication.type.replace('-', ' ').toUpperCase()}
+                  </Badge>
+                  <div className="text-sm text-gray-500">
+                    {new Date(publication.publishedDate).getFullYear()}
+                  </div>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(publication.type)}`}>
-                  {publication.type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                </span>
-              </div>
-
-              <h3 className="text-lg font-semibold text-neutral mb-2 line-clamp-2">
-                {publication.title}
-              </h3>
-
-              {publication.authors && publication.authors.length > 0 && (
-                <p className="text-sm text-gray-600 mb-2">
-                  <span className="font-medium">Authors:</span> {publication.authors.join(', ')}
-                </p>
-              )}
-
-              {publication.abstract && (
-                <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                <CardTitle className="text-lg leading-tight">
+                  {publication.title}
+                </CardTitle>
+                <div className="text-sm text-gray-600">
+                  {Array.isArray(publication.authors) ? publication.authors.join(', ') : publication.authors}
+                </div>
+              </CardHeader>
+              <CardContent className="flex-1 flex flex-col">
+                <p className="text-gray-700 mb-4 line-clamp-3 flex-1">
                   {publication.abstract}
                 </p>
-              )}
-
-              <div className="space-y-2 text-xs text-gray-500 mb-4">
-                {publication.publishedDate && (
-                  <div>
-                    <span className="font-medium">Published:</span> {formatDate(publication.publishedDate)}
+                
+                {publication.journal && (
+                  <div className="text-sm text-gray-600 mb-3">
+                    <span className="font-medium">Published in:</span> {publication.journal}
                   </div>
                 )}
                 
-                {publication.journal && (
-                  <div>
-                    <span className="font-medium">Journal:</span> {publication.journal}
-                  </div>
-                )}
-              </div>
-
-              {publication.tags && publication.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1 mb-4">
-                  {publication.tags.slice(0, 3).map((tag, index) => (
-                    <span key={index} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                  {Array.isArray(publication.tags) && publication.tags.slice(0, 3).map((tag, index) => (
+                    <Badge key={index} variant="secondary" className="text-xs">
                       {tag}
-                    </span>
+                    </Badge>
                   ))}
+                  {Array.isArray(publication.tags) && publication.tags.length > 3 && (
+                    <Badge variant="secondary" className="text-xs">
+                      +{publication.tags.length - 3}
+                    </Badge>
+                  )}
                 </div>
-              )}
-
-              <div className="flex gap-2">
-                {publication.fileUrl && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1 group"
-                    onClick={() => window.open(publication.fileUrl, '_blank')}
-                  >
-                    <Download className="h-3 w-3 mr-2 group-hover:animate-bounce" />
-                    Download
-                  </Button>
-                )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 group"
-                  onClick={() => {
-                    // Navigate to detailed view
-                    console.log('View details for:', publication.id);
-                  }}
-                >
-                  <ExternalLink className="h-3 w-3 mr-2 group-hover:rotate-12 transition-transform" />
-                  Details
+                
+                <Button className="w-full" size="sm">
+                  <Download className="h-4 w-4 mr-2" />
+                  Download PDF
                 </Button>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
         {filteredPublications.length === 0 && (
           <div className="text-center py-12">
-            <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500">
-              {searchTerm ? 'No resources found matching your search.' : 'Resources will be available soon.'}
-            </p>
+            <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No resources found</h3>
+            <p className="text-gray-600">Try adjusting your search terms or filters.</p>
           </div>
         )}
 
-        {/* Call to Action */}
-        <div className="mt-12 text-center">
-          <div className="bg-white rounded-lg p-6 border border-gray-200 max-w-2xl mx-auto">
-            <h3 className="text-lg font-semibold text-neutral mb-2">Collaborate with Us</h3>
-            <p className="text-gray-600 text-sm mb-4">
-              Interested in contributing to our research or accessing our complete resource library? 
-              Get in touch with our research team.
+        {/* Additional Info */}
+        <div className="mt-16 bg-white rounded-lg shadow-lg p-8">
+          <div className="text-center">
+            <Award className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Contributing to Knowledge
+            </h3>
+            <p className="text-gray-600 max-w-3xl mx-auto mb-6">
+              Our research and publications contribute to the broader understanding of effective rural development 
+              strategies and inclusive education practices. We share our learnings to help other organizations 
+              and researchers build upon our experiences.
             </p>
-            <Button variant="outline">
-              Contact Research Team
-              <ExternalLink className="h-4 w-4 ml-2" />
+            <Button size="lg">
+              Request Collaboration
             </Button>
           </div>
         </div>
