@@ -149,8 +149,10 @@ export default function NewsSection() {
                   size="sm"
                   className="w-full group"
                   onClick={() => {
+                    // Generate slug from title if not available
+                    const slug = article.slug || article.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                     // Navigate to article detail page
-                    window.open(`/news/${article.slug}`, '_blank');
+                    window.open(`/news/${slug}`, '_blank');
                   }}
                 >
                   Read More

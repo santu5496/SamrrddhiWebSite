@@ -9,6 +9,7 @@ import About from "@/pages/About";
 import Programs from "@/pages/Programs";
 import Leadership from "@/pages/Leadership";
 import News from "@/pages/News";
+import NewsDetail from "./pages/NewsDetail";
 import Events from "@/pages/Events";
 import Media from "@/pages/Media";
 import Gallery from "@/pages/Gallery";
@@ -27,6 +28,7 @@ function Router() {
       <Route path="/programs" component={Programs} />
       <Route path="/leadership" component={Leadership} />
       <Route path="/news" component={News} />
+      <Route path="/news/:slug" component={NewsDetail} />
       <Route path="/events" component={Events} />
       <Route path="/media" component={Media} />
       <Route path="/gallery" component={Gallery} />
