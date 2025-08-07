@@ -11,6 +11,8 @@ import {
   insertContactInfoSchema,
   insertDonationConfigSchema,
   insertNewsSchema,
+  insertPhotoGallerySchema,
+  insertMediaCoverageSchema,
 } from "@shared/schema";
 import { z } from "zod";
 
@@ -356,6 +358,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching news article:", error);
       res.status(500).json({ message: "Failed to fetch news article" });
+    }
+  });
+
+  // Photo Gallery routes
+  app.get('/api/photo-gallery', async (req, res) => {
+    try {
+      console.log("Fetching photo gallery...");
+      const photos = await storage.getPhotoGallery();
+      console.log(`Found ${photos.length} photos`);
+      res.json(photos);
+    } catch (error) {
+      console.error("Error fetching photo gallery:", error);
+      res.status(500).json({ message: "Failed to fetch photo gallery", error: error.message });
+    }
+  });
+
+  // Media Coverage routes
+  app.get('/api/media-coverage', async (req, res) => {
+    try {
+      console.log("Fetching media coverage...");
+      const mediaItems = await storage.getMediaCoverage();
+      console.log(`Found ${mediaItems.length} media items`);
+      res.json(mediaItems);
+    } catch (error) {
+      console.error("Error fetching media coverage:", error);
+      res.status(500).json({ message: "Failed to fetch media coverage", error: error.message });
     }
   });
 

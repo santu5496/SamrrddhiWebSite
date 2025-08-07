@@ -152,6 +152,37 @@ export const news = sqliteTable("news", {
   updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
+// Photo Gallery
+export const photoGallery = sqliteTable("photo_gallery", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
+  description: text("description"),
+  imageUrl: text("image_url").notNull(),
+  category: text("category").notNull(), // program, event, general, success_story
+  event: text("event"),
+  date: text("date"),
+  photographer: text("photographer"),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
+});
+
+// Media Coverage (videos, articles, interviews)
+export const mediaCoverage = sqliteTable("media_coverage", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  type: text("type").notNull(), // video, article, interview, documentary
+  title: text("title").notNull(),
+  description: text("description"),
+  thumbnailUrl: text("thumbnail_url").notNull(),
+  mediaUrl: text("media_url"), // for videos, external links
+  publishedDate: integer("published_date").$defaultFn(() => Date.now()),
+  source: text("source"), // media house, publication name
+  author: text("author"),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
+});
+
 // Schema exports for validation
 export const insertHeroContentSchema = createInsertSchema(heroContent);
 export const insertAboutContentSchema = createInsertSchema(aboutContent);
@@ -161,6 +192,8 @@ export const insertLeadershipSchema = createInsertSchema(leadership);
 export const insertContactInfoSchema = createInsertSchema(contactInfo);
 export const insertDonationConfigSchema = createInsertSchema(donationConfig);
 export const insertNewsSchema = createInsertSchema(news);
+export const insertPhotoGallerySchema = createInsertSchema(photoGallery);
+export const insertMediaCoverageSchema = createInsertSchema(mediaCoverage);
 
 // Type exports
 export type InsertHeroContent = z.infer<typeof insertHeroContentSchema>;
@@ -171,9 +204,13 @@ export type InsertLeadership = z.infer<typeof insertLeadershipSchema>;
 export type InsertContactInfo = z.infer<typeof insertContactInfoSchema>;
 export type InsertDonationConfig = z.infer<typeof insertDonationConfigSchema>;
 export type InsertNews = z.infer<typeof insertNewsSchema>;
+export type InsertPhotoGallery = z.infer<typeof insertPhotoGallerySchema>;
+export type InsertMediaCoverage = z.infer<typeof insertMediaCoverageSchema>;
 
 export type HeroContent = typeof heroContent.$inferSelect;
 export type AboutContent = typeof aboutContent.$inferSelect;
+export type PhotoGallery = typeof photoGallery.$inferSelect;
+export type MediaCoverage = typeof mediaCoverage.$inferSelect;
 export type Program = typeof programs.$inferSelect;
 export type Event = typeof events.$inferSelect;
 export type Leadership = typeof leadership.$inferSelect;

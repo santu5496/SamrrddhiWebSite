@@ -8,6 +8,8 @@ import {
   contactInfo,
   donationConfig,
   news,
+  photoGallery,
+  mediaCoverage,
   type HeroContent,
   type InsertHeroContent,
   type AboutContent,
@@ -24,6 +26,10 @@ import {
   type InsertDonationConfig,
   type News,
   type InsertNews,
+  type PhotoGallery,
+  type InsertPhotoGallery,
+  type MediaCoverage,
+  type InsertMediaCoverage,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, asc } from "drizzle-orm";
@@ -77,6 +83,20 @@ export interface IStorage {
   createNews(newsItem: InsertNews): Promise<News>;
   updateNews(id: number, newsItem: Partial<InsertNews>): Promise<News>;
   deleteNews(id: number): Promise<void>;
+
+  // Photo Gallery operations
+  getPhotoGallery(): Promise<PhotoGallery[]>;
+  getPhotoGalleryByCategory(category: string): Promise<PhotoGallery[]>;
+  createPhotoGalleryItem(item: InsertPhotoGallery): Promise<PhotoGallery>;
+  updatePhotoGalleryItem(id: number, item: Partial<InsertPhotoGallery>): Promise<PhotoGallery>;
+  deletePhotoGalleryItem(id: number): Promise<void>;
+
+  // Media Coverage operations
+  getMediaCoverage(): Promise<MediaCoverage[]>;
+  getMediaCoverageByType(type: string): Promise<MediaCoverage[]>;
+  createMediaCoverageItem(item: InsertMediaCoverage): Promise<MediaCoverage>;
+  updateMediaCoverageItem(id: number, item: Partial<InsertMediaCoverage>): Promise<MediaCoverage>;
+  deleteMediaCoverageItem(id: number): Promise<void>;
 }
 
 export class PostgreSQLStorage implements IStorage {
@@ -320,6 +340,62 @@ export class PostgreSQLStorage implements IStorage {
 
   async deleteNews(id: number): Promise<void> {
     await db.delete(news).where(eq(news.id, id));
+  }
+
+  // Photo Gallery operations
+  async getPhotoGallery(): Promise<PhotoGallery[]> {
+    return await db.select().from(photoGallery).where(eq(photoGallery.isActive, true)).orderBy(desc(photoGallery.createdAt));
+  }
+
+  async getPhotoGalleryByCategory(category: string): Promise<PhotoGallery[]> {
+    return await db.select().from(photoGallery)
+      .where(eq(photoGallery.category, category))
+      .orderBy(desc(photoGallery.createdAt));
+  }
+
+  async createPhotoGalleryItem(item: InsertPhotoGallery): Promise<PhotoGallery> {
+    const [created] = await db.insert(photoGallery).values(item).returning();
+    return created;
+  }
+
+  async updatePhotoGalleryItem(id: number, item: Partial<InsertPhotoGallery>): Promise<PhotoGallery> {
+    const [updated] = await db.update(photoGallery)
+      .set({ ...item, updatedAt: Date.now() })
+      .where(eq(photoGallery.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deletePhotoGalleryItem(id: number): Promise<void> {
+    await db.delete(photoGallery).where(eq(photoGallery.id, id));
+  }
+
+  // Media Coverage operations
+  async getMediaCoverage(): Promise<MediaCoverage[]> {
+    return await db.select().from(mediaCoverage).where(eq(mediaCoverage.isActive, true)).orderBy(desc(mediaCoverage.publishedDate));
+  }
+
+  async getMediaCoverageByType(type: string): Promise<MediaCoverage[]> {
+    return await db.select().from(mediaCoverage)
+      .where(eq(mediaCoverage.type, type))
+      .orderBy(desc(mediaCoverage.publishedDate));
+  }
+
+  async createMediaCoverageItem(item: InsertMediaCoverage): Promise<MediaCoverage> {
+    const [created] = await db.insert(mediaCoverage).values(item).returning();
+    return created;
+  }
+
+  async updateMediaCoverageItem(id: number, item: Partial<InsertMediaCoverage>): Promise<MediaCoverage> {
+    const [updated] = await db.update(mediaCoverage)
+      .set({ ...item, updatedAt: Date.now() })
+      .where(eq(mediaCoverage.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteMediaCoverageItem(id: number): Promise<void> {
+    await db.delete(mediaCoverage).where(eq(mediaCoverage.id, id));
   }
 }
 
