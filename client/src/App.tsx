@@ -9,7 +9,7 @@ import About from "@/pages/About";
 import Programs from "@/pages/Programs";
 import Leadership from "@/pages/Leadership";
 import News from "@/pages/News";
-import NewsDetail from "./pages/NewsDetail";
+import NewsDetail from "@/pages/NewsDetail";
 import Events from "@/pages/Events";
 import Media from "@/pages/Media";
 import Gallery from "@/pages/Gallery";

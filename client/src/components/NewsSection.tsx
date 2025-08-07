@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Calendar, User, ArrowRight, Tag } from "lucide-react";
 import { Button } from "./ui/button";
+import { useLocation } from "wouter";
 
 interface NewsItem {
   id: number;
@@ -20,6 +21,7 @@ export default function NewsSection() {
   const { data: news = [], isLoading } = useQuery<NewsItem[]>({
     queryKey: ['/api/news'],
   });
+  const [location, setLocation] = useLocation();
 
   if (isLoading) {
     return (
@@ -152,7 +154,7 @@ export default function NewsSection() {
                     // Generate slug from title if not available
                     const slug = article.slug || article.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                     // Navigate to article detail page
-                    window.open(`/news/${slug}`, '_blank');
+                    setLocation(`/news/${slug}`);
                   }}
                 >
                   Read More
@@ -170,7 +172,7 @@ export default function NewsSection() {
               className="px-8 py-3"
               onClick={() => {
                 // Navigate to full news page
-                window.open('/news', '_blank');
+                setLocation('/news');
               }}
             >
               View All News & Updates
