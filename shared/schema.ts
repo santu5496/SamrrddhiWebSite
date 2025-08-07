@@ -135,6 +135,23 @@ export const donationConfig = sqliteTable("donation_config", {
   updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
 });
 
+// News & Updates
+export const news = sqliteTable("news", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  excerpt: text("excerpt").notNull(),
+  imageUrl: text("image_url"),
+  programId: integer("program_id").references(() => programs.id),
+  category: text("category").notNull(),
+  tags: text("tags"), // JSON string
+  publishedDate: integer("published_date").$defaultFn(() => Date.now()),
+  isPublished: integer("is_published", { mode: "boolean" }).default(true),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at").$defaultFn(() => Date.now()),
+  updatedAt: integer("updated_at").$defaultFn(() => Date.now()),
+});
+
 // Schema exports for validation
 export const insertHeroContentSchema = createInsertSchema(heroContent);
 export const insertAboutContentSchema = createInsertSchema(aboutContent);
@@ -143,6 +160,7 @@ export const insertEventSchema = createInsertSchema(events);
 export const insertLeadershipSchema = createInsertSchema(leadership);
 export const insertContactInfoSchema = createInsertSchema(contactInfo);
 export const insertDonationConfigSchema = createInsertSchema(donationConfig);
+export const insertNewsSchema = createInsertSchema(news);
 
 // Type exports
 export type InsertHeroContent = z.infer<typeof insertHeroContentSchema>;
@@ -152,6 +170,7 @@ export type InsertEvent = z.infer<typeof insertEventSchema>;
 export type InsertLeadership = z.infer<typeof insertLeadershipSchema>;
 export type InsertContactInfo = z.infer<typeof insertContactInfoSchema>;
 export type InsertDonationConfig = z.infer<typeof insertDonationConfigSchema>;
+export type InsertNews = z.infer<typeof insertNewsSchema>;
 
 export type HeroContent = typeof heroContent.$inferSelect;
 export type AboutContent = typeof aboutContent.$inferSelect;
@@ -160,3 +179,4 @@ export type Event = typeof events.$inferSelect;
 export type Leadership = typeof leadership.$inferSelect;
 export type ContactInfo = typeof contactInfo.$inferSelect;
 export type DonationConfig = typeof donationConfig.$inferSelect;
+export type News = typeof news.$inferSelect;

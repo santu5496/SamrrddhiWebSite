@@ -7,6 +7,7 @@ import {
   leadership,
   contactInfo,
   donationConfig,
+  news,
   type HeroContent,
   type InsertHeroContent,
   type AboutContent,
@@ -21,6 +22,8 @@ import {
   type InsertContactInfo,
   type DonationConfig,
   type InsertDonationConfig,
+  type News,
+  type InsertNews,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, asc } from "drizzle-orm";
@@ -65,6 +68,15 @@ export interface IStorage {
   // Donation config operations
   getDonationConfig(): Promise<DonationConfig | undefined>;
   updateDonationConfig(config: InsertDonationConfig): Promise<DonationConfig>;
+
+  // News operations
+  getNews(): Promise<News[]>;
+  getPublishedNews(): Promise<News[]>;
+  getNewsByCategory(category: string): Promise<News[]>;
+  getNewsById(id: number): Promise<News | undefined>;
+  createNews(newsItem: InsertNews): Promise<News>;
+  updateNews(id: number, newsItem: Partial<InsertNews>): Promise<News>;
+  deleteNews(id: number): Promise<void>;
 }
 
 export class PostgreSQLStorage implements IStorage {
@@ -264,6 +276,50 @@ export class PostgreSQLStorage implements IStorage {
       const result = await db.insert(donationConfig).values(config).returning();
       return result[0];
     }
+  }
+
+  // News operations
+  async getNews(): Promise<News[]> {
+    return await db.select().from(news).orderBy(desc(news.publishedDate));
+  }
+
+  async getPublishedNews(): Promise<News[]> {
+    return await db
+      .select()
+      .from(news)
+      .where(eq(news.isPublished, true))
+      .orderBy(desc(news.publishedDate));
+  }
+
+  async getNewsByCategory(category: string): Promise<News[]> {
+    return await db
+      .select()
+      .from(news)
+      .where(eq(news.category, category))
+      .orderBy(desc(news.publishedDate));
+  }
+
+  async getNewsById(id: number): Promise<News | undefined> {
+    const result = await db.select().from(news).where(eq(news.id, id));
+    return result[0];
+  }
+
+  async createNews(newsItem: InsertNews): Promise<News> {
+    const result = await db.insert(news).values(newsItem).returning();
+    return result[0];
+  }
+
+  async updateNews(id: number, newsItem: Partial<InsertNews>): Promise<News> {
+    const result = await db
+      .update(news)
+      .set({ ...newsItem, updatedAt: Date.now() })
+      .where(eq(news.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteNews(id: number): Promise<void> {
+    await db.delete(news).where(eq(news.id, id));
   }
 }
 
