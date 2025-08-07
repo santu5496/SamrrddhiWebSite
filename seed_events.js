@@ -1,229 +1,184 @@
-import Database from 'better-sqlite3';
+import { db } from './server/db.ts';
+import { events } from './shared/schema.ts';
 
-const db = new Database('./database.sqlite');
+const currentDate = Date.now();
+const oneDay = 24 * 60 * 60 * 1000;
+const oneWeek = 7 * oneDay;
+const oneMonth = 30 * oneDay;
 
-// Create events table if it doesn't exist
-db.exec(`
-  CREATE TABLE IF NOT EXISTS events (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    description TEXT,
-    event_date INTEGER NOT NULL,
-    start_time TEXT,
-    end_time TEXT,
-    location TEXT,
-    event_type TEXT NOT NULL,
-    max_participants INTEGER,
-    current_participants INTEGER DEFAULT 0,
-    registration_deadline INTEGER,
-    is_registration_open INTEGER DEFAULT 1,
-    organizer TEXT,
-    is_active INTEGER DEFAULT 1,
-    image_url TEXT,
-    created_at INTEGER DEFAULT (unixepoch() * 1000),
-    updated_at INTEGER DEFAULT (unixepoch() * 1000)
-  );
-`);
-
-// Insert sample events
-const events = [
+const eventsData = [
+  // PAST EVENTS (5)
   {
-    title: 'Annual Fundraising Gala 2025',
-    description: 'Join us for an elegant evening of dining, entertainment, and giving back to support our mission of empowering underprivileged children. The event will feature live music, silent auction, and inspiring stories from our beneficiaries.',
-    event_date: new Date('2025-03-15 18:00:00').getTime(),
-    start_time: '18:00',
-    end_time: '22:00',
-    location: 'Grand Ballroom, Hotel Taj Palace, Mumbai',
-    event_type: 'fundraiser',
-    max_participants: 200,
-    current_participants: 85,
-    registration_deadline: new Date('2025-03-10 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Samruddhi Service Society',
-    image_url: '/api/placeholder/600/400'
+    title: "Annual Fundraising Gala 2024 - Hope & Harmony",
+    description: "Our biggest fundraising event of the year featuring cultural performances by hostel girls, success story presentations, and community celebrations. The evening raised ₹12 lakhs for our programs through generous donations and sponsorships from local businesses and supporters.",
+    eventDate: currentDate - (45 * oneDay), // 45 days ago
+    startTime: "18:00",
+    endTime: "22:00",
+    location: "Community Hall, Nashik District",
+    eventType: "fundraising",
+    maxParticipants: 300,
+    currentParticipants: 285,
+    registrationDeadline: currentDate - (50 * oneDay),
+    isRegistrationOpen: false,
+    organizer: "Samruddhi Service Society",
+    imageUrl: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
+    isActive: true
   },
   {
-    title: 'Educational Workshop: Digital Literacy for Rural Girls',
-    description: 'A comprehensive workshop focused on introducing basic computer skills and digital literacy to rural girls aged 12-16. Participants will learn essential computer operations, internet safety, and basic coding concepts.',
-    event_date: new Date('2025-02-20 10:00:00').getTime(),
-    start_time: '10:00',
-    end_time: '16:00',
-    location: 'Community Center, Nashik',
-    event_type: 'educational',
-    max_participants: 30,
-    current_participants: 18,
-    registration_deadline: new Date('2025-02-15 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Dr. Priya Sharma',
-    image_url: '/api/placeholder/600/400'
+    title: "Girls' Hostel 10th Annual Day Celebration",
+    description: "A joyous celebration marking the 10th anniversary of our Girls' Hostel program. Students showcased their talents through dance, music, and drama performances. Parents from nearby villages attended to witness their daughters' achievements and academic progress.",
+    eventDate: currentDate - (30 * oneDay), // 30 days ago
+    startTime: "14:00",
+    endTime: "18:00",
+    location: "Samruddhi Girls' Hostel, Pimpri Village",
+    eventType: "celebration",
+    maxParticipants: 150,
+    currentParticipants: 142,
+    registrationDeadline: currentDate - (35 * oneDay),
+    isRegistrationOpen: false,
+    organizer: "Girls' Hostel Team",
+    imageUrl: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
+    isActive: true
   },
   {
-    title: 'Community Health Camp',
-    description: 'Free health screening and medical checkup camp for the local community. Our medical team will provide consultations, basic treatments, and health awareness sessions. All age groups welcome.',
-    event_date: new Date('2025-02-25 09:00:00').getTime(),
-    start_time: '09:00',
-    end_time: '17:00',
-    location: 'Village Primary School, Aurangabad',
-    event_type: 'community',
-    max_participants: 150,
-    current_participants: 45,
-    registration_deadline: new Date('2025-02-22 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Medical Team Samruddhi',
-    image_url: '/api/placeholder/600/400'
+    title: "Free Medical Camp - Rural Health Initiative",
+    description: "Comprehensive medical camp conducted across three remote villages providing free health checkups, eye examinations, women's health consultations, and child vaccination drives. Over 500 patients received treatment and free medicines worth ₹75,000.",
+    eventDate: currentDate - (21 * oneDay), // 21 days ago
+    startTime: "08:00",
+    endTime: "17:00",
+    location: "Multiple Villages: Pimpri, Kasara, Bhandardara",
+    eventType: "healthcare",
+    maxParticipants: 600,
+    currentParticipants: 523,
+    registrationDeadline: currentDate - (28 * oneDay),
+    isRegistrationOpen: false,
+    organizer: "Healthcare Team & District Hospital",
+    imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
+    isActive: true
   },
   {
-    title: 'Skill Development Workshop: Tailoring & Embroidery',
-    description: 'Empowerment through skill development - learn traditional tailoring and embroidery techniques that can provide sustainable livelihood opportunities. Materials and refreshments provided.',
-    event_date: new Date('2025-03-05 14:00:00').getTime(),
-    start_time: '14:00',
-    end_time: '18:00',
-    location: 'Women Empowerment Center, Pune',
-    event_type: 'workshop',
-    max_participants: 25,
-    current_participants: 12,
-    registration_deadline: new Date('2025-03-01 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Reshma Devi',
-    image_url: '/api/placeholder/600/400'
+    title: "Skill Development Program Graduation Ceremony",
+    description: "Graduation ceremony for 35 women who successfully completed our 6-month tailoring and embroidery training program. Participants showcased their handmade garments and received certificates. Many graduates shared their success stories of achieving financial independence.",
+    eventDate: currentDate - (14 * oneDay), // 14 days ago
+    startTime: "15:00",
+    endTime: "18:00",
+    location: "Skill Development Center, Nashik",
+    eventType: "graduation",
+    maxParticipants: 100,
+    currentParticipants: 87,
+    registrationDeadline: currentDate - (17 * oneDay),
+    isRegistrationOpen: false,
+    organizer: "Skill Development Team",
+    imageUrl: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
+    isActive: true
   },
   {
-    title: 'Youth Leadership Summit 2025',
-    description: 'A day-long summit bringing together young leaders, activists, and change-makers to discuss social issues, share experiences, and network. Features keynote speakers, panel discussions, and interactive workshops.',
-    event_date: new Date('2025-04-12 09:00:00').getTime(),
-    start_time: '09:00',
-    end_time: '17:00',
-    location: 'Convention Center, Delhi',
-    event_type: 'community',
-    max_participants: 100,
-    current_participants: 67,
-    registration_deadline: new Date('2025-04-05 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Youth Wing - Samruddhi',
-    image_url: '/api/placeholder/600/400'
+    title: "Environmental Conservation Tree Plantation Drive",
+    description: "Monsoon season tree plantation initiative where 5,000 native trees were planted across 10 villages in collaboration with local schools. Students adopted trees as part of environmental education program and committed to monitoring their growth.",
+    eventDate: currentDate - (7 * oneDay), // 7 days ago
+    startTime: "07:00",
+    endTime: "12:00",
+    location: "10 Villages across Nashik District",
+    eventType: "environmental",
+    maxParticipants: 200,
+    currentParticipants: 184,
+    registrationDeadline: currentDate - (10 * oneDay),
+    isRegistrationOpen: false,
+    organizer: "Environmental Team & Local Schools",
+    imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
+    isActive: true
+  },
+  
+  // UPCOMING EVENTS (3)
+  {
+    title: "Youth Leadership Summit 2025",
+    description: "An empowering summit designed for rural youth aged 16-25 to develop leadership skills, learn about career opportunities, and network with successful professionals. Sessions include personality development, communication skills, and entrepreneurship guidance from industry experts.",
+    eventDate: currentDate + (14 * oneDay), // 14 days from now
+    startTime: "09:00",
+    endTime: "17:00",
+    location: "Samruddhi Training Center, Nashik",
+    eventType: "workshop",
+    maxParticipants: 80,
+    currentParticipants: 42,
+    registrationDeadline: currentDate + (10 * oneDay),
+    isRegistrationOpen: true,
+    organizer: "Youth Development Team",
+    imageUrl: "https://images.unsplash.com/photo-1515169067868-5387ec356754?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
+    isActive: true
   },
   {
-    title: 'Tree Plantation Drive',
-    description: 'Join our environmental conservation initiative. Help us plant 500+ saplings in the community. Tools, saplings, and refreshments provided. A great way to contribute to a greener future.',
-    event_date: new Date('2025-02-28 07:00:00').getTime(),
-    start_time: '07:00',
-    end_time: '11:00',
-    location: 'Riverside Park, Nagpur',
-    event_type: 'community',
-    max_participants: 80,
-    current_participants: 34,
-    registration_deadline: new Date('2025-02-26 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Green Team Samruddhi',
-    image_url: '/api/placeholder/600/400'
+    title: "Women Entrepreneurs Meet & Microfinance Launch",
+    description: "Launch event for our new microfinance program supporting women entrepreneurs. Meet existing successful women from our programs, learn about available loans (₹10,000-₹50,000), attend financial literacy workshops, and network with potential business mentors.",
+    eventDate: currentDate + (28 * oneDay), // 28 days from now
+    startTime: "10:00",
+    endTime: "16:00",
+    location: "Community Center, Pimpri Village",
+    eventType: "business",
+    maxParticipants: 60,
+    currentParticipants: 23,
+    registrationDeadline: currentDate + (21 * oneDay),
+    isRegistrationOpen: true,
+    organizer: "Women Empowerment Team",
+    imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
+    isActive: true
   },
   {
-    title: 'Women Empowerment Workshop Series',
-    description: 'A 3-day intensive workshop series focused on financial literacy, legal rights, and entrepreneurship for women in rural areas. Professional certificate provided upon completion.',
-    event_date: new Date('2025-03-20 09:00:00').getTime(),
-    start_time: '09:00',
-    end_time: '17:00',
-    location: 'Rural Development Center, Kolhapur',
-    event_type: 'workshop',
-    max_participants: 40,
-    current_participants: 28,
-    registration_deadline: new Date('2025-03-15 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Women Welfare Team',
-    image_url: '/api/placeholder/600/400'
-  },
-  {
-    title: 'Monthly Blood Donation Camp',
-    description: 'Help save lives by donating blood. Our medical team ensures safe and hygienic blood collection. Light refreshments provided to all donors. Every donation can save up to 3 lives.',
-    event_date: new Date('2025-02-15 08:00:00').getTime(),
-    start_time: '08:00',
-    end_time: '14:00',
-    location: 'Samruddhi Main Campus, Nashik',
-    event_type: 'community',
-    max_participants: 100,
-    current_participants: 45,
-    registration_deadline: new Date('2025-02-12 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Health Committee',
-    image_url: '/api/placeholder/600/400'
-  },
-  {
-    title: 'Career Guidance Seminar for Rural Youth',
-    description: 'Comprehensive career guidance session covering various career opportunities, skill requirements, and pathways to success. Industry experts will share insights and answer questions.',
-    event_date: new Date('2025-02-18 14:00:00').getTime(),
-    start_time: '14:00',
-    end_time: '17:00',
-    location: 'District Collector Office Hall, Aurangabad',
-    event_type: 'educational',
-    max_participants: 80,
-    current_participants: 52,
-    registration_deadline: new Date('2025-02-16 23:59:59').getTime(),
-    is_registration_open: 1,
-    organizer: 'Career Development Team',
-    image_url: '/api/placeholder/600/400'
-  },
-  {
-    title: 'Cultural Heritage Festival 2024',
-    description: 'A celebration of local culture, traditions, and arts featuring folk dances, traditional music, handicraft exhibitions, and local cuisine. Past event showcasing community talent.',
-    event_date: new Date('2024-12-15 16:00:00').getTime(),
-    start_time: '16:00',
-    end_time: '21:00',
-    location: 'Municipal Ground, Nashik',
-    event_type: 'community',
-    max_participants: 500,
-    current_participants: 485,
-    registration_deadline: new Date('2024-12-10 23:59:59').getTime(),
-    is_registration_open: 0,
-    organizer: 'Cultural Committee',
-    image_url: '/api/placeholder/600/400'
-  },
-  {
-    title: 'Annual Sports Day 2024',
-    description: 'Inter-school sports competition featuring various games and activities for students from our partner schools. A memorable day of healthy competition and fun.',
-    event_date: new Date('2024-11-20 08:00:00').getTime(),
-    start_time: '08:00',
-    end_time: '16:00',
-    location: 'District Sports Complex, Aurangabad',
-    event_type: 'community',
-    max_participants: 300,
-    current_participants: 275,
-    registration_deadline: new Date('2024-11-15 23:59:59').getTime(),
-    is_registration_open: 0,
-    organizer: 'Sports Committee',
-    image_url: '/api/placeholder/600/400'
-  },
-  {
-    title: 'Scholarship Distribution Ceremony 2024',
-    description: 'Annual ceremony to honor meritorious students and distribute scholarships to deserving candidates. A celebration of academic excellence and future potential.',
-    event_date: new Date('2024-10-25 15:00:00').getTime(),
-    start_time: '15:00',
-    end_time: '18:00',
-    location: 'Samruddhi Main Campus, Nashik',
-    event_type: 'educational',
-    max_participants: 150,
-    current_participants: 142,
-    registration_deadline: new Date('2024-10-20 23:59:59').getTime(),
-    is_registration_open: 0,
-    organizer: 'Academic Board',
-    image_url: '/api/placeholder/600/400'
+    title: "Annual Sports Day & Cultural Festival 2025",
+    description: "Our biggest celebration of the year featuring sports competitions, cultural performances, and exhibitions showcasing work from all our programs. Special karate demonstrations by our state champion girls, art exhibitions by IDC children, and traditional dances by hostel students.",
+    eventDate: currentDate + (45 * oneDay), // 45 days from now
+    startTime: "08:00",
+    endTime: "19:00",
+    location: "District Sports Complex, Nashik",
+    eventType: "festival",
+    maxParticipants: 500,
+    currentParticipants: 127,
+    registrationDeadline: currentDate + (35 * oneDay),
+    isRegistrationOpen: true,
+    organizer: "Samruddhi Service Society",
+    imageUrl: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
+    isActive: true
   }
 ];
 
-const insertEvent = db.prepare(`
-  INSERT INTO events (
-    title, description, event_date, start_time, end_time, location, 
-    event_type, max_participants, current_participants, registration_deadline, 
-    is_registration_open, organizer, image_url
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-`);
+async function seedEvents() {
+  console.log('Starting events seeding...');
+  
+  try {
+    // Clear existing events data
+    await db.delete(events);
+    console.log('Cleared existing events data');
 
-events.forEach(event => {
-  insertEvent.run(
-    event.title, event.description, event.event_date, event.start_time, event.end_time,
-    event.location, event.event_type, event.max_participants, event.current_participants,
-    event.registration_deadline, event.is_registration_open, event.organizer, event.image_url
-  );
-});
+    // Insert new events data
+    for (const event of eventsData) {
+      const insertData = {
+        ...event,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      };
 
-console.log(`Inserted ${events.length} events into the database`);
-db.close();
+      await db.insert(events).values(insertData);
+      const eventType = event.eventDate < currentDate ? 'PAST' : 'UPCOMING';
+      console.log(`✓ Inserted ${eventType}: ${event.title}`);
+    }
+
+    console.log(`\n🎉 Successfully seeded ${eventsData.length} events!`);
+    console.log('- 5 Past Events (completed)');
+    console.log('- 3 Upcoming Events (registration open)');
+    console.log('Events content is now available at /api/events');
+    
+  } catch (error) {
+    console.error('Error seeding events data:', error);
+    throw error;
+  }
+}
+
+// Run the seeding function
+seedEvents()
+  .then(() => {
+    console.log('Events seeding completed successfully!');
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error('Events seeding failed:', error);
+    process.exit(1);
+  });
