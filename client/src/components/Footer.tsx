@@ -10,11 +10,14 @@ export default function Footer() {
   // Parse social media data if it exists
   let socialMediaData = null;
   try {
-    if (contactInfo?.socialMedia) {
+    if (contactInfo?.socialMedia && typeof contactInfo.socialMedia === 'string') {
       socialMediaData = JSON.parse(contactInfo.socialMedia);
+    } else if (contactInfo?.socialMedia && typeof contactInfo.socialMedia === 'object') {
+      socialMediaData = contactInfo.socialMedia;
     }
   } catch (error) {
     console.warn('Failed to parse social media data:', error);
+    socialMediaData = null;
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -41,38 +44,68 @@ export default function Footer() {
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed mb-4 mobile-text">
               Dedicated to empowering underprivileged rural girls and differently-abled children through education, shelter, and comprehensive support services.
             </p>
-            <div className="flex space-x-4">
-              {socialMediaData?.facebook && (
+            <div className="flex space-x-4 mt-4">
+              {socialMediaData?.facebook ? (
                 <a 
                   href={socialMediaData.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target"
+                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
                   aria-label="Follow us on Facebook"
                 >
-                  <Facebook className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Facebook className="h-5 w-5" />
+                </a>
+              ) : (
+                <a 
+                  href="https://facebook.com/samruddhisociety"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  aria-label="Follow us on Facebook"
+                >
+                  <Facebook className="h-5 w-5" />
                 </a>
               )}
-              {socialMediaData?.twitter && (
+              {socialMediaData?.twitter ? (
                 <a 
                   href={socialMediaData.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target"
+                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
                   aria-label="Follow us on Twitter"
                 >
-                  <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Twitter className="h-5 w-5" />
+                </a>
+              ) : (
+                <a 
+                  href="https://twitter.com/samruddhisociety"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  aria-label="Follow us on Twitter"
+                >
+                  <Twitter className="h-5 w-5" />
                 </a>
               )}
-              {socialMediaData?.instagram && (
+              {socialMediaData?.instagram ? (
                 <a 
                   href={socialMediaData.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-secondary transition-colors touch-target"
+                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
                   aria-label="Follow us on Instagram"
                 >
-                  <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Instagram className="h-5 w-5" />
+                </a>
+              ) : (
+                <a 
+                  href="https://instagram.com/samruddhisociety"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-secondary transition-colors touch-target p-2 rounded-full hover:bg-white/10"
+                  aria-label="Follow us on Instagram"
+                >
+                  <Instagram className="h-5 w-5" />
                 </a>
               )}
             </div>
@@ -126,12 +159,21 @@ export default function Footer() {
           
           <div>
             <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contact Info</h4>
-            <div className="space-y-1 sm:space-y-2 text-gray-300">
-              <p className="text-sm sm:text-base">{contactInfo?.phone || "+91 9876543210"}</p>
-              <p className="text-sm sm:text-base break-all">{contactInfo?.email || "contact@samruddhisociety.org"}</p>
-              <p className="text-sm sm:text-base whitespace-pre-line mobile-text">
-                {contactInfo?.address || "Samruddhi Service Society\nVillage Nashik, Maharashtra, India\nPIN: 422001"}
-              </p>
+            <div className="space-y-2 text-gray-300">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm sm:text-base">📞</span>
+                <p className="text-sm sm:text-base">{contactInfo?.phone || "+91 9876543210"}</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm sm:text-base">✉️</span>
+                <p className="text-sm sm:text-base break-all">{contactInfo?.email || "contact@samruddhisociety.org"}</p>
+              </div>
+              <div className="flex items-start space-x-2">
+                <span className="text-sm sm:text-base mt-0.5">📍</span>
+                <p className="text-sm sm:text-base leading-relaxed">
+                  {contactInfo?.address || "Samruddhi Service Society, Village Nashik, Maharashtra, India - 422001"}
+                </p>
+              </div>
             </div>
           </div>
         </div>
