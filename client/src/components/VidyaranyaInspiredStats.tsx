@@ -181,7 +181,7 @@ export default function VidyaranyaInspiredStats() {
         </div>
 
         {/* Call-to-Action Section */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center">
+        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center -mt-4">
           <div className="max-w-4xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Join Us in Creating Sustainable Change
