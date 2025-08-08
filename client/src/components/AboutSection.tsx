@@ -73,7 +73,7 @@ export default function AboutSection() {
         <div className="absolute top-1/3 right-1/3 w-28 h-28 bg-indigo-400 rounded-full blur-xl float-animation" style={{animationDelay: '3s'}}></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-7xl mx-auto px-2 relative">
         {/* Enhanced Header Section */}
         <div className="text-center mb-10 fade-in-section" ref={animationRef}>
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full mb-6 shimmer">
