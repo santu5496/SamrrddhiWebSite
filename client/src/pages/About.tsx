@@ -8,7 +8,7 @@ export default function About() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="pt-8">
+      <main className="pt-4">
         {/* About page specific content */}
         <VidyaranyaInspiredStats />
         <AboutSection />

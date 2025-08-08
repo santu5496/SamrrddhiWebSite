@@ -115,15 +115,15 @@ export default function VidyaranyaInspiredStats() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <section className="py-8 bg-gradient-to-br from-blue-50 via-white to-green-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero-style Header */}
-        <div className="text-center mb-16 fade-in-section" ref={animationRef}>
+        <div className="text-center mb-8 fade-in-section" ref={animationRef}>
           <div className="relative">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4 animate-fade-in-up">
               TOWARDS
             </h1>
-            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-8 animate-fade-in-up animate-delay-200">
+            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-6 animate-fade-in-up animate-delay-200">
               SUSTAINABLE CHANGE
             </h2>
           </div>
@@ -137,7 +137,7 @@ export default function VidyaranyaInspiredStats() {
         </div>
 
         {/* Impact Statistics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {statsData.map((stat, index) => {
             const IconComponent = stat.icon;
             return (
@@ -149,14 +149,14 @@ export default function VidyaranyaInspiredStats() {
                   element?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                <div className="p-8 text-center">
+                <div className="p-6 text-center">
                   {/* Icon */}
-                  <div className={`w-20 h-20 ${stat.color} rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform`}>
-                    <IconComponent className="h-10 w-10 text-white" />
+                  <div className={`w-16 h-16 ${stat.color} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                    <IconComponent className="h-8 w-8 text-white" />
                   </div>
                   
                   {/* Count */}
-                  <div className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+                  <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                     {stat.count}
                   </div>
                   
@@ -181,12 +181,12 @@ export default function VidyaranyaInspiredStats() {
         </div>
 
         {/* Call-to-Action Section */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 text-center">
+        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center">
           <div className="max-w-4xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Join Us in Creating Sustainable Change
             </h3>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-lg text-gray-600 mb-6">
               Every contribution, no matter the size, makes a meaningful difference in the lives of those we serve. 
               Your support helps us continue our mission of empowerment and education.
             </p>
@@ -215,7 +215,7 @@ export default function VidyaranyaInspiredStats() {
         </div>
 
         {/* Trust Indicators */}
-        <div className="mt-16 grid md:grid-cols-3 gap-8 text-center">
+        <div className="mt-8 grid md:grid-cols-3 gap-6 text-center">
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
               <Trophy className="h-8 w-8 text-green-600" />

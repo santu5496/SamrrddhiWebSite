@@ -156,9 +156,9 @@ export default function ImpactSection() {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <section className="py-10 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Impact in Numbers</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Every number represents lives transformed, dreams fulfilled, and hope restored through our dedicated programs.
@@ -166,15 +166,15 @@ export default function ImpactSection() {
           <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {impacts.map((impact, index) => {
             const IconComponent = impact.icon;
             return (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300">
-                <div className={`w-16 h-16 ${impact.color} bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                  <IconComponent className={`h-8 w-8 ${impact.color}`} />
+              <div key={index} className="bg-white rounded-xl shadow-lg p-5 text-center hover:shadow-xl transition-shadow duration-300">
+                <div className={`w-14 h-14 ${impact.color} bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-3`}>
+                  <IconComponent className={`h-7 w-7 ${impact.color}`} />
                 </div>
-                <div className={`text-4xl md:text-5xl font-extrabold ${impact.color} mb-2`}>
+                <div className={`text-3xl md:text-4xl font-extrabold ${impact.color} mb-2`}>
                   {impact.number}{impact.suffix}
                 </div>
                 <div className="text-lg font-semibold text-neutral mb-2">
@@ -188,8 +188,8 @@ export default function ImpactSection() {
           })}
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-lg text-gray-700 mb-6">
+        <div className="mt-8 text-center">
+          <p className="text-lg text-gray-700 mb-4">
             <strong>Join our mission</strong> to create lasting impact in the lives of underprivileged children.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

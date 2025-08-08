@@ -64,7 +64,7 @@ export default function AboutSection() {
   console.log("About Content (Enhanced):", aboutContent);
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
+    <section id="about" className="py-12 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
       {/* Floating background decorations */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-20 w-32 h-32 bg-purple-400 rounded-full blur-3xl float-animation"></div>
@@ -75,7 +75,7 @@ export default function AboutSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Enhanced Header Section */}
-        <div className="text-center mb-16 fade-in-section" ref={animationRef}>
+        <div className="text-center mb-10 fade-in-section" ref={animationRef}>
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full mb-6 shimmer">
             <Sparkles className="h-10 w-10 text-white" />
           </div>
@@ -93,7 +93,7 @@ export default function AboutSection() {
         </div>
 
         {/* Main Story Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-12">
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur-lg"></div>
             <div className="relative overflow-hidden rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-700 group">
@@ -173,8 +173,8 @@ export default function AboutSection() {
         </div>
 
         {/* Timeline Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
+        <div className="mb-12">
+          <div className="text-center mb-8">
             <h3 className="text-3xl md:text-4xl font-bold text-neutral mb-4">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Journey</span>
             </h3>
@@ -204,8 +204,8 @@ export default function AboutSection() {
         </div>
 
         {/* Core Values Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
+        <div className="mb-10">
+          <div className="text-center mb-8">
             <h3 className="text-3xl md:text-4xl font-bold text-neutral mb-4">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Values</span>
             </h3>
