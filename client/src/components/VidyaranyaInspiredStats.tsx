@@ -123,7 +123,7 @@ export default function VidyaranyaInspiredStats() {
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4 animate-fade-in-up">
               TOWARDS
             </h1>
-            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-6 animate-fade-in-up animate-delay-200">
+            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4 animate-fade-in-up animate-delay-200">
               SUSTAINABLE CHANGE
             </h2>
           </div>
