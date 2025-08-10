@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { Users, GraduationCap, Home, Heart, Award, Calendar } from "lucide-react";
 import { HeroContent } from "@shared/schema";
+import { useCountAnimation, useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 // Animated counter hook
 const useAnimatedCounter = (end: number, duration: number = 2000) => {
@@ -23,41 +24,21 @@ const useAnimatedCounter = (end: number, duration: number = 2000) => {
   return count;
 };
 
-// Counter animation hook
-const useCountAnimation = (target: number, duration: number = 2000) => {
-  const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    if (target === 0) return;
-
-    let startTime: number;
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-      setCount(Math.floor(progress * target));
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [target, duration]);
-
-  return count;
-};
 
 export default function ImpactSection() {
   const { data: heroContent } = useQuery<HeroContent>({
     queryKey: ["/api/hero"],
   });
 
-  const yearsCount = useAnimatedCounter(parseInt(heroContent?.yearsOfService || "29"), 2000);
-  const childrenCount = useAnimatedCounter(parseInt(heroContent?.childrenSupported?.replace('+', '') || "50"), 2500);
-  const programsCount = useAnimatedCounter(parseInt(heroContent?.corePrograms || "8"), 1500);
-  const volunteersCount = useAnimatedCounter(25, 2200);
-  const graduatesCount = useAnimatedCounter(200, 3000);
-  const monthlyMealsCount = useAnimatedCounter(4500, 2800);
+  const { count: yearsCount, countRef: yearsRef } = useCountAnimation(parseInt(heroContent?.yearsOfService || "29"), 2000);
+  const { count: childrenCount, countRef: childrenRef } = useCountAnimation(parseInt(heroContent?.childrenSupported?.replace('+', '') || "50"), 2500);
+  const { count: programsCount, countRef: programsRef } = useCountAnimation(parseInt(heroContent?.corePrograms || "8"), 1500);
+  const { count: volunteersCount, countRef: volunteersRef } = useCountAnimation(25, 2200);
+  const { count: graduatesCount, countRef: graduatesRef } = useCountAnimation(200, 3000);
+  const { count: monthlyMealsCount, countRef: monthlyRef } = useCountAnimation(4500, 2800);
+  
+  const { ref: animationRef } = useScrollAnimation();
 
   const impacts = [
     {
@@ -66,7 +47,8 @@ export default function ImpactSection() {
       suffix: "",
       label: "Years of Service",
       description: "Empowering communities since 1995",
-      color: "text-primary"
+      color: "text-yellow-400",
+      ref: yearsRef
     },
     {
       icon: Users,
@@ -74,7 +56,8 @@ export default function ImpactSection() {
       suffix: "+",
       label: "Children Supported",
       description: "Rural girls & differently-abled children",
-      color: "text-secondary"
+      color: "text-blue-400",
+      ref: childrenRef
     },
     {
       icon: GraduationCap,
@@ -82,7 +65,8 @@ export default function ImpactSection() {
       suffix: "+",
       label: "Students Graduated",
       description: "Success stories over the years",
-      color: "text-accent"
+      color: "text-green-400",
+      ref: graduatesRef
     },
     {
       icon: Heart,
@@ -90,7 +74,8 @@ export default function ImpactSection() {
       suffix: "+",
       label: "Active Volunteers",
       description: "Dedicated community supporters",
-      color: "text-orange-500"
+      color: "text-pink-400",
+      ref: volunteersRef
     },
     {
       icon: Home,
@@ -98,7 +83,8 @@ export default function ImpactSection() {
       suffix: "",
       label: "Core Programs",
       description: "Comprehensive support services",
-      color: "text-primary"
+      color: "text-purple-400",
+      ref: programsRef
     },
     {
       icon: Award,
@@ -106,81 +92,47 @@ export default function ImpactSection() {
       suffix: "",
       label: "Monthly Meals Served",
       description: "Nutritious food for healthy growth",
-      color: "text-secondary"
-    }
-  ];
-
-  const impactStats = [
-    {
-      icon: <Calendar className="h-8 w-8 text-primary" />,
-      number: yearsCount,
-      suffix: "",
-      label: "Years of Service",
-      description: "Empowering communities since 1995"
-    },
-    {
-      icon: <Users className="h-8 w-8 text-secondary" />,
-      number: childrenCount,
-      suffix: "+",
-      label: "Children Supported",
-      description: "Currently enrolled in our programs"
-    },
-    {
-      icon: <GraduationCap className="h-8 w-8 text-accent" />,
-      number: graduatesCount,
-      suffix: "+",
-      label: "Students Graduated",
-      description: "Success stories over the years"
-    },
-    {
-      icon: <Heart className="h-8 w-8 text-primary" />,
-      number: volunteersCount,
-      suffix: "+",
-      label: "Active Volunteers",
-      description: "Dedicated community supporters"
-    },
-    {
-      icon: <Home className="h-8 w-8 text-secondary" />,
-      number: programsCount,
-      suffix: "",
-      label: "Core Programs",
-      description: "Comprehensive support services"
-    },
-    {
-      icon: <Award className="h-8 w-8 text-accent" />,
-      number: monthlyMealsCount,
-      suffix: "",
-      label: "Monthly Meals Served",
-      description: "Nutritious food for healthy growth"
+      color: "text-orange-400",
+      ref: monthlyRef
     }
   ];
 
   return (
-    <section className="py-10 bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-7xl mx-auto px-2">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">Our Impact in Numbers</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+    <section className="py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 relative overflow-hidden" ref={animationRef}>
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-purple-200 to-blue-200 rounded-full blur-xl animate-float opacity-30"></div>
+        <div className="absolute bottom-20 right-20 w-32 h-32 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-full blur-xl animate-float opacity-20" style={{animationDelay: '2s'}}></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-16 animate-fade-in-up">
+          <h2 className="text-4xl md:text-5xl font-bold gradient-text-animated mb-6">Our Impact in Numbers</h2>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Every number represents lives transformed, dreams fulfilled, and hope restored through our dedicated programs.
           </p>
-          <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-8 rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
           {impacts.map((impact, index) => {
             const IconComponent = impact.icon;
             return (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-5 text-center hover:shadow-xl transition-shadow duration-300">
-                <div className={`w-14 h-14 ${impact.color} bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-3`}>
-                  <IconComponent className={`h-7 w-7 ${impact.color}`} />
+              <div 
+                key={index} 
+                className="modern-card p-8 text-center hover-lift group"
+                ref={impact.ref}
+              >
+                <div className={`w-20 h-20 bg-gradient-to-br from-white to-gray-50 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                  <IconComponent className={`h-10 w-10 ${impact.color} group-hover:animate-pulse`} />
                 </div>
-                <div className={`text-3xl md:text-4xl font-extrabold ${impact.color} mb-2`}>
-                  {impact.number}{impact.suffix}
+                <div className={`text-5xl md:text-6xl font-extrabold ${impact.color} mb-4 animate-scale-in`}>
+                  <span>{impact.number}</span><span>{impact.suffix}</span>
                 </div>
-                <div className="text-lg font-semibold text-neutral mb-2">
+                <div className="text-xl font-bold text-gray-800 mb-3">
                   {impact.label}
                 </div>
-                <div className="text-sm text-gray-600">
+                <div className="text-gray-600 leading-relaxed">
                   {impact.description}
                 </div>
               </div>

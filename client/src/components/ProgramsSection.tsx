@@ -71,7 +71,7 @@ export default function ProgramsSection() {
   const { data: apiPrograms, isLoading, error } = useQuery<Program[]>({
     queryKey: ["/api/programs"],
   });
-  const animationRef = useScrollAnimation();
+  const { ref: animationRef } = useScrollAnimation();
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
   const [categoryFilter, setCategoryFilter] = useState('all');
 
