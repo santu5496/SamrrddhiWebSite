@@ -41,17 +41,25 @@ export default function UrgentAppealBanner() {
   return (
     <div className="bg-gradient-to-r from-red-600 to-orange-500 text-white py-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10"></div>
+      {/* Enhanced life-changing animated background pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute -top-4 -left-4 w-32 h-32 bg-white rounded-full animate-heart-beat"></div>
+        <div className="absolute top-8 right-12 w-16 h-16 bg-yellow-300 rounded-full animate-donation-glow"></div>
+        <div className="absolute bottom-6 left-1/3 w-24 h-24 bg-orange-200 rounded-full animate-life-impact" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-4 left-1/2 w-12 h-12 bg-pink-300 rounded-full animate-save-life" style={{animationDelay: '0.5s'}}></div>
+        <div className="absolute bottom-2 right-1/4 w-20 h-20 bg-blue-200 rounded-full animate-help-transform" style={{animationDelay: '1.5s'}}></div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
           {/* Urgent Appeal Content */}
           <div className="flex items-center space-x-4">
-            <div className="flex items-center bg-white/20 rounded-full px-4 py-2">
-              <AlertCircle className="h-5 w-5 mr-2 animate-pulse" />
+            <div className="flex items-center bg-white/20 rounded-full px-4 py-2 animate-donation-glow">
+              <AlertCircle className="h-5 w-5 mr-2 animate-heart-beat" />
               <span className="font-semibold">URGENT APPEAL</span>
             </div>
-            <div className="hidden md:block">
-              <h3 className="font-bold text-lg">Help 50 Girls Continue Their Education!</h3>
-              <p className="text-sm opacity-90">Your support can prevent dropout during exam season</p>
+            <div className="hidden md:block animate-life-impact">
+              <h3 className="font-bold text-lg gradient-text-animated">Help 50 Girls Continue Their Education!</h3>
+              <p className="text-sm opacity-90 animate-help-transform">Your support can prevent dropout during exam season</p>
             </div>
           </div>
 

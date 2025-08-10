@@ -421,8 +421,9 @@ export default function ProgramsSection() {
               return (
                 <div 
                   key={program.id} 
-                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500 group cursor-pointer touch-target border border-gray-100"
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500 group cursor-pointer touch-target border border-gray-100 animate-save-life"
                   onClick={() => setSelectedProgram(program)}
+                  style={{animationDelay: `${index * 0.1}s`}}
                 >
                   <div className="relative overflow-hidden">
                     <img 

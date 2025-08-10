@@ -38,6 +38,7 @@ import LiveImpactFeed from "@/components/LiveImpactFeed";
 import TrustIndicators from "@/components/TrustIndicators";
 import StickyDonationButton from "@/components/StickyDonationButton";
 import EnhancedHeroSection from "@/components/EnhancedHeroSection";
+import LifeImpactAnimation from "@/components/LifeImpactAnimation";
 
 export default function Home() {
   return (
@@ -53,6 +54,9 @@ export default function Home() {
         
         {/* Live Impact Feed - Show real-time impact early */}
         <LiveImpactFeed />
+        
+        {/* Life-Changing Impact Animations */}
+        <LifeImpactAnimation />
         
         <div className="section-bg">
           <ImpactSection />
