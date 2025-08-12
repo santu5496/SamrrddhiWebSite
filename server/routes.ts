@@ -143,8 +143,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const contact = await storage.getContactInfo();
       res.json(contact || {
-        address: "Samruddhi Service Society\nVillage Nashik, Maharashtra, India\nPIN: 422001",
-        phone: "+91 9876543210",
+        address: "SAMRUDDHI SERVICE SOCIETY(R)\nNo:211 2nd main 6th cross sadashivangar\nbelagavi, belgavi, Karnataka 590019,\nIndia",
+        phone: "+91.9448111921",
         email: "contact@samruddhisociety.org",
         website: "www.samruddhisociety.org",
         socialMedia: JSON.stringify({
